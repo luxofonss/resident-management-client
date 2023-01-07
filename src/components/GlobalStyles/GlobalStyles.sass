@@ -1,13 +1,59 @@
 @import-normalize
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap')
+@import "~bootstrap/scss/bootstrap"
+@import "./variables.sass"
+@import "./animations.sass"
+@import "./mixins.sass"
+
 body
     margin: 0
-    font-family: 'DM Sans', sans-serif
+    font-family: 'Manrope', sans-serif
+    font-weight: 500
+
+::-webkit-scrollbar
+    width: 8px
+    height: 3px
+/* Track */
+::-webkit-scrollbar-track
+    background: #f1f1f1
+
+/* Handle */
+::-webkit-scrollbar-thumb
+    background: #BBBBBB
+::-webkit-scrollbar-thumb:hover
+    background: #555
+    background: var(--place-holder)
+    border-radius: 10px
+    &:hover
+        background: #8EA6D2
 
 a
     text-decoration: none
 
 iframe
     display: none
+
+.required:after
+    content: " *"
+    color: red
+    margin-left: 3px
+
+.error-message
+    color: red
+    font-size: 13px
+    font-weight: 500
+
+.normal-link
+    color: var(--text-dark)
+
+    &:hover
+        color: var(--text-dark)
+
+.normal-link-white
+    color: #fff
+
+    &:hover
+        color: #fff
 
 .flex-col-between
     display: flex
@@ -18,10 +64,20 @@ iframe
     display: flex
     align-items: center
 
+.display-none
+    display: none
+
+.display-block
+    display: block
+
 .flex-center
     display: flex
     align-items: center
     justify-content: center
+
+.label
+    @include small-heading
+    margin-bottom: 4px !important
 
 .menu-hover
     height: 100px
@@ -42,6 +98,10 @@ iframe
     -webkit-box-orient: vertical
     overflow: hidden
     text-overflow: ellipsis
+
+.hide
+    display: none
+
 .pd-8
     padding: 8px
 
@@ -59,28 +119,9 @@ iframe
 
 .hover-pointer
     &:hover
-      cursor: pointer  
-.b4E__text
-    display: inline
-    user-select: none
-    & div
-        color: #fff
-        font-size: 26px
-        position: absolute
-        left: 0
+        cursor: pointer
 
-    & div:nth-child(1)
-        color: transparent
-        -webkit-text-stroke: 1px #03a9f4
-
-    & div:nth-child(2)
-        color: #03a9f4
-        animation: animate 4s ease-in-out infinite
-
-@keyframes animate
-    0%,
-    100%
-        clip-path: polygon( 0% 45%, 16% 44%, 33% 50%, 54% 60%,70% 61%,84% 59%, 100% 52%,100% 100%,0% 100%)
-
-    50%
-        clip-path: polygon( 0% 60%, 15% 65%,34% 66%,51% 62%,67% 50%,84% 45%,100% 46%,100% 100%,0% 100%)
+.b4e-logo
+    display: flex
+    align-items: center
+    justify-content: center

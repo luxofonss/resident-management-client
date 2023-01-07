@@ -3,7 +3,7 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware } from 'connected-react-router';
 import history from '~/helpers/history';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from '@redux-devtools/extension';
 import logger from 'redux-logger';
 import createReducer from './reducers';
 import rootSaga from './saga';
@@ -30,20 +30,13 @@ const store =
               createReducer(),
               {},
               composeWithDevTools(
-                  applyMiddleware(
-                      routerMiddleware(history),
-                      promiseMiddleware,
-                      sagaMiddleware,
-                      logger,
-                  ),
+                  applyMiddleware(routerMiddleware(history), promiseMiddleware, sagaMiddleware, logger),
               ),
           )
         : createStore(
               createReducer(),
               {},
-              compose(
-                  applyMiddleware(routerMiddleware(history), promiseMiddleware, sagaMiddleware),
-              ),
+              compose(applyMiddleware(routerMiddleware(history), promiseMiddleware, sagaMiddleware)),
           );
 
 store.asyncReducers = {};

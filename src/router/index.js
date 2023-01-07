@@ -41,8 +41,8 @@ export const initModules = async (modules = [], container = 'app') => {
     await Promise.all([
         modules.map(async (item) => {
             const [reducer, saga] = await Promise.all([
-                import(`src/containers/${container}/screens/${item.path}/reducer`),
-                import(`src/containers/${container}/screens/${item.path}/saga`),
+                import(`src/containers/${container}/screens/${item.path}/redux/reducer`),
+                import(`src/containers/${container}/screens/${item.path}/redux/saga`),
             ]);
             store.injectReducer(item.key, reducer.default);
             store.injectSaga(item.key, saga.default);

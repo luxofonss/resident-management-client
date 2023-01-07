@@ -1,0 +1,56 @@
+@import '../GlobalStyles/_mixins'
+$calendarIcon: '../../assets/images/calendar-icon.png'
+
+.input-wrapper
+    display: flex
+    flex-direction: column
+
+    label
+        @include small-heading
+        justify-content: flex-start
+        margin-bottom: 8px !important
+
+input[type="date"]
+    @include input-style
+    font-size: 14px
+    &:hover
+        cursor: text
+
+input[type="date"]::-webkit-calendar-picker-indicator
+    -webkit-appearance: none
+    opacity: 1
+    color: rgba(0, 0, 0, 0)
+    background: url(#{$calendarIcon})
+    background-size: cover
+    top: 0
+    right: 3.1rem
+    top: -2px
+    bottom: 0px
+    z-index: 1 !important
+    &:hover
+        cursor: pointer
+
+.space-class
+    width: 100%
+    gap: 0!important
+
+    .ant-space-item
+        .ant-picker
+            border: none
+            padding: 0!important
+            width: 100%!important
+            .ant-picker-input
+                @include input-style
+                padding: 8px 16px 8px 16px!important
+
+                span
+                    span
+                        svg
+                            width: 20px
+                            height: 20px
+
+                .ant-picker-suffix
+                    color: #888!important
+            .ant-picker-input:focus
+
+        .ant-picker.ant-picker-focused

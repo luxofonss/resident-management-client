@@ -1,0 +1,36 @@
+
+@import '../GlobalStyles/_mixins'
+$img-upload: '../../assets/images/img-upload.png'
+
+.input-wrapper
+    display: flex
+    flex-direction: column
+
+    label
+        @include small-heading
+        justify-content: flex-start
+        margin-bottom: 4px !important
+
+.file-input
+    @include input-style
+    padding-right: 44px
+    position: relative
+    &:hover
+        cursor: pointer
+
+input[type="file" i]::-webkit-file-upload-button
+    background: url(#{$img-upload})
+    background-size: cover
+    width: 18px
+    height: 18px
+    border: none
+    position: absolute
+    transform: translateY(-50%)
+    top: 50%
+    right: 14px
+    text-indent: 190%
+    white-space: nowrap
+    overflow: hidden
+    z-index: 1
+    &:hover
+        cursor: pointer

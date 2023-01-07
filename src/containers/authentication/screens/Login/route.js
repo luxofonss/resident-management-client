@@ -3,8 +3,9 @@ import AuthLayout from '~/components/Layout/AuthLayout';
 export const loginModule = { key: 'login', path: 'Login' };
 
 const container = 'authentication';
+
 export default {
-    path: '/auth/login',
+    path: '/auth',
     exact: true,
     isPrivate: false,
     layout: AuthLayout,

@@ -8,6 +8,7 @@ import { I18nextProvider } from 'react-i18next';
 import * as serviceWorker from './serviceWorker';
 import * as ReactDOM from 'react-dom';
 import GlobalStyles from '~/components/GlobalStyles';
+import 'antd/dist/reset.css';
 
 ReactDOM.render(
     <Provider store={store}>

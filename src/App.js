@@ -13,7 +13,8 @@ import { RESET_NOTIFY_STATE } from '~/redux/actions/notify';
 import { REQUEST_STATE } from '~/app-configs';
 import AppLayout from '~/components/Layout/AppLayout/AppLayout';
 import AuthLayout from '~/components/Layout/AuthLayout/AuthLayout';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 
 console.debug('listAppRoutes =>', listAppRoutes);
 console.debug('listAuthenticationRoutes =>', listAuthenticationRoutes);

@@ -10,7 +10,7 @@ export const featureModule = {
 export default {
     path: '/',
     exact: true,
-    isPrivate: true,
+    isPrivate: false,
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([featureModule], 'app');
