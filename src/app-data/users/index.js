@@ -23,7 +23,7 @@ export const apiListIssuer = async (params) => {
 
 export const apiCreateIssuer = async (params) => {
     try {
-        const response = await POST('/issuer/create', params, { isFullPath: false });
+        const response = await POST('/user/new', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

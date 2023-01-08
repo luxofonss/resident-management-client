@@ -5,7 +5,7 @@ import { GET } from '~/app-data/fetch';
 
 export const apiLogin = async (params) => {
     try {
-        const response = await POST('/auth/institution/login', params, { isFullPath: false });
+        const response = await POST('/auth/login', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

@@ -98,9 +98,9 @@ function Login({ authAction = 'login' }) {
                                     type="text"
                                     placeholder="Enter email"
                                     autoComplete="false"
-                                    {...register('email', {
+                                    {...register('username', {
                                         required: true,
-                                        pattern: getEmailValidationRegex(),
+                                        // pattern: getEmailValidationRegex(),
                                     })}
                                 />
                                 {errors.email?.type === 'required' && (
@@ -147,7 +147,7 @@ function Login({ authAction = 'login' }) {
                                             id="remember-login"
                                             type="checkbox"
                                             name="remember-login"
-                                            {...register('remember-login', { required: false })}
+                                            // {...register('remember-login', { required: false })}
                                         />
                                         <label for="remember-login">Remember me</label>
                                     </div>
@@ -160,7 +160,7 @@ function Login({ authAction = 'login' }) {
                                 {/* <Button className={cx('submit')}>
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign in'}
                                 </Button> */}
-                                <AppButton>
+                                <AppButton type="sumit">
                                     {user?.authState === REQUEST_STATE.REQUEST ? <Spin /> : 'Sign in'}
                                 </AppButton>
                             </div>

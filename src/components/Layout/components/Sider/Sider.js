@@ -1,20 +1,34 @@
-import { AppstoreOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import {
+    DiffOutlined,
+    HomeOutlined,
+    SplitCellsOutlined,
+    UnorderedListOutlined,
+    UsergroupAddOutlined,
+    UsergroupDeleteOutlined,
+    UserOutlined,
+    WalletOutlined,
+} from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { SIDER_COLLAPSE } from '~/app-configs';
+
 import { getNavItem } from '~/components/Layout/AppLayout/AppLayout';
+import './Sider.sass';
 
 const { Sider, Content } = Layout;
 
 const sliderItems = [
-    getNavItem('Tài khoản', 'account', <UserOutlined />, [
-        getNavItem('Danh sách tài khoản', '/accounts/list'),
-        getNavItem('Thêm tài khoản', '/accounts/add'),
+    getNavItem('Hộ khẩu', 'household', <HomeOutlined />, [
+        getNavItem('Thêm hộ khẩu mới', '/household/create', <UsergroupAddOutlined />),
+        getNavItem('Danh sách hộ khẩu', '/household/list', <UnorderedListOutlined />),
+        getNavItem('Chuyển hộ khẩu', '/household/move', <UsergroupDeleteOutlined />),
+        getNavItem('Tách hộ khẩu', '/household/separate', <SplitCellsOutlined />),
     ]),
-    getNavItem('Cấu hình chứng chỉ', '/config/select-ceft', <AppstoreOutlined />, null),
-    getNavItem('Cấu hình hợp đồng', '/config/blockchain', <SettingOutlined />, null),
+    getNavItem('Nhân khẩu', 'resident', <UserOutlined />, null),
+    getNavItem('Tạm trú tạm vắng', 'temporary-resident-absent', <DiffOutlined />, null),
+    getNavItem('Quản lý cơ sở vật chất', 'infrastructure', <WalletOutlined />, null),
 ];
 
 export default function AppSider(props) {
@@ -37,6 +51,7 @@ export default function AppSider(props) {
 
     return (
         <Sider
+            theme="dark"
             style={{
                 border: 'none',
                 minHeight: '100vh',
@@ -70,6 +85,7 @@ export default function AppSider(props) {
                 <div style={{ marginTop: '10px', flex: '1' }}>
                     <Menu
                         mode="inline"
+                        // theme="dark"
                         theme="dark"
                         defaultOpenKeys={['account']}
                         defaultSelectedKeys={['1']}

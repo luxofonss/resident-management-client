@@ -40,6 +40,7 @@ export const listAuthenticationRoutes = authenticationRoutes.map((item) => {
 export const initModules = async (modules = [], container = 'app') => {
     await Promise.all([
         modules.map(async (item) => {
+            console.log('item.path', item.path);
             const [reducer, saga] = await Promise.all([
                 import(`src/containers/${container}/screens/${item.path}/redux/reducer`),
                 import(`src/containers/${container}/screens/${item.path}/redux/saga`),

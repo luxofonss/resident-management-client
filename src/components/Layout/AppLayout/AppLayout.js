@@ -33,7 +33,7 @@ function AppLayout({ children, match }) {
                         position: 'relative',
                     }}
                 >
-                    {children}
+                    <div className={cx('content-wrapper')}>{children}</div>
                 </Content>
             </Layout>
         </Layout>
