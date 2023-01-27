@@ -5,12 +5,15 @@ import AppInput from '~/components/AppInput';
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
 import AppButton from '~/components/AppButton/AppButton';
+import { THEM_HK } from '../../redux/action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 function AddHousehold(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -25,14 +28,17 @@ function AddHousehold(props) {
     };
 
     const onSubmit = (data) => {
-        console.log(data);
+        console.log('data', data);
+        dispatch(THEM_HK(data));
     };
     return (
         <div>
             <div className="page-header">Thêm hộ khẩu mới</div>
             <span>(*): Các trường bắt buộc nhập</span>
-            <AppForm onSubmit={onSubmit}>
-                <AppInput type="number" label="Số hộ khẩu" name="soHoKhau" required></AppInput>
+            <AppForm onSubmit={(data) => onSubmit(data)}>
+                <AppInput type="number" label="Chủ hộ" name="chu_ho_id" required></AppInput>
+                <AppInput type="text" label="Địa chỉ" name="dia_chi" required></AppInput>
+                <AppButton type="submit">Thêm</AppButton>
             </AppForm>
             <AppButton type="primary" onClick={showModal}>
                 Open Modal

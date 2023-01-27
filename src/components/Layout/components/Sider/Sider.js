@@ -20,14 +20,19 @@ import './Sider.sass';
 const { Sider, Content } = Layout;
 
 const sliderItems = [
-    getNavItem('Hộ khẩu', 'household', <HomeOutlined />, [
+    getNavItem('Hộ khẩu', '/household', <HomeOutlined />, [
         getNavItem('Thêm hộ khẩu mới', '/household/create', <UsergroupAddOutlined />),
         getNavItem('Danh sách hộ khẩu', '/household/list', <UnorderedListOutlined />),
         getNavItem('Chuyển hộ khẩu', '/household/move', <UsergroupDeleteOutlined />),
         getNavItem('Tách hộ khẩu', '/household/separate', <SplitCellsOutlined />),
     ]),
-    getNavItem('Nhân khẩu', 'resident', <UserOutlined />, null),
-    getNavItem('Tạm trú tạm vắng', 'temporary-resident-absent', <DiffOutlined />, null),
+    getNavItem('Nhân khẩu', 'resident', <UserOutlined />, [
+        getNavItem('Thêm nhân khẩu mới', '/resident/create', <UsergroupAddOutlined />),
+        getNavItem('Danh sách nhân khẩu', '/resident/list', <UnorderedListOutlined />),
+    ]),
+    getNavItem('Tạm trú tạm vắng', 'temporary-resident-absent', <DiffOutlined />, [
+        getNavItem('Khai báo tạm vắng', '/temporary-resident-absent/new-absent', <UsergroupAddOutlined />),
+    ]),
     getNavItem('Quản lý cơ sở vật chất', 'infrastructure', <WalletOutlined />, null),
 ];
 

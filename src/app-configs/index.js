@@ -1,7 +1,6 @@
 export const Configs = {
     BASE_API: process.env.REACT_APP_BASE_API_URL,
     DOMAIN: '',
-
     CURRENT_PAGE: 1,
     FILE_MAXIMUM: 5, //MB
     PAGE_SIZE_20: 20,

@@ -8,9 +8,9 @@ export const householdModule = {
 };
 
 export default {
-    path: '/household/create',
+    path: '/household/sample',
     exact: true,
-    isPrivate: false,
+    isPrivate: true,
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([householdModule], 'app');
@@ -20,10 +20,21 @@ export default {
 
 export const childRoutes = [
     {
+        path: '/household/create',
+        key: 'create',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([householdModule], 'app');
+            return import('./pages/AddHousehold');
+        }),
+    },
+    {
         path: '/household/list',
         key: 'list',
         exact: true,
-        isPrivate: false,
+        isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([householdModule], 'app');
@@ -34,7 +45,7 @@ export const childRoutes = [
         path: '/household/move',
         key: 'move',
         exact: true,
-        isPrivate: false,
+        isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([householdModule], 'app');
@@ -45,7 +56,7 @@ export const childRoutes = [
         path: '/household/separate',
         key: 'separate',
         exact: true,
-        isPrivate: false,
+        isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([householdModule], 'app');

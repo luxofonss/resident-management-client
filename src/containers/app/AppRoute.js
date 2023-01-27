@@ -6,33 +6,15 @@ import { appRoutes } from '~/router/index';
 import FullPageLoading from '~/components/Loading/FullPageLoading/FullPageLoading';
 
 function AppRoute() {
+    console.log(appRoutes);
     return (
         <Suspense fallback={<FullPageLoading />}>
             <Switch>
-                {appRoutes.map(
-                    ({ component: Component, exact = true, path, isPrivate, ...rest }) => {
-                        if (isPrivate) {
-                            return (
-                                <PrivateRoute
-                                    key={path}
-                                    component={Component}
-                                    exact={exact}
-                                    path={path}
-                                    {...rest}
-                                />
-                            );
-                        } else
-                            return (
-                                <PublicRoute
-                                    key={path}
-                                    exact={exact}
-                                    path={path}
-                                    component={Component}
-                                    {...rest}
-                                />
-                            );
-                    },
-                )}
+                {appRoutes.map(({ component: Component, exact = true, path, isPrivate, ...rest }) => {
+                    if (isPrivate) {
+                        return <PrivateRoute key={path} component={Component} exact={exact} path={path} {...rest} />;
+                    } else return <PublicRoute key={path} exact={exact} path={path} component={Component} {...rest} />;
+                })}
             </Switch>
         </Suspense>
     );

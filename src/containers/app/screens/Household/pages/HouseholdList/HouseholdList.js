@@ -1,6 +1,9 @@
 import { Table } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './HouseholdList.module.sass';
+import { LAY_HK } from '../../redux/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -38,11 +41,32 @@ const columns = [
 ];
 
 function HouseholdList(props) {
-    return (
-        <div>
-            <Table dataSource={dataSource} columns={columns} />
-        </div>
-    );
+    const dispatch = useDispatch();
+    const danhSachHoKhau = useSelector((state) => {
+        console.log(state);
+        return state.household?.danhSach;
+    });
+    let data = [];
+    if (danhSachHoKhau?.data?.data) {
+        console.log(danhSachHoKhau?.data?.data);
+        danhSachHoKhau?.data?.data.forEach((hk) => {
+            data = [
+                ...data,
+                {
+                    key: hk.id,
+                    householdNumber: hk.id,
+                    head: hk.ten_chu_ho,
+                    address: hk.dia_chi,
+                },
+            ];
+        });
+    }
+
+    useEffect(() => {
+        dispatch(LAY_HK());
+    }, []);
+
+    return <div>{data !== [] && <Table dataSource={data} columns={columns} />}</div>;
 }
 
 export default HouseholdList;

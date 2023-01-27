@@ -149,7 +149,7 @@ function Login({ authAction = 'login' }) {
                                             name="remember-login"
                                             // {...register('remember-login', { required: false })}
                                         />
-                                        <label for="remember-login">Remember me</label>
+                                        <label htmlFor="remember-login">Remember me</label>
                                     </div>
                                     <div className={cx('forget-password')}>
                                         <Link to="#">Forget password?</Link>

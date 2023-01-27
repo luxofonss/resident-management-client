@@ -1,11 +1,12 @@
-import { TOKEN_KEY } from '~/app-configs';
 import { REQUEST_STATE } from '~/app-configs';
+import { PUT } from '~/app-data/fetch';
+import { DELETE } from '~/app-data/fetch';
 import { POST } from '~/app-data/fetch';
 import { GET } from '~/app-data/fetch';
 
-export const apiLogin = async (params) => {
+export const apiThemHK = async (params) => {
     try {
-        const response = await POST('/auth/login', params, { isFullPath: false });
+        const response = await POST('/hokhau/new', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -20,15 +21,9 @@ export const apiLogin = async (params) => {
     }
 };
 
-export const apiProfile = async () => {
+export const apiLayHK = async (params) => {
     try {
-        const response = await GET(
-            '/user',
-            {
-                // token: localStorage.getItem(TOKEN_KEY),
-            },
-            { isFullPath: false },
-        );
+        const response = await GET('/hokhau', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
