@@ -1,3 +1,6 @@
-git clone https://github.com/luxofonss/react-base.git
-npm install
-npm start
+1. git clone <repo>
+
+2. npm install
+
+3. npm start
+
