@@ -486,7 +486,13 @@ export const IconBell = ({ ...props }) => (
 );
 
 export const IconEdit = ({ width, height }) => (
-    <svg width={width ? width : '24'} height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+        width={width ? width : '24'}
+        height={height ? height : '24'}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
         <g clipPath="url(#clip0_24_1618)">
             <path
                 d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z"
@@ -498,6 +504,24 @@ export const IconEdit = ({ width, height }) => (
                 <rect width="24" height="24" fill="white" />
             </clipPath>
         </defs>
+    </svg>
+);
+
+export const IconTrash = ({ width, height }) => (
+    <svg
+        width={width ? width : '24'}
+        height={height ? height : '24'}
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="M2.40002 5.39999H21.6M9.60002 17.4V10.2M14.4 17.4V10.2M16.8 22.2H7.20002C5.87454 22.2 4.80002 21.1255 4.80002 19.8V6.59999C4.80002 5.93725 5.33728 5.39999 6.00002 5.39999H18C18.6628 5.39999 19.2 5.93725 19.2 6.59999V19.8C19.2 21.1255 18.1255 22.2 16.8 22.2ZM9.60002 5.39999H14.4C15.0628 5.39999 15.6 4.86273 15.6 4.19999V2.99999C15.6 2.33725 15.0628 1.79999 14.4 1.79999H9.60002C8.93728 1.79999 8.40002 2.33725 8.40002 2.99999V4.19999C8.40002 4.86273 8.93728 5.39999 9.60002 5.39999Z"
+            stroke="black"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
     </svg>
 );
 

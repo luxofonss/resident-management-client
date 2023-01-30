@@ -4,6 +4,8 @@ import styles from './ResidentList.module.sass';
 import { LAY_HK, LAY_NK } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { IconEdit, IconTrash } from '~/assets/svgs';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -23,10 +25,10 @@ const columns = [
         fixed: 'left',
     },
     {
-        title: 'Age',
-        width: 100,
-        dataIndex: 'age',
-        key: 'age',
+        title: 'Ngày sinh',
+        width: 120,
+        dataIndex: 'ngay_sinh',
+        key: 'ngay_sinh',
         sorter: true,
     },
     {
@@ -59,11 +61,6 @@ const columns = [
         dataIndex: 'noi_lam_viec',
         key: 'noi_lam_viec',
     },
-    // {
-    //     title: 'Column 7',
-    //     dataIndex: 'address',
-    //     key: '7',
-    // },
     {
         title: 'Hoạt động',
         key: 'active',
@@ -76,28 +73,24 @@ const columns = [
     },
     {
         title: 'Action',
-        key: 'operation',
+        key: 'id',
         fixed: 'right',
-        width: 100,
-        render: () => <a>action</a>,
-    },
-];
-const data2 = [
-    {
-        key: '1',
-        stt: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York Park',
-        tags: [1],
-    },
-    {
-        key: '2',
-        stt: '2',
-        name: 'Jim Green',
-        age: 40,
-        address: 'London Park',
-        tags: [0],
+        width: 150,
+        render: (_, { id }) => (
+            <div className={cx('action-wrapper')}>
+                <div className={cx('action-icon')}>
+                    <Link to={`/resident/edit/:${id}`}>
+                        <IconEdit width={14} height={14} />
+                    </Link>
+                </div>
+                <div className={cx('action-icon')}>
+                    <Link to={`/resident/delete/:${id}`}>
+                        <IconTrash width={14} height={14} />
+                    </Link>
+                </div>
+                <Link to={`/resident/death/:${id}`}>Khai tử</Link>
+            </div>
+        ),
     },
 ];
 
@@ -110,15 +103,15 @@ function ResidentList(props) {
     let data = [];
     console.log('dsNK', danhSachNK);
     if (danhSachNK.state === 'SUCCESS') {
-        console.log('test: ', danhSachNK.data?.data.data);
-        danhSachNK.data?.data.data.forEach((nk, index) => {
+        console.log('test: ', danhSachNK.data?.data);
+        danhSachNK.data?.data.forEach((nk, index) => {
             data = [
                 ...data,
                 {
                     key: nk.key,
                     stt: index + 1,
                     name: nk.ho + nk.ten_dem + nk.ten,
-                    age: 'chua xu ly',
+                    ngay_sinh: nk.ngay_sinh.slice(0, 10),
                     ccdd: nk.ccdd,
                     dan_toc: nk.dan_toc,
                     gioi_tinh: nk.gioi_tinh,
@@ -126,6 +119,7 @@ function ResidentList(props) {
                     nghe_nghiep: nk.nghe_nghiep,
                     noi_lam_viec: nk.noi_lam_viec,
                     active: nk.active,
+                    id: nk.id,
                 },
             ];
         });

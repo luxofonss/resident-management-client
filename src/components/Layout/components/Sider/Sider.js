@@ -28,10 +28,14 @@ const sliderItems = [
     ]),
     getNavItem('Nhân khẩu', 'resident', <UserOutlined />, [
         getNavItem('Thêm nhân khẩu mới', '/resident/create', <UsergroupAddOutlined />),
+        getNavItem('Khai sinh', '/resident/create-child', <UsergroupAddOutlined />),
         getNavItem('Danh sách nhân khẩu', '/resident/list', <UnorderedListOutlined />),
     ]),
-    getNavItem('Tạm trú tạm vắng', 'temporary-resident-absent', <DiffOutlined />, [
-        getNavItem('Khai báo tạm vắng', '/temporary-resident-absent/new-absent', <UsergroupAddOutlined />),
+    getNavItem('Tạm trú tạm vắng', 'temporary-absent', <DiffOutlined />, [
+        getNavItem('Khai báo tạm vắng', '/temporary-absent/new-absent', <UsergroupAddOutlined />),
+        getNavItem('Khai báo tạm trú', '/temporary-absent/new-temporary', <UsergroupAddOutlined />),
+        getNavItem('Danh sách tạm vắng', '/temporary-absent/absent-list', <UnorderedListOutlined />),
+        getNavItem('Danh sách tạm trú', '/temporary-absent/temporary-list', <UnorderedListOutlined />),
     ]),
     getNavItem('Quản lý cơ sở vật chất', 'infrastructure', <WalletOutlined />, null),
 ];

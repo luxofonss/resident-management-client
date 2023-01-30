@@ -39,3 +39,45 @@ export function LAY_HK_FAIL(payload) {
         payload,
     };
 }
+
+export function CHUYEN_HK(payload) {
+    return {
+        type: 'CHUYEN_HK',
+        payload,
+    };
+}
+
+export function CHUYEN_HK_SUCCESS(payload) {
+    return {
+        type: 'CHUYEN_HK_SUCCESS',
+        payload,
+    };
+}
+
+export function CHUYEN_HK_FAIL(payload) {
+    return {
+        type: 'CHUYEN_HK_FAIL',
+        payload,
+    };
+}
+
+export function TACH_HK(payload) {
+    return {
+        type: 'TACH_HK',
+        payload,
+    };
+}
+
+export function TACH_HK_SUCCESS(payload) {
+    return {
+        type: 'TACH_HK_SUCCESS',
+        payload,
+    };
+}
+
+export function TACH_HK_FAIL(payload) {
+    return {
+        type: 'TACH_HK_FAIL',
+        payload,
+    };
+}

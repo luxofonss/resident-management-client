@@ -2,68 +2,82 @@ import classNames from 'classnames/bind';
 import AppForm from '~/components/AppForm';
 import styles from './AddHousehold.module.sass';
 import AppInput from '~/components/AppInput';
-import { Button, Modal } from 'antd';
-import { useState } from 'react';
+import { Button, Modal, notification } from 'antd';
+import { useEffect, useState } from 'react';
 import AppButton from '~/components/AppButton/AppButton';
 import { THEM_HK } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
+import useDebounceValue from '~/hooks/useDebounceValue';
+import { LAY_NK } from '../../../Resident/redux/action';
+import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
 
 function AddHousehold(props) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [cccd, setCccd] = useState('');
+    const nkInfo = useSelector((state) => state.resident.list);
+    const themHK = useSelector((state) => state.household.themHK);
     const dispatch = useDispatch();
+    const searchValue = useDebounceValue(cccd);
 
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    let submitData = {};
 
     const onSubmit = (data) => {
         console.log('data', data);
-        dispatch(THEM_HK(data));
+        submitData.chu_ho_id = nkInfo?.data?.data[0].id;
+        submitData.dia_chi = data.dia_chi;
+        console.log(submitData);
+        dispatch(THEM_HK(submitData));
     };
+
+    useEffect(() => {
+        dispatch(LAY_NK({ condition: { cccd: searchValue } }));
+    }, [searchValue]);
+
+    useEffect(() => {
+        if (themHK.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Thêm hộ khẩu thành công!',
+            });
+        }
+        if (themHK?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Thêm hộ khẩu thất bại!',
+            });
+        }
+    }, [themHK?.state]);
+
+    const onChange = (e) => {
+        setCccd(e.target.value);
+    };
+
     return (
-        <div>
+        <div style={{ width: '40%', minWidth: '400px', margin: '0 auto' }}>
             <div className="page-header">Thêm hộ khẩu mới</div>
             <span>(*): Các trường bắt buộc nhập</span>
             <AppForm onSubmit={(data) => onSubmit(data)}>
-                <AppInput type="number" label="Chủ hộ" name="chu_ho_id" required></AppInput>
+                <AppInput onChange={(e) => onChange(e)} type="number" label="CCCD chủ hộ" required></AppInput>
+                {nkInfo?.data?.data[0] && (
+                    <AppInput
+                        type="text"
+                        label="Chủ hộ"
+                        defaultValue={
+                            nkInfo?.data?.data[0].ho +
+                            ' ' +
+                            nkInfo?.data?.data[0].ten_dem +
+                            ' ' +
+                            nkInfo?.data?.data[0].ten
+                        }
+                        disabled
+                    ></AppInput>
+                )}
                 <AppInput type="text" label="Địa chỉ" name="dia_chi" required></AppInput>
-                <AppButton type="submit">Thêm</AppButton>
+                <AppButton disabled={nkInfo?.data?.data[0] ? false : true} type="submit">
+                    Thêm
+                </AppButton>
             </AppForm>
-            <AppButton type="primary" onClick={showModal}>
-                Open Modal
-            </AppButton>
-            <Modal
-                title={<h4>Basic Modal</h4>}
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                footer={[
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '16px' }}>
-                        <AppButton key="back" type="primary" onClick={handleCancel}>
-                            Return
-                        </AppButton>
-
-                        <AppButton key="submit" type="primary" loading={loading} onClick={handleOk}>
-                            Submit
-                        </AppButton>
-                    </div>,
-                ]}
-            >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
         </div>
     );
 }

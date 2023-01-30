@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import AppLayout from '~/components/Layout/AppLayout';
 import { initModules } from '~/router/index';
+import { residentModule } from '../Resident/route';
 
 export const householdModule = {
     key: 'household',
@@ -26,7 +27,7 @@ export const childRoutes = [
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
-            await initModules([householdModule], 'app');
+            await initModules([householdModule, residentModule], 'app');
             return import('./pages/AddHousehold');
         }),
     },

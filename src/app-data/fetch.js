@@ -38,6 +38,16 @@ export const GET = (path, params, options = {}) => {
                       adjustParam = valueParam
                           .map((paramDetail) => `${key}=${encodeURIComponent(paramDetail != 'all' ? paramDetail : '')}`)
                           .join('&');
+                  } else if (typeof valueParam === 'object') {
+                      adjustParam = adjustParam + `${key}={`;
+                      adjustParam =
+                          adjustParam +
+                          Object.keys(valueParam)
+                              .map((key) => {
+                                  return `"${key}":"${valueParam[key]}"`;
+                              })
+                              .join(',');
+                      adjustParam = adjustParam + '}';
                   } else {
                       // TODO with "all" value;
                       valueParam = valueParam != 'all' ? valueParam : '';
@@ -47,7 +57,6 @@ export const GET = (path, params, options = {}) => {
               })
               .join('&')
         : '';
-
     const _url = (options.isFullPath ? path : Configs.BASE_API + path) + (_params === '' ? '' : '?' + _params);
 
     const _options = getOptions(options);
@@ -66,6 +75,12 @@ export const PUT = (path, params, options = {}) => {
     const _url = options.isFullPath ? path : Configs.BASE_API + path;
     const _options = getOptions(options);
     return axios.put(_url, params, _options).then((response) => response.data);
+};
+
+export const PATCH = (path, params, options = {}) => {
+    const _url = options.isFullPath ? path : Configs.BASE_API + path;
+    const _options = getOptions(options);
+    return axios.patch(_url, params, _options).then((response) => response.data);
 };
 
 export const DELETE = (path, params, options = {}) => {
