@@ -37,7 +37,9 @@ const sliderItems = [
         getNavItem('Danh sách tạm vắng', '/temporary-absent/absent-list', <UnorderedListOutlined />),
         getNavItem('Danh sách tạm trú', '/temporary-absent/temporary-list', <UnorderedListOutlined />),
     ]),
-    getNavItem('Quản lý cơ sở vật chất', 'infrastructure', <WalletOutlined />, null),
+    getNavItem('Quản lý thiết bị', 'equipment', <WalletOutlined />, [
+        getNavItem('Thêm thiết bị', '/equipment/add', <UnorderedListOutlined />),
+    ]),
 ];
 
 export default function AppSider(props) {
