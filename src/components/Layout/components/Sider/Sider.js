@@ -25,6 +25,7 @@ const sliderItems = [
         getNavItem('Danh sách hộ khẩu', '/household/list', <UnorderedListOutlined />),
         getNavItem('Chuyển hộ khẩu', '/household/move', <UsergroupDeleteOutlined />),
         getNavItem('Tách hộ khẩu', '/household/separate', <SplitCellsOutlined />),
+        getNavItem('Nhập khẩu', '/household/add-resident', <SplitCellsOutlined />),
     ]),
     getNavItem('Nhân khẩu', 'resident', <UserOutlined />, [
         getNavItem('Thêm nhân khẩu mới', '/resident/create', <UsergroupAddOutlined />),
@@ -38,7 +39,24 @@ const sliderItems = [
         getNavItem('Danh sách tạm trú', '/temporary-absent/temporary-list', <UnorderedListOutlined />),
     ]),
     getNavItem('Quản lý thiết bị', 'equipment', <WalletOutlined />, [
+        getNavItem('Thêm loại thiết bị', '/equipment/type/add', <UnorderedListOutlined />),
+        getNavItem('Danh sách loại thiết bị', '/equipment/type/', <UnorderedListOutlined />),
         getNavItem('Thêm thiết bị', '/equipment/add', <UnorderedListOutlined />),
+        getNavItem('Mượn thiết bị', '/equipment/borrow', <UnorderedListOutlined />),
+        getNavItem('Danh sách mượn thiết bị', '/equipment/borrow/list', <UnorderedListOutlined />),
+    ]),
+    getNavItem('Đơn từ', 'application', <WalletOutlined />, [
+        getNavItem('Hộ khẩu', '/application/household', <UnorderedListOutlined />, [
+            getNavItem('Đơn chuyển khẩu', '/application/household/movement', <UnorderedListOutlined />),
+            getNavItem('Đơn tách khẩu', '/application/household/separate', <UnorderedListOutlined />),
+            getNavItem('Đơn nhập khẩu', '/application/household/add-resident', <UnorderedListOutlined />),
+            getNavItem('Đơn đính chính hộ khẩu', '/application/household/update', <UnorderedListOutlined />),
+        ]),
+        getNavItem('Nhân khẩu', '/application/resident', <UnorderedListOutlined />, [
+            getNavItem('Đơn đính chính nhân khẩu', '/application/resident/update', <UnorderedListOutlined />),
+        ]),
+        getNavItem('Tạm trú', '/application/temporary', <UnorderedListOutlined />),
+        getNavItem('Tạm vắng', '/application/absent', <UnorderedListOutlined />),
     ]),
 ];
 

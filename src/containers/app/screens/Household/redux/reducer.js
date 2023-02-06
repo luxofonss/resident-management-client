@@ -7,6 +7,9 @@ import {
     LAY_HK,
     LAY_HK_FAIL,
     LAY_HK_SUCCESS,
+    NHAP_HK,
+    NHAP_HK_FAIL,
+    NHAP_HK_SUCCESS,
     TACH_HK,
     TACH_HK_FAIL,
     TACH_HK_SUCCESS,
@@ -112,6 +115,31 @@ export default combineReducers({
                 };
             }
             case TACH_HK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    nhapHK: (state = defaultState, action) => {
+        switch (action.type) {
+            case NHAP_HK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case NHAP_HK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case NHAP_HK_FAIL().type: {
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,

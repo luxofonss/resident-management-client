@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useDebounceValue from '~/hooks/useDebounceValue';
 import { LAY_NK } from '../../../Resident/redux/action';
 import { REQUEST_STATE } from '~/app-configs';
+import AppSelectApi from '~/components/AppSelectApi';
 
 const cx = classNames.bind(styles);
 
@@ -59,6 +60,7 @@ function AddHousehold(props) {
             <span>(*): Các trường bắt buộc nhập</span>
             <AppForm onSubmit={(data) => onSubmit(data)}>
                 <AppInput onChange={(e) => onChange(e)} type="number" label="CCCD chủ hộ" required></AppInput>
+                {/* <AppSelectApi apiURL = ''/> */}
                 {nkInfo?.data?.data[0] && (
                     <AppInput
                         type="text"

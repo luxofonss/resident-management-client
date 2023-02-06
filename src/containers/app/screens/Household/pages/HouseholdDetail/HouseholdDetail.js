@@ -1,10 +1,10 @@
 import { Table } from 'antd';
 import classNames from 'classnames/bind';
-import styles from './HouseholdList.module.sass';
+import styles from './HouseholdDetail.module.sass';
 import { LAY_HK } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -52,12 +52,14 @@ const columns = [
     },
 ];
 
-function HouseholdList(props) {
+function HouseholdDetail(props) {
     const dispatch = useDispatch();
     const danhSachHoKhau = useSelector((state) => {
         console.log(state);
         return state.household?.danhSach;
     });
+    const { id } = useParams();
+    console.log('id', id);
     let data = [];
     if (danhSachHoKhau?.data?.data) {
         console.log(danhSachHoKhau?.data?.data);
@@ -69,7 +71,7 @@ function HouseholdList(props) {
                     householdNumber: hk.id,
                     head: hk.ten_chu_ho,
                     address: hk.dia_chi,
-                    id: hk.id,
+                    id: hk.chu_ho_id,
                 },
             ];
         });
@@ -82,4 +84,4 @@ function HouseholdList(props) {
     return <div>{data !== [] && <Table dataSource={data} columns={columns} />}</div>;
 }
 
-export default HouseholdList;
+export default HouseholdDetail;

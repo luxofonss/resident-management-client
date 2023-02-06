@@ -1,6 +1,6 @@
 import { delay, put, takeLatest, call } from 'redux-saga/effects';
 import { REQUEST_STATE } from '~/app-configs';
-import { apiLayHK, apiThemHK, apiChuyenHK, apiTachHK } from '~/app-data/hoKhau';
+import { apiLayHK, apiThemHK, apiChuyenHK, apiTachHK, apiNhapHK } from '~/app-data/hoKhau';
 import {
     CHUYEN_HK,
     CHUYEN_HK_FAIL,
@@ -8,6 +8,9 @@ import {
     LAY_HK,
     LAY_HK_FAIL,
     LAY_HK_SUCCESS,
+    NHAP_HK,
+    NHAP_HK_FAIL,
+    NHAP_HK_SUCCESS,
     TACH_HK,
     TACH_HK_FAIL,
     TACH_HK_SUCCESS,
@@ -68,9 +71,23 @@ function* handleTachHK({ type, payload }) {
     }
 }
 
+function* handleNhapHK({ type, payload }) {
+    try {
+        const response = yield call(apiNhapHK, payload);
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(NHAP_HK_SUCCESS(response.data));
+        } else {
+            yield put(NHAP_HK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 export default function* () {
     yield takeLatest(THEM_HK().type, handleThemHK);
     yield takeLatest(LAY_HK().type, handleLayHK);
     yield takeLatest(CHUYEN_HK().type, handleChuyenHK);
     yield takeLatest(TACH_HK().type, handleTachHK);
+    yield takeLatest(NHAP_HK().type, handleNhapHK);
 }

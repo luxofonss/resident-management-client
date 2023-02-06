@@ -21,13 +21,35 @@ export default {
 export const childRoutes = [
     {
         path: '/equipment/add',
-        key: 'death',
+        key: 'add',
         exact: true,
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
             await initModules([equipmentModule], 'app');
             return import('./pages/EquipmentAdd');
+        }),
+    },
+    {
+        path: '/equipment/type/add',
+        key: 'add-type',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([equipmentModule], 'app');
+            return import('./pages/EquipmentAddType');
+        }),
+    },
+    {
+        path: '/equipment/type',
+        key: 'list-type',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([equipmentModule], 'app');
+            return import('./pages/EquipmentTypeList');
         }),
     },
 ];

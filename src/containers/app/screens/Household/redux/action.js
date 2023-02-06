@@ -81,3 +81,24 @@ export function TACH_HK_FAIL(payload) {
         payload,
     };
 }
+
+export function NHAP_HK(payload) {
+    return {
+        type: 'NHAP_HK',
+        payload,
+    };
+}
+
+export function NHAP_HK_SUCCESS(payload) {
+    return {
+        type: 'NHAP_HK_SUCCESS',
+        payload,
+    };
+}
+
+export function NHAP_HK_FAIL(payload) {
+    return {
+        type: 'NHAP_HK_FAIL',
+        payload,
+    };
+}
