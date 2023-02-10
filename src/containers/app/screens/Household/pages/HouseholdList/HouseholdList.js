@@ -5,29 +5,16 @@ import { LAY_HK } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { IconEdit } from '~/assets/svgs';
 
 const cx = classNames.bind(styles);
-
-const dataSource = [
-    {
-        key: '1',
-        householdNumber: 125124,
-        head: 'Nguyễn Văn A',
-        address: '10 Downing Street',
-    },
-    {
-        key: '2',
-        householdNumber: 124234,
-        head: 'Nguyễn Văn B',
-        address: '10 Downing Street',
-    },
-];
 
 const columns = [
     {
         title: 'Số hộ khẩu',
         dataIndex: 'householdNumber',
         key: 'householdNumber',
+        width: 100,
     },
     {
         title: 'Họ và tên chủ hộ',
@@ -40,13 +27,21 @@ const columns = [
         key: 'address',
     },
     {
+        title: 'Số nhân khẩu',
+        key: 'number',
+        fixed: 'right',
+        width: 150,
+        render: (_, record) => <div>{record.nhanKhau.length}</div>,
+    },
+    {
         title: 'Action',
         key: 'id',
         fixed: 'right',
         width: 150,
+        height: 'auto',
         render: (_, { id }) => (
             <div className={cx('action-wrapper')}>
-                <Link to={`/household/detail/${id}`}>detail</Link>
+                <Link to={`/household/detail/${id}`}>Xem chi tiết</Link>
             </div>
         ),
     },
@@ -69,7 +64,8 @@ function HouseholdList(props) {
                     householdNumber: hk.id,
                     head: hk.ten_chu_ho,
                     address: hk.dia_chi,
-                    id: hk.id,
+                    id: hk.chu_ho_id,
+                    nhanKhau: hk.nhanKhau,
                 },
             ];
         });

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { LAY_LOAI_TB } from '../../redux/action';
-import styles from './EquipmentTypeList.module.sass';
+import styles from './EquipmentTypeDetail.module.sass';
 
 const cx = classNames.bind(styles);
 
@@ -80,7 +80,7 @@ const columns = [
     },
 ];
 
-function EquipmentTypeList(props) {
+function EquipmentTypeDetail(props) {
     const dispatch = useDispatch();
     const danhSachThietBi = useSelector((state) => {
         console.log(state);
@@ -119,4 +119,4 @@ function EquipmentTypeList(props) {
     // );
 }
 
-export default EquipmentTypeList;
+export default EquipmentTypeDetail;

@@ -23,7 +23,7 @@ export const apiLogin = async (params) => {
 export const apiProfile = async () => {
     try {
         const response = await GET(
-            '/user',
+            '/profile',
             {
                 // token: localStorage.getItem(TOKEN_KEY),
             },

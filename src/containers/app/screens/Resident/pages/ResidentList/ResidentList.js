@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { IconEdit, IconTrash } from '~/assets/svgs';
 import { Link } from 'react-router-dom';
+import { isEmptyValue } from '~/helpers/check';
 
 const cx = classNames.bind(styles);
 
@@ -72,23 +73,26 @@ const columns = [
         ),
     },
     {
-        title: 'Action',
+        title: 'Hành động',
         key: 'id',
         fixed: 'right',
-        width: 150,
-        render: (_, { id }) => (
+        width: 230,
+        render: (_, record) => (
             <div className={cx('action-wrapper')}>
                 <div className={cx('action-icon')}>
-                    <Link to={`/resident/edit/:${id}`}>
+                    <Link to={`/resident/edit/:${record.id}`}>
                         <IconEdit width={14} height={14} />
                     </Link>
                 </div>
-                <div className={cx('action-icon')}>
-                    <Link to={`/resident/delete/:${id}`}>
+                {/* <div className={cx('action-icon')}>
+                    <Link to={`/resident/delete/:${record.id}`}>
                         <IconTrash width={14} height={14} />
                     </Link>
-                </div>
-                <Link to={`/resident/death/:${id}`}>Khai tử</Link>
+                </div> */}
+
+                {isEmptyValue(record.chu_ho_id) && <Link to={`/household/add-resident/${record.id}`}>Nhập khẩu</Link>}
+
+                <Link to={`/resident/death/:${record.id}`}>Khai tử</Link>
             </div>
         ),
     },
@@ -120,6 +124,7 @@ function ResidentList(props) {
                     noi_lam_viec: nk.noi_lam_viec,
                     active: nk.active,
                     id: nk.id,
+                    chu_ho_id: nk.chu_ho_id,
                 },
             ];
         });

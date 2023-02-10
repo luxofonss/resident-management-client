@@ -11,7 +11,6 @@ import { CHECK_VALID_TOKEN } from '~/redux/actions/user';
 function PrivateRoute({ component: Component, location, ...rest }) {
     const dispatch = useDispatch();
     const isAuthencate = useSelector((state) => {
-        console.log(state);
         return state.user?.verifyAuthState;
     });
 
@@ -31,7 +30,7 @@ function PrivateRoute({ component: Component, location, ...rest }) {
         case REQUEST_STATE?.SUCCESS:
             return <Route {...rest} render={(props) => <Component {...props} />} />;
         case REQUEST_STATE?.ERROR:
-            return <Redirect to={{ pathname: '/auth/login', state: { from: location } }} />;
+            return <Redirect to={{ pathname: '/auth', state: { from: location } }} />;
         default:
             return <FullPageLoading />;
     }

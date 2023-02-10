@@ -39,11 +39,26 @@
             transform: rotateY(180deg)
 
         .seleted-name
+            width: 50%
             display: block
-            max-width: 98%
+            // max-width: 98%
             white-space: nowrap
             overflow: hidden !important
             text-overflow: ellipsis
+
+        .input
+            @include input-style
+            padding: 0
+            width: 50%
+
+            &::placeholder
+                font-size: 14px
+                font-weight: 400
+            &:focus
+                border-color: none
+                box-shadow: none
+                border-inline-end-width: 0px
+                outline: 0
 
     .selections
         position: absolute

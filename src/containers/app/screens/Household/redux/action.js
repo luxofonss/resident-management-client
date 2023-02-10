@@ -19,6 +19,13 @@ export function THEM_HK_FAIL(payload) {
     };
 }
 
+export function THEM_HK_RESET(payload) {
+    return {
+        type: 'THEM_HK_RESET',
+        payload,
+    };
+}
+
 export function LAY_HK(payload) {
     return {
         type: 'LAY_HK',
@@ -36,6 +43,13 @@ export function LAY_HK_SUCCESS(payload) {
 export function LAY_HK_FAIL(payload) {
     return {
         type: 'LAY_HK_FAIL',
+        payload,
+    };
+}
+
+export function LAY_HK_RESET(payload) {
+    return {
+        type: 'LAY_HK_RESET',
         payload,
     };
 }
@@ -99,6 +113,34 @@ export function NHAP_HK_SUCCESS(payload) {
 export function NHAP_HK_FAIL(payload) {
     return {
         type: 'NHAP_HK_FAIL',
+        payload,
+    };
+}
+
+export function UPDATE_HK(payload) {
+    return {
+        type: 'UPDATE_HK',
+        payload,
+    };
+}
+
+export function UPDATE_HK_SUCCESS(payload) {
+    return {
+        type: 'UPDATE_HK_SUCCESS',
+        payload,
+    };
+}
+
+export function UPDATE_HK_FAIL(payload) {
+    return {
+        type: 'UPDATE_HK_FAIL',
+        payload,
+    };
+}
+
+export function UPDATE_HK_RESET(payload) {
+    return {
+        type: 'UPDATE_HK_RESET',
         payload,
     };
 }

@@ -24,7 +24,7 @@ export const apiThemNK = async (params) => {
 
 export const apiLayNK = async (params) => {
     try {
-        const response = await GET('/nhankhau', { ...params, limit: Configs.PAGE_SIZE_20 }, { isFullPath: false });
+        const response = await GET('/nhankhau', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response.data,

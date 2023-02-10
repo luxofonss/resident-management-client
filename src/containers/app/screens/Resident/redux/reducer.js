@@ -3,18 +3,27 @@ import { REQUEST_STATE } from '~/app-configs';
 import {
     CAP_NHAT_NK,
     CAP_NHAT_NK_FAIL,
+    CAP_NHAT_NK_RESET,
     CAP_NHAT_NK_SUCCESS,
     KHAI_SINH_NK,
     KHAI_SINH_NK_FAIL,
+    KHAI_SINH_NK_RESET,
     KHAI_SINH_NK_SUCCESS,
     KHAI_TU_NK,
     KHAI_TU_NK_FAIL,
+    KHAI_TU_NK_RESET,
     KHAI_TU_NK_SUCCESS,
     LAY_NK,
+    LAY_NK_2,
     LAY_NK_FAIL,
+    LAY_NK_FAIL_2,
+    LAY_NK_RESET,
+    LAY_NK_RESET_2,
     LAY_NK_SUCCESS,
+    LAY_NK_SUCCESS_2,
     THEM_NK,
     THEM_NK_FAIL,
+    THEM_NK_RESET,
     THEM_NK_SUCCESS,
 } from './action';
 
@@ -45,6 +54,45 @@ export default combineReducers({
                     state: REQUEST_STATE.ERROR,
                 };
             }
+            case LAY_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    list2: (state = defaultState, action) => {
+        switch (action.type) {
+            case LAY_NK_2().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case LAY_NK_SUCCESS_2().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case LAY_NK_FAIL_2().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case LAY_NK_RESET_2().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
             default:
                 return state;
         }
@@ -68,6 +116,13 @@ export default combineReducers({
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,
+                };
+            }
+            case THEM_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:
@@ -95,6 +150,13 @@ export default combineReducers({
                     state: REQUEST_STATE.ERROR,
                 };
             }
+            case KHAI_SINH_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
             default:
                 return state;
         }
@@ -120,6 +182,13 @@ export default combineReducers({
                     state: REQUEST_STATE.ERROR,
                 };
             }
+            case CAP_NHAT_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
             default:
                 return state;
         }
@@ -143,6 +212,13 @@ export default combineReducers({
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,
+                };
+            }
+            case KHAI_TU_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:

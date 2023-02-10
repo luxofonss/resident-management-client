@@ -2,9 +2,8 @@ import { Table } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { LAY_LOAI_TB } from '../../redux/action';
-import styles from './EquipmentTypeList.module.sass';
+import styles from './EquipmentBorrowList.module.sass';
 
 const cx = classNames.bind(styles);
 
@@ -67,20 +66,9 @@ const columns = [
         dataIndex: 'ghi_chu',
         key: 'ghi_chu',
     },
-    {
-        title: 'Action',
-        key: 'id',
-        fixed: 'right',
-        width: 150,
-        render: (_, id) => (
-            <div className={cx('action-wrapper')}>
-                <Link to={`/equipment/type/${id}`}>move</Link>
-            </div>
-        ),
-    },
 ];
 
-function EquipmentTypeList(props) {
+function EquipmentBorrowList(props) {
     const dispatch = useDispatch();
     const danhSachThietBi = useSelector((state) => {
         console.log(state);
@@ -93,7 +81,6 @@ function EquipmentTypeList(props) {
             data = [
                 ...data,
                 {
-                    id: tb.id,
                     name: tb.name,
                     thu_phi: tb.thu_phi,
                     la_cong_trinh: tb.la_cong_trinh,
@@ -119,4 +106,4 @@ function EquipmentTypeList(props) {
     // );
 }
 
-export default EquipmentTypeList;
+export default EquipmentBorrowList;

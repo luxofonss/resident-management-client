@@ -1,6 +1,6 @@
 import { delay, put, takeLatest, call } from 'redux-saga/effects';
 import { REQUEST_STATE } from '~/app-configs';
-import { apiLayHK, apiThemHK, apiChuyenHK, apiTachHK, apiNhapHK } from '~/app-data/hoKhau';
+import { apiLayHK, apiThemHK, apiChuyenHK, apiTachHK, apiNhapHK, apiUpdateHK } from '~/app-data/hoKhau';
 import {
     CHUYEN_HK,
     CHUYEN_HK_FAIL,
@@ -17,6 +17,9 @@ import {
     THEM_HK,
     THEM_HK_FAIL,
     THEM_HK_SUCCESS,
+    UPDATE_HK,
+    UPDATE_HK_FAIL,
+    UPDATE_HK_SUCCESS,
 } from './action';
 
 function* handleThemHK({ type, payload }) {
@@ -26,6 +29,19 @@ function* handleThemHK({ type, payload }) {
             yield put(THEM_HK_SUCCESS({ data: response.data }));
         } else {
             yield put(THEM_HK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+function* handleUpdateHK({ type, payload }) {
+    try {
+        const response = yield call(apiUpdateHK, payload);
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(UPDATE_HK_SUCCESS({ data: response.data }));
+        } else {
+            yield put(UPDATE_HK_FAIL());
         }
     } catch (error) {
         console.log('error: ', error);
@@ -86,6 +102,7 @@ function* handleNhapHK({ type, payload }) {
 
 export default function* () {
     yield takeLatest(THEM_HK().type, handleThemHK);
+    yield takeLatest(UPDATE_HK().type, handleUpdateHK);
     yield takeLatest(LAY_HK().type, handleLayHK);
     yield takeLatest(CHUYEN_HK().type, handleChuyenHK);
     yield takeLatest(TACH_HK().type, handleTachHK);

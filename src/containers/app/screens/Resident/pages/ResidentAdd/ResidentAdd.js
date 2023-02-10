@@ -8,7 +8,7 @@ import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import AppDateInput from '~/components/AppDateInput';
 import AppButton from '~/components/AppButton/AppButton';
-import { THEM_NK } from '../../redux/action';
+import { THEM_NK, THEM_NK_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
@@ -35,6 +35,7 @@ function ResidentAdd(props) {
                 description: 'Thêm nhân khẩu thất bại!',
             });
         }
+        dispatch(THEM_NK_RESET());
     }, [addResident?.state]);
 
     const onSubmit = (data) => {

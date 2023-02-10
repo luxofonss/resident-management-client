@@ -11,8 +11,11 @@ const AppDateInput = ({ name, required = false, ...props }) => {
         formState: { errors },
     } = useFormContext();
 
+    if (props.defaultValue) {
+        setValue(name, props.defaultValue);
+    }
     const onChange = (date, dateString) => {
-        // console.log(date, dateString);
+        console.log(date, dateString);
         setValue(name, dateString);
     };
 

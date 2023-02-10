@@ -5,12 +5,13 @@ import AppInput from '~/components/AppInput';
 import { Button, Modal, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import AppButton from '~/components/AppButton/AppButton';
-import { THEM_HK } from '../../redux/action';
+import { LAY_HK_FAIL, THEM_HK, THEM_HK_FAIL, THEM_HK_RESET } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import useDebounceValue from '~/hooks/useDebounceValue';
-import { LAY_NK } from '../../../Resident/redux/action';
+import { LAY_NK, LAY_NK_FAIL } from '../../../Resident/redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 import AppSelectApi from '~/components/AppSelectApi';
+import AppInputSearch from '~/components/AppInputSearch';
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +20,7 @@ function AddHousehold(props) {
     const nkInfo = useSelector((state) => state.resident.list);
     const themHK = useSelector((state) => state.household.themHK);
     const dispatch = useDispatch();
-    const searchValue = useDebounceValue(cccd);
+    const searchValue = useDebounceValue(cccd, 1000);
 
     let submitData = {};
 
@@ -32,7 +33,15 @@ function AddHousehold(props) {
     };
 
     useEffect(() => {
-        dispatch(LAY_NK({ condition: { cccd: searchValue } }));
+        dispatch(LAY_HK_FAIL());
+    }, []);
+
+    useEffect(() => {
+        console.log('searchValue', searchValue);
+        if (searchValue !== '') dispatch(LAY_NK({ cccd: searchValue }));
+        else {
+            dispatch(LAY_NK_FAIL());
+        }
     }, [searchValue]);
 
     useEffect(() => {
@@ -48,20 +57,25 @@ function AddHousehold(props) {
                 description: 'Thêm hộ khẩu thất bại!',
             });
         }
+        dispatch(THEM_HK_RESET());
     }, [themHK?.state]);
 
     const onChange = (e) => {
+        console.log(e.target.value);
         setCccd(e.target.value);
     };
+
+    console.log('nkInfo', nkInfo);
 
     return (
         <div style={{ width: '40%', minWidth: '400px', margin: '0 auto' }}>
             <div className="page-header">Thêm hộ khẩu mới</div>
             <span>(*): Các trường bắt buộc nhập</span>
             <AppForm onSubmit={(data) => onSubmit(data)}>
-                <AppInput onChange={(e) => onChange(e)} type="number" label="CCCD chủ hộ" required></AppInput>
-                {/* <AppSelectApi apiURL = ''/> */}
-                {nkInfo?.data?.data[0] && (
+                <AppInputSearch onChange={onChange} type="number" label="CCCD chủ hộ" required></AppInputSearch>
+                {/* <AppInput onChange={(e) => onChange(e)} type="number" label="CCCD chủ hộ" required></AppInput> */}
+
+                {nkInfo?.state === 'SUCCESS' && nkInfo?.data?.data.length > 0 && (
                     <AppInput
                         type="text"
                         label="Chủ hộ"

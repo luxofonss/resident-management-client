@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './TemporaryAdd.module.sass';
 import classNames from 'classnames/bind';
 import AppButton from '~/components/AppButton/AppButton';
@@ -8,14 +8,39 @@ import AppFileInput from '~/components/AppFileInput';
 import AppInput from '~/components/AppInput';
 import AppSelectInput from '~/components/AppSelectInput';
 import AppTextArea from '~/components/AppTextArea';
-import { Col, Row } from 'antd';
+import { Col, notification, Row } from 'antd';
+import { TAO_TAM_TRU, TAO_TAM_TRU_RESET } from '../../redux/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
 
 function TemporaryAdd(props) {
+    const addTamTru = useSelector((state) => state.temporaryAbsent.addTamTru);
+    const dispatch = useDispatch();
+    const onSubmit = (data) => {
+        dispatch(TAO_TAM_TRU(data));
+    };
+
+    useEffect(() => {
+        if (addTamTru.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Thêm tạm trú thành công!',
+            });
+        }
+        if (addTamTru?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Thêm tạm trú thất bại!',
+            });
+        }
+        dispatch(TAO_TAM_TRU_RESET());
+    }, [addTamTru?.state]);
+
     return (
         <div>
-            <AppForm onSubmit={(data) => console.log(data)}>
+            <AppForm onSubmit={onSubmit}>
                 <Row gutter={32}>
                     <Col xs={5}>
                         <AppInput type="text" label="Họ" name="nhanKhau.ho" required></AppInput>

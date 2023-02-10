@@ -11,6 +11,7 @@ export const REQUEST_STATE = {
     ERROR: 'ERROR',
     REQUEST: 'REQUEST',
     SUCCESS: 'SUCCESS',
+    RESET: 'RESET',
 };
 
 // key store in localStorage, Cookies, Session

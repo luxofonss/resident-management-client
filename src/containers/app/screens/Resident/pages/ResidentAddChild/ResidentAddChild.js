@@ -8,7 +8,7 @@ import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import AppDateInput from '~/components/AppDateInput';
 import AppButton from '~/components/AppButton/AppButton';
-import { KHAI_SINH_NK } from '../../redux/action';
+import { KHAI_SINH_NK, KHAI_SINH_NK_RESET, THEM_NK_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
@@ -35,6 +35,7 @@ function ResidentAddChild(props) {
                 description: 'Khai sinh thất bại!',
             });
         }
+        dispatch(KHAI_SINH_NK_RESET());
     }, [addResidentChild?.state]);
 
     const onSubmit = (data) => {

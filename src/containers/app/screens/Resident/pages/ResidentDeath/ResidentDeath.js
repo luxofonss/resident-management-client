@@ -8,15 +8,16 @@ import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import AppDateInput from '~/components/AppDateInput';
 import AppButton from '~/components/AppButton/AppButton';
-import { KHAI_TU_NK, LAY_NK } from '../../redux/action';
+import { KHAI_TU_NK, KHAI_TU_NK_RESET, LAY_NK, LAY_NK_2, LAY_NK_RESET, LAY_NK_RESET_2 } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
+import AppSelectApi from '~/components/AppSelectApi';
 
 const cx = classNames.bind(styles);
 
 function ResidentDeath(props) {
-    const residentDeathInfo = useSelector((state) => state.resident.list);
+    const residentDeathInfo = useSelector((state) => state.resident.list2);
     const residentDeath = useSelector((state) => {
         console.log(state);
         return state.resident.khaiTuNK;
@@ -27,7 +28,8 @@ function ResidentDeath(props) {
     console.log('residentDeath', residentDeath);
 
     useEffect(() => {
-        dispatch(LAY_NK({ condition: { id: id.slice(1) } }));
+        dispatch(LAY_NK_RESET_2());
+        dispatch(LAY_NK_2({ ids: [id.slice(1)] }));
     }, []);
 
     console.log('residentDeathInfo', residentDeathInfo);
@@ -45,6 +47,7 @@ function ResidentDeath(props) {
                 description: 'Có lỗi xảy ra, vui lòng thử lại sau!',
             });
         }
+        dispatch(KHAI_TU_NK_RESET());
     }, [residentDeath?.state]);
 
     const onSubmit = (data) => {
@@ -71,18 +74,19 @@ function ResidentDeath(props) {
                     ></AppInput>
                 )}
                 <AppDateInput
-                    defaultValue={moment().format('YYYY MM DD')}
+                    defaultValue={moment().format('YYYY-MM-DD')}
                     label="Ngày mất"
                     name="ngay_khai_tu"
                     required
                 ></AppDateInput>
                 <AppDateInput
-                    defaultValue={moment().format('YYYY MM DD')}
+                    defaultValue={moment().format('YYYY-MM-DD')}
                     label="Ngày làm đơn"
                     name="ngay_lam_giay"
                     required
                 ></AppDateInput>
-                <AppInput type="text" label="Người làm giấy" name="nguoi_lam_giay_id" required></AppInput>
+                {/* <AppInput type="text" label="Người làm giấy" name="nguoi_lam_giay_id" required></AppInput> */}
+                <AppSelectApi apiURL="nhanKhau" label="Họ và tên - CCCD người đại diện" name="nguoi_lam_giay_id" />
                 <AppInput type="text" label="Quan hệ" name="quan_he" required></AppInput>
                 <AppInput type="text" label="Ghi chú" name="ghi_chu" required={false}></AppInput>
                 <AppButton type="submit">Xác nhận</AppButton>

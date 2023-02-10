@@ -9,9 +9,9 @@ export const residentModule = {
 };
 
 export default {
-    path: '/',
+    path: '/resident/list',
     exact: true,
-    isPrivate: false,
+    isPrivate: true,
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([residentModule], 'app');
@@ -20,17 +20,6 @@ export default {
 };
 
 export const childRoutes = [
-    {
-        path: '/resident/list',
-        key: 'list',
-        exact: true,
-        isPrivate: true,
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([residentModule], 'app');
-            return import('./pages/ResidentList');
-        }),
-    },
     {
         path: '/resident/create',
         key: 'add',

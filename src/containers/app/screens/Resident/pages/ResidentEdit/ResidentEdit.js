@@ -8,7 +8,7 @@ import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import AppDateInput from '~/components/AppDateInput';
 import AppButton from '~/components/AppButton/AppButton';
-import { LAY_NK, THEM_NK, CAP_NHAT_NK } from '../../redux/action';
+import { LAY_NK, THEM_NK, CAP_NHAT_NK, CAP_NHAT_NK_RESET, LAY_NK_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 import { Redirect, useParams, useHistory } from 'react-router-dom';
 import moment from 'moment';
@@ -45,11 +45,15 @@ function ResidentEdit(props) {
                 description: 'Gửi yêu cầu thất bại!',
             });
         }
+        dispatch(CAP_NHAT_NK_RESET());
     }, [residentUpdate?.state]);
 
     useEffect(() => {
-        dispatch(LAY_NK({ condition: { id: id.slice(1) } }));
+        dispatch(LAY_NK_RESET());
+        dispatch(LAY_NK({ ids: [id.slice(1)] }));
     }, []);
+
+    console.log('residentInfo', residentInfo);
     return (
         <div>
             <div
@@ -112,7 +116,7 @@ function ResidentEdit(props) {
                                 required
                             ></AppInput>
                             <AppDateInput
-                                defaultValue={residentInfo.data.data[0].ngay_cap?.slice(0, 10)}
+                                defaultValue={residentInfo.data.data[0].cccd_ngay_cap?.slice(0, 10)}
                                 label="Ngày cấp"
                                 name="mo_ta.cccd_ngay_cap"
                                 required
@@ -193,7 +197,7 @@ function ResidentEdit(props) {
                         </Col>
                         <Col xs={8}>
                             <AppDateInput
-                                defaultValue={moment().format('YYYY MM DD')}
+                                defaultValue={moment().format('YYYY-MM-DD')}
                                 label="Ngày làm đơn"
                                 name="ngay_lam_don"
                                 required

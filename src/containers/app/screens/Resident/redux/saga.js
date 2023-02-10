@@ -12,8 +12,11 @@ import {
     KHAI_TU_NK_FAIL,
     KHAI_TU_NK_SUCCESS,
     LAY_NK,
+    LAY_NK_2,
     LAY_NK_FAIL,
+    LAY_NK_FAIL_2,
     LAY_NK_SUCCESS,
+    LAY_NK_SUCCESS_2,
     THEM_NK,
     THEM_NK_FAIL,
     THEM_NK_SUCCESS,
@@ -26,6 +29,19 @@ function* handleLayNhanKhau({ type, payload }) {
             yield put(LAY_NK_SUCCESS({ data: response.data }));
         } else {
             yield put(LAY_NK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+function* handleLayNhanKhau2({ type, payload }) {
+    try {
+        const response = yield call(apiLayNK, payload);
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(LAY_NK_SUCCESS_2({ data: response.data }));
+        } else {
+            yield put(LAY_NK_FAIL_2());
         }
     } catch (error) {
         console.log('error: ', error);
@@ -86,6 +102,7 @@ function* handleKhaiTuNhanKhau({ type, payload }) {
 
 export default function* () {
     yield takeLatest(LAY_NK().type, handleLayNhanKhau);
+    yield takeLatest(LAY_NK_2().type, handleLayNhanKhau2);
     yield takeLatest(THEM_NK().type, handleThemNhanKhau);
     yield takeLatest(KHAI_SINH_NK().type, handleKhaiSinhNhanKhau);
     yield takeLatest(CAP_NHAT_NK().type, handleCapNhatNhanKhau);

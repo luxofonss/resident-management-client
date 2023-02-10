@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import AppLayout from '~/components/Layout/AppLayout';
 import { initModules } from '~/router/index';
+import { residentModule } from '../Resident/route';
 
 export const temporaryAbsentModule = {
     key: 'temporaryAbsent',
@@ -8,28 +9,17 @@ export const temporaryAbsentModule = {
 };
 
 export default {
-    path: '/',
+    path: '/temporary-absent/new-temporary',
     exact: true,
-    isPrivate: false,
+    isPrivate: true,
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([temporaryAbsentModule], 'app');
-        return import('./pages/Demo');
+        return import('./pages/TemporaryAdd');
     }),
 };
 
 export const childRoutes = [
-    {
-        path: '/temporary-absent/new-temporary',
-        key: 'death',
-        exact: true,
-        isPrivate: true,
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([temporaryAbsentModule], 'app');
-            return import('./pages/TemporaryAdd');
-        }),
-    },
     {
         path: '/temporary-absent/new-absent',
         key: 'death',
@@ -48,8 +38,19 @@ export const childRoutes = [
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
-            await initModules([temporaryAbsentModule], 'app');
+            await initModules([temporaryAbsentModule, residentModule], 'app');
             return import('./pages/AbsentList');
+        }),
+    },
+    {
+        path: '/temporary-absent/temporary-list',
+        key: 'temporary-list',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([temporaryAbsentModule, residentModule], 'app');
+            return import('./pages/TemporaryList');
         }),
     },
 ];

@@ -64,7 +64,7 @@ function ResidentDelete(props) {
                                 </Col>
                                 <Col xs={12}>
                                     <AppDateInput
-                                        defaultValue={moment().format('YYYY MM DD')}
+                                        defaultValue={moment().format('YYYY-MM-DD')}
                                         label="Ngày làm đơn"
                                         name="donChuyenKhau.ngay_lam_don"
                                         required

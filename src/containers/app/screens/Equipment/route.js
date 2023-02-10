@@ -8,28 +8,17 @@ export const equipmentModule = {
 };
 
 export default {
-    path: '/',
+    path: '/equipment/add',
     exact: true,
-    isPrivate: false,
+    isPrivate: true,
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([equipmentModule], 'app');
-        return import('./pages/Demo');
+        return import('./pages/EquipmentAdd');
     }),
 };
 
 export const childRoutes = [
-    {
-        path: '/equipment/add',
-        key: 'add',
-        exact: true,
-        isPrivate: true,
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([equipmentModule], 'app');
-            return import('./pages/EquipmentAdd');
-        }),
-    },
     {
         path: '/equipment/type/add',
         key: 'add-type',
@@ -42,6 +31,17 @@ export const childRoutes = [
         }),
     },
     {
+        path: '/equipment/type/id',
+        key: 'detail-type',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([equipmentModule], 'app');
+            return import('./pages/EquipmentTypeDetail');
+        }),
+    },
+    {
         path: '/equipment/type',
         key: 'list-type',
         exact: true,
@@ -50,6 +50,28 @@ export const childRoutes = [
         component: lazy(async () => {
             await initModules([equipmentModule], 'app');
             return import('./pages/EquipmentTypeList');
+        }),
+    },
+    {
+        path: '/equipment/borrow',
+        key: 'borrow',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([equipmentModule], 'app');
+            return import('./pages/EquipmentBorrow');
+        }),
+    },
+    {
+        path: '/equipment/borrow/list',
+        key: 'borrow-list',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([equipmentModule], 'app');
+            return import('./pages/EquipmentBorrowList');
         }),
     },
 ];

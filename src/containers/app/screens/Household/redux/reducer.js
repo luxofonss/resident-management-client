@@ -15,7 +15,13 @@ import {
     TACH_HK_SUCCESS,
     THEM_HK,
     THEM_HK_FAIL,
+    THEM_HK_RESET,
     THEM_HK_SUCCESS,
+    UPDATE_HK,
+    UPDATE_HK_FAIL,
+    UPDATE_HK_RESET,
+    UPDATE_HK_SUCCESS,
+    LAY_HK_RESET,
 } from './action';
 
 const defaultState = {
@@ -45,6 +51,45 @@ export default combineReducers({
                     state: REQUEST_STATE.ERROR,
                 };
             }
+            case THEM_HK_RESET().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.RESET,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    updateHK: (state = defaultState, action) => {
+        switch (action.type) {
+            case UPDATE_HK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case UPDATE_HK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case UPDATE_HK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case UPDATE_HK_RESET().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.RESET,
+                    data: null,
+                };
+            }
             default:
                 return state;
         }
@@ -68,6 +113,13 @@ export default combineReducers({
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,
+                };
+            }
+            case LAY_HK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:

@@ -2,7 +2,10 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { CheckIcon, ChevronDown } from '~/assets/svgs';
+import { LAY_NK, LAY_NK_FAIL, LAY_NK_RESET } from '~/containers/app/screens/Resident/redux/action';
+import useDebounceValue from '~/hooks/useDebounceValue';
 import styles from './AppSelectApi.module.sass';
 
 const cx = classNames.bind(styles);
@@ -14,17 +17,25 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     const [iconClick, setIconClick] = useState(false);
     const [params, setParams] = useState('');
     const [options, setOptions] = useState();
+    const [cccd, setCccd] = useState('');
+    const nkInfo = useSelector((state) => state.resident.list);
+    const dispatch = useDispatch();
+
     const selections = useRef();
     const wrapperRef = useRef();
     const _name = name;
+    const searchValue = useDebounceValue(cccd, 1000);
 
     const handleSelect = (id, name, index) => {
-        setValue(_name, id);
         setSelected({ name: name, id: id });
+        setValue(_name, id);
+        dispatch(LAY_NK_RESET());
         setActive(index);
         selections.current.classList.toggle('hide');
         setIconClick(!iconClick);
     };
+
+    console.log('nkInfo', nkInfo);
 
     const handleClick = (event) => {
         const { target } = event;
@@ -36,20 +47,16 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     };
 
     useEffect(() => {
-        const fetch = async () => {
-            let apiPath;
-            if (isFullPath) {
-                apiPath = apiURL;
-            } else {
-                apiPath = process.env.REACT_APP_BASE_API_URL + apiURL;
-                console.log(apiPath);
-            }
-            const response = await axios.get(apiPath);
-            setOptions(response?.data?.rows);
-            setSelected({ name: response?.data?.rows[0].name, id: response?.data?.rows[0].id });
-        };
-        fetch();
-    }, []);
+        console.log('searchValue', searchValue);
+        if (searchValue !== '') dispatch(LAY_NK({ cccd: searchValue }));
+        else {
+            dispatch(LAY_NK_FAIL());
+        }
+    }, [searchValue]);
+
+    useEffect(() => {
+        setOptions(nkInfo?.data?.data);
+    }, [nkInfo?.data?.data]);
 
     useEffect(() => {
         if (params !== '') {
@@ -58,9 +65,6 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     }, [params]);
 
     useEffect(() => {
-        if (options) {
-            setValue(_name, options[0].id);
-        }
         document.addEventListener('click', handleClick);
         return () => {
             document.removeEventListener('click', handleClick);
@@ -70,6 +74,11 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     const handleSelectClick = () => {
         selections.current.classList.toggle('hide');
         setIconClick(!iconClick);
+    };
+
+    const onChange = (e) => {
+        console.log(e.target.value);
+        setCccd(e.target.value);
     };
 
     return (
@@ -83,6 +92,14 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
                     {label}
                 </label>
                 <div id="select" onClick={() => handleSelectClick()} className={cx('select-wrapper')}>
+                    <input
+                        id={name}
+                        type={props.type ? props.type : 'text'}
+                        className={cx('input')}
+                        onChange={(e) => onChange(e)}
+                        defaultValue={selected.name}
+                        {...props}
+                    />
                     <div className={cx('selected-name')}>{selected.name}</div>
                     <div className={cx(iconClick ? 'click' : 'un-click', 'flex-center')}>
                         <ChevronDown />
@@ -96,10 +113,10 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
                                     key={index}
                                     className={cx(active === index ? 'active' : '')}
                                     onClick={() => {
-                                        handleSelect(option.id, option.name, index);
+                                        handleSelect(option.id, option.ho + option.ten_dem + option.ten, index);
                                     }}
                                 >
-                                    <div>{option.name}</div>
+                                    <div>{option.ho + option.ten_dem + option.ten}</div>
                                     <div className={cx(active !== index ? 'hide' : '')}>
                                         <CheckIcon />
                                     </div>

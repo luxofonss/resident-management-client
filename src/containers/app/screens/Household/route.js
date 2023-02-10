@@ -9,28 +9,17 @@ export const householdModule = {
 };
 
 export default {
-    path: '/household/sample',
+    path: '/household/create',
     exact: true,
     isPrivate: true,
     layout: AppLayout,
     component: lazy(async () => {
-        await initModules([householdModule], 'app');
+        await initModules([householdModule, residentModule], 'app');
         return import('./pages/AddHousehold');
     }),
 };
 
 export const childRoutes = [
-    {
-        path: '/household/create',
-        key: 'create',
-        exact: true,
-        isPrivate: true,
-        layout: AppLayout,
-        component: lazy(async () => {
-            await initModules([householdModule, residentModule], 'app');
-            return import('./pages/AddHousehold');
-        }),
-    },
     {
         path: '/household/list',
         key: 'list',
@@ -49,7 +38,7 @@ export const childRoutes = [
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
-            await initModules([householdModule], 'app');
+            await initModules([householdModule, residentModule], 'app');
             return import('./pages/HouseholdMove');
         }),
     },
@@ -60,7 +49,7 @@ export const childRoutes = [
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
-            await initModules([householdModule], 'app');
+            await initModules([householdModule, residentModule], 'app');
             return import('./pages/HouseholdSeparate');
         }),
     },
@@ -76,7 +65,7 @@ export const childRoutes = [
         }),
     },
     {
-        path: '/household/add-resident',
+        path: '/household/add-resident/:id',
         key: 'add-resident',
         exact: true,
         isPrivate: true,

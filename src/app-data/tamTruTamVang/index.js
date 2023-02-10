@@ -8,15 +8,96 @@ import { GET } from '~/app-data/fetch';
 export const apiLayTamVang = async (params) => {
     try {
         const response = await GET('/hokhau/don/all', params, { isFullPath: false });
-        //    const token = localStorage.getItem(TOKEN_KEY);
-        //    const response = await axios.get('http://localhost:3000/hokhau/don/all/?type=don_tam_vang', {
-        //        headers: {
-        //            Authorization: 'Bearer ' + token,
-        //        },
-        //    });
         return {
             state: REQUEST_STATE.SUCCESS,
-            data: response.data,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiAddTamVang = async (params) => {
+    try {
+        const response = await POST('/tamvang', params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiAcceptTamVang = async (params) => {
+    try {
+        console.log(params);
+        const response = await POST(`/tamvang/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiAddTamTru = async (params) => {
+    try {
+        const response = await POST('/tamtru', params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiLayTamTru = async (params) => {
+    try {
+        const response = await GET('/hokhau/don/all?type=don_tam_tru', null, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiAcceptTamTru = async (params) => {
+    try {
+        console.log(params);
+        const response = await POST(`/tamtru/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
         };
     } catch (error) {
         console.log('error', error);

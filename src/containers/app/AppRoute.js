@@ -6,7 +6,6 @@ import { appRoutes } from '~/router/index';
 import FullPageLoading from '~/components/Loading/FullPageLoading/FullPageLoading';
 
 function AppRoute() {
-    console.log(appRoutes);
     return (
         <Suspense fallback={<FullPageLoading />}>
             <Switch>

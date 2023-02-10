@@ -25,7 +25,7 @@ const sliderItems = [
         getNavItem('Danh sách hộ khẩu', '/household/list', <UnorderedListOutlined />),
         getNavItem('Chuyển hộ khẩu', '/household/move', <UsergroupDeleteOutlined />),
         getNavItem('Tách hộ khẩu', '/household/separate', <SplitCellsOutlined />),
-        getNavItem('Nhập khẩu', '/household/add-resident', <SplitCellsOutlined />),
+        getNavItem('Nhập khẩu', '/household/add-resident/', <SplitCellsOutlined />),
     ]),
     getNavItem('Nhân khẩu', 'resident', <UserOutlined />, [
         getNavItem('Thêm nhân khẩu mới', '/resident/create', <UsergroupAddOutlined />),
