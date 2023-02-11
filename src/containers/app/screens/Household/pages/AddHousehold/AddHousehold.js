@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import AppForm from '~/components/AppForm';
 import styles from './AddHousehold.module.sass';
 import AppInput from '~/components/AppInput';
-import { Button, Modal, notification } from 'antd';
+import { Button, Col, Modal, notification, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import AppButton from '~/components/AppButton/AppButton';
 import { LAY_HK_FAIL, THEM_HK, THEM_HK_FAIL, THEM_HK_RESET } from '../../redux/action';
@@ -69,30 +69,42 @@ function AddHousehold(props) {
 
     return (
         <div style={{ width: '40%', minWidth: '400px', margin: '0 auto' }}>
-            <div className="page-header">Thêm hộ khẩu mới</div>
+            <div className={cx('page-header')}>Thêm hộ khẩu mới</div>
             <span>(*): Các trường bắt buộc nhập</span>
             <AppForm onSubmit={(data) => onSubmit(data)}>
-                <AppInputSearch onChange={onChange} type="number" label="CCCD chủ hộ" required></AppInputSearch>
-                {/* <AppInput onChange={(e) => onChange(e)} type="number" label="CCCD chủ hộ" required></AppInput> */}
-
-                {nkInfo?.state === 'SUCCESS' && nkInfo?.data?.data.length > 0 && (
-                    <AppInput
-                        type="text"
-                        label="Chủ hộ"
-                        defaultValue={
-                            nkInfo?.data?.data[0].ho +
-                            ' ' +
-                            nkInfo?.data?.data[0].ten_dem +
-                            ' ' +
-                            nkInfo?.data?.data[0].ten
-                        }
-                        disabled
-                    ></AppInput>
-                )}
-                <AppInput type="text" label="Địa chỉ" name="dia_chi" required></AppInput>
-                <AppButton disabled={nkInfo?.data?.data[0] ? false : true} type="submit">
-                    Thêm
-                </AppButton>
+                <Row gutter={[0, 12]}>
+                    <Col xs={24}>
+                        <AppInputSearch onChange={onChange} type="number" label="CCCD chủ hộ" required></AppInputSearch>
+                    </Col>
+                    {nkInfo?.state === 'SUCCESS' && nkInfo?.data?.data.length > 0 && (
+                        <Col xs={24}>
+                            <AppInput
+                                type="text"
+                                label="Chủ hộ"
+                                defaultValue={
+                                    nkInfo?.data?.data[0].ho +
+                                    ' ' +
+                                    nkInfo?.data?.data[0].ten_dem +
+                                    ' ' +
+                                    nkInfo?.data?.data[0].ten
+                                }
+                                disabled
+                            ></AppInput>
+                        </Col>
+                    )}
+                    <Col xs={24}>
+                        <AppInput type="text" label="Địa chỉ" name="dia_chi" required></AppInput>
+                    </Col>
+                    <Col xs={24}>
+                        <AppButton
+                            style={{ width: '100%', marginTop: '24px' }}
+                            disabled={nkInfo?.data?.data[0] ? false : true}
+                            type="submit"
+                        >
+                            Thêm
+                        </AppButton>
+                    </Col>
+                </Row>
             </AppForm>
         </div>
     );

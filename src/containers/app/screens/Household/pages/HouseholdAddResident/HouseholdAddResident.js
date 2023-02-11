@@ -7,7 +7,7 @@ import AppInput from '~/components/AppInput';
 import AppButton from '~/components/AppButton/AppButton';
 import AppDateInput from '~/components/AppDateInput';
 import AppTextArea from '~/components/AppTextArea';
-import { Row, Col, notification } from 'antd';
+import { Row, Col, notification, Button } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CHUYEN_HK, NHAP_HK } from '../../redux/action';
@@ -15,6 +15,7 @@ import { REQUEST_STATE } from '~/app-configs';
 import { useParams } from 'react-router-dom';
 import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
 import AppSelectApi from '~/components/AppSelectApi';
+import { IconPlus, IconX } from '~/assets/svgs';
 
 const cx = classNames.bind(styles);
 
@@ -79,9 +80,9 @@ function HouseholdAddResident(props) {
     console.log('danhSachNhanKhau', danhSachNhanKhau);
     return (
         <div>
-            nhap khau
+            <div className="page-header">Nhập khẩu</div>
             <AppForm onSubmit={(data) => onSubmit(data)}>
-                <Row gutter={48}>
+                <Row gutter={[48, 12]}>
                     <Col xs={12}>
                         <AppSelectApi
                             apiURL="nhanKhau"
@@ -90,7 +91,7 @@ function HouseholdAddResident(props) {
                         />
 
                         {/* <AppInput type="text" label="Người đại diện" name="donNhapKhau.dai_dien_id" required></AppInput> */}
-                        <Row gutter={64}>
+                        <Row gutter={[64, 12]}>
                             <Col xs={12}>
                                 <AppInput
                                     type="text"
@@ -155,9 +156,9 @@ function HouseholdAddResident(props) {
                             const fieldName = `Residents[${index}]`;
                             return (
                                 <div key={index}>
-                                    <Row gutter={48}>
+                                    <Row gutter={[24, 12]}>
                                         {id && (
-                                            <Col xs={12}>
+                                            <Col xs={11}>
                                                 <AppInput
                                                     type="text"
                                                     label="Nhân khẩu"
@@ -174,7 +175,7 @@ function HouseholdAddResident(props) {
                                             </Col>
                                         )}
                                         {!id && (
-                                            <Col xs={12}>
+                                            <Col xs={11}>
                                                 <AppInput
                                                     type="number"
                                                     label="Nhân khẩu"
@@ -183,7 +184,7 @@ function HouseholdAddResident(props) {
                                                 ></AppInput>
                                             </Col>
                                         )}
-                                        <Col xs={12}>
+                                        <Col xs={11}>
                                             <AppInput
                                                 type="text"
                                                 label="Quan hệ chủ hộ"
@@ -191,7 +192,7 @@ function HouseholdAddResident(props) {
                                                 required
                                             ></AppInput>
                                         </Col>
-                                        <Col xs={12}>
+                                        <Col xs={11}>
                                             <AppInput
                                                 type="text"
                                                 label="Quan hệ với đại diện"
@@ -199,7 +200,7 @@ function HouseholdAddResident(props) {
                                                 required
                                             ></AppInput>
                                         </Col>
-                                        <Col xs={12}>
+                                        <Col xs={11}>
                                             <AppInput
                                                 type="text"
                                                 label="Ghi chú chuyển khẩu cùng"
@@ -208,10 +209,15 @@ function HouseholdAddResident(props) {
                                             ></AppInput>
                                         </Col>
                                         {!id && (
-                                            <Col xs={4}>
-                                                <AppButton color="orange" type="button" onClick={removeResident(index)}>
+                                            <Col xs={2}>
+                                                {/* <AppButton color="orange" type="button" onClick={removeResident(index)}>
                                                     Remove
-                                                </AppButton>
+                                                </AppButton> */}
+                                                <div onClick={removeResident(index)} className="action-wrapper">
+                                                    <div className="action-icon">
+                                                        <IconX width={18} height={18} />
+                                                    </div>
+                                                </div>
                                             </Col>
                                         )}
                                     </Row>
@@ -219,18 +225,24 @@ function HouseholdAddResident(props) {
                             );
                         })}
                         {!id && (
-                            <Fragment>
-                                <AppButton type="button" onClick={addResident}>
-                                    Add Resident
-                                </AppButton>
-                                <AppButton type="button" onClick={clearResidents}>
+                            <div className="flex-right">
+                                {/* <AppButton type="button" onClick={addResident}> */}
+                                <div style={{ marginTop: '18px' }} onClick={addResident} className="action-wrapper">
+                                    <div className="action-icon">
+                                        <IconPlus />
+                                    </div>
+                                </div>
+                                {/* </AppButton> */}
+                                <Button danger onClick={clearResidents}>
                                     Clear All
-                                </AppButton>
-                            </Fragment>
+                                </Button>
+                            </div>
                         )}
                     </Col>
                 </Row>
-                <AppButton type="submit">Thêm</AppButton>
+                <div className="bottom-right">
+                    <AppButton type="submit">Thêm</AppButton>
+                </div>
             </AppForm>
         </div>
     );

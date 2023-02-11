@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CHUYEN_HK, LAY_HK, LAY_HK_RESET } from '../../redux/action';
 import AppInputSearch from '~/components/AppInputSearch';
 import useDebounceValue from '~/hooks/useDebounceValue';
-import { LAY_NK, LAY_NK_FAIL } from '../../../Resident/redux/action';
+import { LAY_NK_2, LAY_NK_2_FAIL } from '../../../Resident/redux/action';
 import AppSelectApi from '~/components/AppSelectApi';
 import AppCheckbox from '~/components/AppCheckbox';
 
@@ -26,7 +26,7 @@ function HouseholdMove(props) {
         return state.household.danhSach;
     });
     const danhSachNhanKhau = useSelector((state) => {
-        return state.resident?.list;
+        return state.resident?.list2;
     });
     const dispatch = useDispatch();
 
@@ -67,22 +67,14 @@ function HouseholdMove(props) {
     }, [searchValue]);
 
     useEffect(() => {
-        dispatch(LAY_NK({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
+        dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
     }, [hoKhauInfo?.data?.data[0]?.nhanKhau]);
 
     return (
         <div>
-            chuyen ho khau
+            <div className={cx('page-header')}>Chuyển hộ khẩu</div>
             <AppForm onSubmit={(data) => onSubmit(data)}>
-                <Row gutter={[12, 8]}>
-                    <Col xs={6}>
-                        <AppSelectApi
-                            apiURL="nhanKhau"
-                            label="CCCD - Họ và tên người đại diện"
-                            name="donChuyenKhau.dai_dien_id"
-                        />
-                    </Col>
-
+                <Row gutter={[12, 12]}>
                     <Col xs={6}>
                         <AppInputSearch
                             onChange={onChange}
@@ -92,6 +84,15 @@ function HouseholdMove(props) {
                             required
                         ></AppInputSearch>
                     </Col>
+                    <Col xs={6}>
+                        <AppSelectApi
+                            apiURL="nhanKhau"
+                            label="CCCD - Họ và tên người đại diện"
+                            name="donChuyenKhau.dai_dien_id"
+                            required
+                        />
+                    </Col>
+
                     <Col xs={6}>
                         <AppInput
                             type="number"
@@ -119,11 +120,13 @@ function HouseholdMove(props) {
                         ></AppInput>
                     </Col>
 
+                    <div className="second-header">Thông tin nhân khẩu</div>
+
                     <Col xs={24}>
                         {hoKhauInfo?.data?.data[0] &&
                             danhSachNhanKhau?.data?.data.map((nk, index) => (
                                 <div className={cx('nk-wrapper')}>
-                                    <Row gutter={24}>
+                                    <Row gutter={[24, 12]}>
                                         <Col xs={4}>
                                             <AppInput
                                                 type="number"
@@ -169,7 +172,9 @@ function HouseholdMove(props) {
                             ))}
                     </Col>
                 </Row>
-                <AppButton type="submit">Thêm</AppButton>
+                <div className="bottom-right">
+                    <AppButton type="submit">Xác nhận</AppButton>
+                </div>
             </AppForm>
         </div>
     );

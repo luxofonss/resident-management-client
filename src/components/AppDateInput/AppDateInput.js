@@ -21,7 +21,7 @@ const AppDateInput = ({ name, required = false, ...props }) => {
 
     return (
         <Space className="space-class" direction="vertical">
-            <label className={required ? 'required, label' : 'label'} htmlFor="antd-date-picker">
+            <label className={required ? 'required label' : 'label'} htmlFor="antd-date-picker">
                 {props.label}
             </label>
             <DatePicker

@@ -831,3 +831,15 @@ export const UserProfilesRightIcon = () => (
         />
     </svg>
 );
+
+export const IconX = ({ width, height, stroke = 'black' }) => (
+    <svg width={width ?? 24} height={height ?? 24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 5L5 19M19 19L5 5" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+    </svg>
+);
+
+export const IconPlus = ({ width, height, stroke = 'black' }) => (
+    <svg width={width ?? 24} height={height ?? 24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 6L12 18M18 12L6 12" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+    </svg>
+);

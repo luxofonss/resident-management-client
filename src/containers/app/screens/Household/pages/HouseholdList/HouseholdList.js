@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './HouseholdList.module.sass';
 import { LAY_HK } from '../../redux/action';
@@ -34,14 +34,16 @@ const columns = [
         render: (_, record) => <div>{record.nhanKhau.length}</div>,
     },
     {
-        title: 'Action',
+        title: 'Hành động',
         key: 'id',
         fixed: 'right',
         width: 150,
         height: 'auto',
         render: (_, { id }) => (
             <div className={cx('action-wrapper')}>
-                <Link to={`/household/detail/${id}`}>Xem chi tiết</Link>
+                <Link to={`/household/detail/${id}`}>
+                    <Button>Xem chi tiết</Button>
+                </Link>
             </div>
         ),
     },

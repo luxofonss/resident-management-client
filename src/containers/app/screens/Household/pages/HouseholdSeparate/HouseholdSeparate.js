@@ -10,7 +10,7 @@ import AppButton from '~/components/AppButton/AppButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { LAY_HK, LAY_HK_RESET, TACH_HK } from '../../redux/action';
 import AppInputSearch from '~/components/AppInputSearch';
-import { LAY_NK } from '../../../Resident/redux/action';
+import { LAY_NK_2 } from '../../../Resident/redux/action';
 import AppCheckbox from '~/components/AppCheckbox';
 import useDebounceValue from '~/hooks/useDebounceValue';
 import AppSelectApi from '~/components/AppSelectApi';
@@ -27,7 +27,7 @@ function HouseholdSeparate(props) {
         return state.household?.danhSach;
     });
     const danhSachNhanKhau = useSelector((state) => {
-        return state.resident?.list;
+        return state.resident?.list2;
     });
 
     const dispatch = useDispatch();
@@ -67,17 +67,13 @@ function HouseholdSeparate(props) {
     }, [searchValue]);
 
     useEffect(() => {
-        dispatch(LAY_NK({ ids: hoKhauInfo?.data?.data[0].nhanKhau }));
+        dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0].nhanKhau }));
     }, [hoKhauInfo?.data?.data[0]]);
     return (
         <div>
-            tach ho khau
+            <div className="page-header">Tách hộ khẩu</div>
             <AppForm onSubmit={(data) => onSubmit(data)}>
-                <Row gutter={12}>
-                    <Col xs={6}>
-                        <AppSelectApi apiURL="nhanKhau" label="Họ và tên - CCCD" name="donTachKhau.dai_dien_id" />
-                    </Col>
-
+                <Row gutter={[12, 12]}>
                     <Col xs={6}>
                         <AppInputSearch
                             onChange={onChange}
@@ -87,7 +83,9 @@ function HouseholdSeparate(props) {
                             required
                         ></AppInputSearch>
                     </Col>
-
+                    <Col xs={6}>
+                        <AppSelectApi apiURL="nhanKhau" label="Họ và tên - CCCD" name="donTachKhau.dai_dien_id" />
+                    </Col>
                     <Col xs={6}>
                         <AppDateInput label="Ngày tách" name="donTachKhau.ngay_tach" required></AppDateInput>
                     </Col>
@@ -106,6 +104,7 @@ function HouseholdSeparate(props) {
                         <AppInput label="Lý do" name="donTachKhau.ly_do"></AppInput>
                     </Col>
                 </Row>
+                <div className="second-header">Thông tin nhân khẩu</div>
 
                 <Col xs={24}>
                     {hoKhauInfo?.data?.data[0] &&

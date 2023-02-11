@@ -50,7 +50,6 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
         console.log('searchValue', searchValue);
         if (searchValue !== '') dispatch(LAY_NK({ cccd: searchValue }));
         else {
-            dispatch(LAY_NK_FAIL());
         }
     }, [searchValue]);
 
@@ -65,6 +64,9 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     }, [params]);
 
     useEffect(() => {
+        if (options) {
+            if (selections.current.classList.contains('hide')) selections.current.classList.remove('hide');
+        }
         document.addEventListener('click', handleClick);
         return () => {
             document.removeEventListener('click', handleClick);
@@ -88,7 +90,7 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
                 className={cx('form-select')}
                 {...register(name, props.validate ? props.validate : { required: 'This field is required!' })}
             >
-                <label className={cx(required ? 'required' : 'label')} htmlFor="select">
+                <label className={required ? 'required label' : 'label'} htmlFor="select">
                     {label}
                 </label>
                 <div id="select" onClick={() => handleSelectClick()} className={cx('select-wrapper')}>
@@ -116,6 +118,7 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
                                         handleSelect(option.id, option.ho + option.ten_dem + option.ten, index);
                                     }}
                                 >
+                                    <div>{option.cccd}</div>
                                     <div>{option.ho + option.ten_dem + option.ten}</div>
                                     <div className={cx(active !== index ? 'hide' : '')}>
                                         <CheckIcon />

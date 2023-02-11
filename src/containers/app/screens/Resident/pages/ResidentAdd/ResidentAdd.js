@@ -43,32 +43,57 @@ function ResidentAdd(props) {
     };
     return (
         <div>
+            <div className="flex-center page-header">Thêm nhân khẩu</div>
             <AppForm
                 onSubmit={(data) => {
                     console.log(data);
                     onSubmit(data);
                 }}
             >
-                <Row gutter={32}>
-                    <Col xl={8}>
+                <Row gutter={[32, 12]}>
+                    <Col xs={8}>
                         <AppInput type="text" label="Họ" name="nhanKhauInfo.ho" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppInput type="text" label="Tên đệm" name="nhanKhauInfo.ten_dem" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppInput type="text" label="Tên" name="nhanKhauInfo.ten" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
                         <AppInput type="number" label="CCCD" name="nhanKhauInfo.cccd" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppDateInput label="Ngày cấp" name="nhanKhauInfo.cccd_ngay_cap" required></AppDateInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppInput type="text" label="Nơi cấp" name="nhanKhauInfo.cccd_noi_cap" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
                         <AppInput type="text" label="Bí danh" name="nhanKhauInfo.bi_danh" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppDateInput label="Ngày sinh" name="nhanKhauInfo.ngay_sinh" required></AppDateInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppInput type="text" label="Nơi sinh" name="nhanKhauInfo.noi_sinh" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
                         <AppInput type="text" label="Nguyên quán" name="nhanKhauInfo.nguyen_quan" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppInput type="text" label="Dân tộc" name="nhanKhauInfo.dan_toc" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
+                        <AppInput type="text" label="Tôn giáo" name="nhanKhauInfo.ton_giao" required></AppInput>
+                    </Col>
+                    <Col xs={8}>
                         <AppInput type="text" label="Nghề nghiệp" name="nhanKhauInfo.nghe_nhiep" required></AppInput>
                     </Col>
-                    <Col xl={8}>
-                        <AppInput type="text" label="Tên đệm" name="nhanKhauInfo.ten_dem" required></AppInput>
-                        <AppDateInput label="Ngày cấp" name="nhanKhauInfo.cccd_ngay_cap" required></AppDateInput>
-                        <AppDateInput label="Ngày sinh" name="nhanKhauInfo.ngay_sinh" required></AppDateInput>
-                        <AppInput type="text" label="Dân tộc" name="nhanKhauInfo.dan_toc" required></AppInput>
+                    <Col xs={8}>
                         <AppInput type="text" label="Nơi làm việc" name="nhanKhauInfo.noi_lam_viec" required></AppInput>
                     </Col>
-                    <Col xl={8}>
-                        <AppInput type="text" label="Tên" name="nhanKhauInfo.ten" required></AppInput>
-                        <AppInput type="text" label="Nơi cấp" name="nhanKhauInfo.cccd_noi_cap" required></AppInput>
-                        <AppInput type="text" label="Nơi sinh" name="nhanKhauInfo.noi_sinh" required></AppInput>
-                        <AppInput type="text" label="Tôn giáo" name="nhanKhauInfo.ton_giao" required></AppInput>
+                    <Col xs={8}>
                         <Row gutter={8}>
                             <Col xl={12}>
                                 <AppInput
@@ -89,7 +114,9 @@ function ResidentAdd(props) {
                         </Row>
                     </Col>
                 </Row>
-                <AppButton type="submit">Thêm</AppButton>
+                <div style={{ marginTop: '24px' }} className="bottom-right">
+                    <AppButton type="submit">Xác nhận</AppButton>
+                </div>
             </AppForm>
         </div>
     );

@@ -108,7 +108,7 @@ function EquipmentTypeList(props) {
         dispatch(LAY_LOAI_TB());
     }, []);
 
-    return <div>{data !== [] && <Table dataSource={data} columns={columns} />}</div>;
+    return <div>{danhSachThietBi.state === 'SUCCESS' && <Table dataSource={data} columns={columns} />}</div>;
 }
 
 export default EquipmentTypeList;

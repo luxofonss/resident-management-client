@@ -1,4 +1,4 @@
-import { Table, Tag, Space } from 'antd';
+import { Table, Tag, Space, Button } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './ResidentList.module.sass';
 import { LAY_HK, LAY_NK } from '../../redux/action';
@@ -76,7 +76,7 @@ const columns = [
         title: 'Hành động',
         key: 'id',
         fixed: 'right',
-        width: 230,
+        width: 280,
         render: (_, record) => (
             <div className={cx('action-wrapper')}>
                 <div className={cx('action-icon')}>
@@ -90,9 +90,15 @@ const columns = [
                     </Link>
                 </div> */}
 
-                {isEmptyValue(record.chu_ho_id) && <Link to={`/household/add-resident/${record.id}`}>Nhập khẩu</Link>}
+                {isEmptyValue(record.chu_ho_id) && (
+                    <Button>
+                        <Link to={`/household/add-resident/${record.id}`}>Nhập khẩu</Link>
+                    </Button>
+                )}
 
-                <Link to={`/resident/death/:${record.id}`}>Khai tử</Link>
+                <Button danger>
+                    <Link to={`/resident/death/:${record.id}`}>Khai tử</Link>
+                </Button>
             </div>
         ),
     },
@@ -116,7 +122,7 @@ function ResidentList(props) {
                     stt: index + 1,
                     name: nk.ho + nk.ten_dem + nk.ten,
                     ngay_sinh: nk.ngay_sinh.slice(0, 10),
-                    ccdd: nk.ccdd,
+                    cccd: nk.cccd,
                     dan_toc: nk.dan_toc,
                     gioi_tinh: nk.gioi_tinh,
                     nguyen_quan: nk.nguyen_quan,

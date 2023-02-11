@@ -10,6 +10,7 @@ import AppDateInput from '~/components/AppDateInput';
 import AppButton from '~/components/AppButton/AppButton';
 import { KHAI_SINH_NK, KHAI_SINH_NK_RESET, THEM_NK_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
+import AppSelectApi from '~/components/AppSelectApi';
 
 const cx = classNames.bind(styles);
 
@@ -56,69 +57,107 @@ function ResidentAddChild(props) {
     };
     return (
         <div>
+            <div className="flex-center page-header">Khai sinh</div>
+
             <AppForm
                 onSubmit={(data) => {
                     onSubmit(data);
                 }}
             >
                 <Row gutter={32}>
-                    <Col xs={5}>
+                    <Col xs={6}>
                         <AppInput type="text" label="Họ" name="nhanKhauInfo.ho" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppInput type="text" label="Tên đệm" name="nhanKhauInfo.ten_dem" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppInput type="text" label="Tên" name="nhanKhauInfo.ten" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
                         <AppInput type="number" label="CCCD" name="nhanKhauInfo.cccd" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppDateInput label="Ngày cấp" name="nhanKhauInfo.cccd_ngay_cap" required></AppDateInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppInput type="text" label="Nơi cấp" name="nhanKhauInfo.cccd_noi_cap" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
                         <AppInput type="text" label="Bí danh" name="nhanKhauInfo.bi_danh" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppDateInput label="Ngày sinh" name="nhanKhauInfo.ngay_sinh" required></AppDateInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppInput type="text" label="Nơi sinh" name="nhanKhauInfo.noi_sinh" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
                         <AppInput type="text" label="Nguyên quán" name="nhanKhauInfo.nguyen_quan" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppInput type="text" label="Dân tộc" name="nhanKhauInfo.dan_toc" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppInput type="text" label="Tôn giáo" name="nhanKhauInfo.ton_giao" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
                         <AppInput type="text" label="Nghề nghiệp" name="nhanKhauInfo.nghe_nhiep" required></AppInput>
                     </Col>
-                    <Col xs={5}>
-                        <AppInput type="text" label="Tên đệm" name="nhanKhauInfo.ten_dem" required></AppInput>
-                        <AppDateInput label="Ngày cấp" name="nhanKhauInfo.cccd_ngay_cap" required></AppDateInput>
-                        <AppDateInput label="Ngày sinh" name="nhanKhauInfo.ngay_sinh" required></AppDateInput>
-                        <AppInput type="text" label="Dân tộc" name="nhanKhauInfo.dan_toc" required></AppInput>
+                    <Col xs={6}>
                         <AppInput type="text" label="Nơi làm việc" name="nhanKhauInfo.noi_lam_viec" required></AppInput>
                     </Col>
-                    <Col xs={5}>
-                        <AppInput type="text" label="Tên" name="nhanKhauInfo.ten" required></AppInput>
-                        <AppInput type="text" label="Nơi cấp" name="nhanKhauInfo.cccd_noi_cap" required></AppInput>
-                        <AppInput type="text" label="Nơi sinh" name="nhanKhauInfo.noi_sinh" required></AppInput>
-                        <AppInput type="text" label="Tôn giáo" name="nhanKhauInfo.ton_giao" required></AppInput>
-                        <Row gutter={8}>
-                            <Col xl={12}>
-                                <AppInput
-                                    type="text"
-                                    label="Điện thoại"
-                                    name="nhanKhauInfo.so_dien_thoai"
-                                    required
-                                ></AppInput>
-                            </Col>
-                            <Col xs={12}>
-                                <AppInput
-                                    type="email"
-                                    label="Email"
-                                    name="nhanKhauInfo.email"
-                                    required={false}
-                                ></AppInput>
-                            </Col>
-                        </Row>
+                    <Col xs={6}>
+                        <AppInput type="text" label="Điện thoại" name="nhanKhauInfo.so_dien_thoai" required></AppInput>
                     </Col>
-                    <Col xs={4}>
+
+                    <Col xs={6}>
+                        <AppInput type="email" label="Email" name="nhanKhauInfo.email" required={false}></AppInput>
+                    </Col>
+                    <Col xs={6}>
                         <AppInput type="text" label="Số hộ khẩu" name="hokhau" required></AppInput>
-                        <AppInput type="text" label="Họ và tên bố" name="giayKhaiSinh.bo_id" required></AppInput>
-                        <AppDateInput label="Ngày khai sinh" name="giayKhaiSinh.ngay_khai_sinh" required></AppDateInput>
-                        <AppInput
-                            type="text"
-                            label="Người khai sinh"
+                    </Col>
+                    <Col xs={6}>
+                        <AppSelectApi
+                            apiURL="nhanKhau"
+                            label="CCCD - Họ và tên bố"
+                            name="giayKhaiSinh.bo_id"
+                            required
+                        />
+                    </Col>
+
+                    <Col xs={6}>
+                        <AppSelectApi
+                            apiURL="nhanKhau"
+                            label="CCCD - Họ và tên mẹ"
+                            name="giayKhaiSinh.me_id"
+                            required
+                        />
+                    </Col>
+                    <Col xs={6}>
+                        <AppSelectApi
+                            apiURL="nhanKhau"
+                            label="CCCD - Họ và tên người khai sinh"
                             name="giayKhaiSinh.nguoi_khai_sinh"
                             required
-                        ></AppInput>
+                        />
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={6}>
                         <AppInput type="text" label="Quan hệ chủ hộ" name="quanHeChuHo" required></AppInput>
-                        <AppInput type="text" label="Họ và tên mẹ" name="giayKhaiSinh.me_id" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppDateInput label="Ngày khai sinh" name="giayKhaiSinh.ngay_khai_sinh" required></AppDateInput>
+                    </Col>
+                    <Col xs={6}>
                         <AppInput type="text" label="Nơi đăng ký" name="giayKhaiSinh.noi_dang_ki" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
                         <AppInput type="text" label="Ghi chú" name="giayKhaiSinh.ghi_chu" required={false}></AppInput>
                     </Col>
                 </Row>
-                <AppButton type="submit">Thêm</AppButton>
+                <div style={{ marginTop: '24px' }} className="bottom-right">
+                    <AppButton type="submit">Xác nhận</AppButton>
+                </div>
             </AppForm>
         </div>
     );

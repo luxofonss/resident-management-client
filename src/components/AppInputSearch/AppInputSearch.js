@@ -3,10 +3,17 @@ import { useForm, useFormContext } from 'react-hook-form';
 import styles from './AppInputSearch.module.sass';
 
 const cx = classNames.bind(styles);
-function AppInputSearch({ apiURL, onChange, isFullPath = false, name, wrapperStyle = {}, ...props }) {
+function AppInputSearch({ apiURL, onChange, required, isFullPath = false, name, wrapperStyle = {}, ...props }) {
+    const {
+        register,
+        setValue,
+        formState: { errors },
+    } = useFormContext();
     return (
         <div className={cx('input-wrapper')} style={wrapperStyle}>
-            <label htmlFor={name}>{props.label}</label>
+            <label htmlFor={name} className={cx(required ? 'required' : '')}>
+                {props.label}
+            </label>
 
             <input
                 id={name}
@@ -16,6 +23,7 @@ function AppInputSearch({ apiURL, onChange, isFullPath = false, name, wrapperSty
                 autoComplete="off"
                 {...props}
             />
+            {errors?.type === 'required' && <div className="error-message">Trường này không được để trống</div>}
         </div>
     );
 }

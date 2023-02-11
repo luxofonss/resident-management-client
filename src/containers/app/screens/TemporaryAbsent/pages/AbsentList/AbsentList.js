@@ -1,4 +1,4 @@
-import { Table, Tag, Space, notification } from 'antd';
+import { Table, Tag, Space, notification, Button } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './AbsentList.module.sass';
 import { ACCEPT_TAM_VANG, LAY_TAM_VANG } from '../../redux/action';
@@ -185,7 +185,7 @@ function AbsentList(props) {
                     style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
                     className={cx('action-wrapper')}
                 >
-                    <button onClick={() => handleAccept(record.id)}>phe duyet</button>
+                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
                 </div>
             ),
         },

@@ -1,4 +1,4 @@
-import { Col, notification, Row, Table, Tag } from 'antd';
+import { Button, Col, notification, Row, Table, Tag } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './HouseholdDetail.module.sass';
 import { LAY_HK, UPDATE_HK, UPDATE_HK_RESET } from '../../redux/action';
@@ -11,6 +11,7 @@ import AppInput from '~/components/AppInput';
 import { IconEdit, IconTrash } from '~/assets/svgs';
 import AppButton from '~/components/AppButton/AppButton';
 import { REQUEST_STATE } from '~/app-configs';
+import { isEmptyValue } from '~/helpers/check';
 
 const cx = classNames.bind(styles);
 
@@ -71,7 +72,7 @@ function HouseholdDetail(props) {
         },
         {
             title: 'Full Name',
-            width: 100,
+            width: 150,
             dataIndex: 'name',
             key: 'name',
             fixed: 'left',
@@ -87,11 +88,13 @@ function HouseholdDetail(props) {
             title: 'CCCD',
             dataIndex: 'cccd',
             key: 'cccd',
+            width: 100,
         },
         {
             title: 'Dân tộc',
             dataIndex: 'dan_toc',
             key: 'dan_toc',
+            width: 100,
         },
         {
             title: 'Giới tính',
@@ -103,20 +106,24 @@ function HouseholdDetail(props) {
             title: 'Nguyên quán',
             dataIndex: 'nguyen_quan',
             key: 'nguyen_quan',
+            width: 120,
         },
         {
             title: 'Nghề nghiệp',
             dataIndex: 'nghe_nghiep',
             key: 'nghe_nghiep',
+            width: 120,
         },
         {
             title: 'Nơi làm việc',
             dataIndex: 'noi_lam_viec',
             key: 'noi_lam_viec',
+            width: 150,
         },
         {
-            title: 'Hoạt động',
+            title: 'Trạng thái',
             key: 'active',
+            width: 120,
             dataIndex: 'active',
             render: (_, { active }) => (
                 <>
@@ -128,20 +135,27 @@ function HouseholdDetail(props) {
             title: 'Action',
             key: 'id',
             fixed: 'right',
-            width: 150,
-            render: (_, { id }) => (
+            width: 250,
+            render: (_, record) => (
                 <div className={cx('action-wrapper')}>
                     <div className={cx('action-icon')}>
-                        <Link to={`/resident/edit/:${id}`}>
+                        <Link to={`/resident/edit/:${record.id}`}>
                             <IconEdit width={14} height={14} />
                         </Link>
                     </div>
-                    <div className={cx('action-icon')}>
-                        <Link to={`/resident/delete/:${id}`}>
+                    {/* <div className={cx('action-icon')}>
+                        <Link to={`/resident/delete/:${record.id}`}>
                             <IconTrash width={14} height={14} />
                         </Link>
-                    </div>
-                    <Link to={`/resident/death/:${id}`}>Khai tử</Link>
+                    </div> */}
+                    {isEmptyValue(record.chu_ho_id) && (
+                        <Button>
+                            <Link to={`/household/add-resident/${record.id}`}>Nhập khẩu</Link>
+                        </Button>
+                    )}
+                    <Link to={`/resident/death/:${record.id}`}>
+                        <Button danger>Khai tử</Button>
+                    </Link>
                 </div>
             ),
         },
@@ -197,6 +211,7 @@ function HouseholdDetail(props) {
 
     return (
         <div>
+            <div className="page-header">Chi tiết hộ khẩu</div>
             {danhSachHoKhau?.data?.data[0] && (
                 <div>
                     <AppForm onSubmit={onUpdate}>
@@ -226,7 +241,11 @@ function HouseholdDetail(props) {
                             </Col>
 
                             <Col xs={3}>
-                                {edit === false && <AppButton onClick={() => setEdit(true)}>Chỉnh sửa</AppButton>}
+                                {edit === false && (
+                                    <div className="bottom-right">
+                                        <AppButton onClick={() => setEdit(true)}>Chỉnh sửa</AppButton>
+                                    </div>
+                                )}
                                 {edit === true && <AppButton type="submit">Xác nhận</AppButton>}
                             </Col>
                         </Row>

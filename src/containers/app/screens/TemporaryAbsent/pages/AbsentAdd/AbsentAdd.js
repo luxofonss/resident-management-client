@@ -43,21 +43,37 @@ function AbsentAdd(props) {
     }, [addTamVang?.state]);
 
     return (
-        <div style={{ width: '50%', minWidth: '500px', margin: '0 auto' }}>
+        <div style={{ width: '50%', minWidth: '450px', margin: '0 auto' }}>
             <AppForm onSubmit={onSubmit}>
-                <AppInput type="number" label="ID người tạm vắng" name="nhan_khau_id"></AppInput>
-                <AppDateInput
-                    defaultValue={moment().format('YYYY-MM-DD')}
-                    label="Ngày làm đơn"
-                    name="ngay_lam_don"
-                    required
-                ></AppDateInput>
-                <AppInput type="text" label="Địa chỉ tạm trú" name="dia_chi_tam_chu" required></AppInput>
-                <AppInput type="text" label="Lý do" name="ly_do" required></AppInput>
-                <AppInput type="number" label="Sổ hộ khẩu" name="so_ho_khau_id" required></AppInput>
-                <AppDateInput label="Ngày hết hạn" name="ngay_het_han" required></AppDateInput>
+                <Row gutter={(24, 12)}>
+                    <Col xs={24}>
+                        <AppInput type="number" label="ID người tạm vắng" name="nhan_khau_id" required></AppInput>
+                    </Col>
+                    <Col xs={24}>
+                        <AppDateInput
+                            defaultValue={moment().format('YYYY-MM-DD')}
+                            label="Ngày làm đơn"
+                            name="ngay_lam_don"
+                            required
+                        ></AppDateInput>
+                    </Col>
+                    <Col xs={24}>
+                        <AppInput type="text" label="Địa chỉ tạm trú" name="dia_chi_tam_chu" required></AppInput>
+                    </Col>
+                    <Col xs={24}>
+                        <AppInput type="text" label="Lý do" name="ly_do" required></AppInput>
+                    </Col>
+                    <Col xs={24}>
+                        <AppInput type="number" label="Sổ hộ khẩu" name="so_ho_khau_id" required></AppInput>
+                    </Col>
+                    <Col xs={24}>
+                        <AppDateInput label="Ngày hết hạn" name="ngay_het_han" required></AppDateInput>
+                    </Col>
+                </Row>
 
-                <AppButton type="submit">Thêm tạm vắng</AppButton>
+                <div style={{ marginTop: '24px' }} className="bottom-right">
+                    <AppButton type="submit">Thêm tạm vắng</AppButton>
+                </div>
             </AppForm>
         </div>
     );
