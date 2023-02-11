@@ -18,10 +18,63 @@ function AbsentList(props) {
     const tamVangAcp = useSelector((state) => {
         return state.temporaryAbsent.acpTamVang;
     });
+    const danhSachNhanKhau = useSelector((state) => {
+        return state.resident?.list;
+    });
+
+    const danhSachNhanKhau2 = useSelector((state) => {
+        return state.resident?.list2;
+    });
 
     const handleAccept = (id) => {
         dispatch(ACCEPT_TAM_VANG({ id: id }));
     };
+    const idList = [];
+    const idPDList = [];
+    const dataSource = [];
+
+    if (tamVangList.state === 'SUCCESS') {
+        tamVangList.data.forEach((tamvang, index) => {
+            idList.push(tamvang.nhan_khau_id);
+            if (tamvang.user_phe_duyet) {
+                idPDList.push(tamvang.user_phe_duyet);
+            } else {
+                idPDList.push(-1);
+            }
+        });
+    }
+    if (tamVangList.state === 'SUCCESS' && danhSachNhanKhau.state === 'SUCCESS') {
+        console.log('test: ', tamVangList.data);
+
+        tamVangList.data.forEach((tamvang, index) => {
+            dataSource.push({
+                stt: index + 1,
+                key: tamvang.id,
+                dia_chi_tam_tru: tamvang.dia_chi_tam_tru,
+                ghi_chu: tamvang.ghi_chu,
+                fullName: danhSachNhanKhau?.data?.data[index]
+                    ? danhSachNhanKhau?.data?.data[index]?.ho +
+                      ' ' +
+                      danhSachNhanKhau?.data?.data[index]?.ten_dem +
+                      ' ' +
+                      danhSachNhanKhau?.data?.data[index]?.ten
+                    : '',
+                ly_do: tamvang.ly_do,
+                ngay_het_han: tamvang.ngay_het_han?.slice(0, 10),
+                ngay_lam_don: tamvang.ngay_lam_don?.slice(0, 10),
+                ngay_phe_duyet: tamvang.ngay_phe_duyet?.slice(0, 10),
+                trang_thai: tamvang.trang_thai,
+                user_phe_duyet:
+                    idPDList[index] !== -1 && danhSachNhanKhau2?.data?.data[index]?.ho
+                        ? danhSachNhanKhau2?.data?.data[index]?.ho +
+                          ' ' +
+                          danhSachNhanKhau2?.data?.data[index]?.ten_dem +
+                          ' ' +
+                          danhSachNhanKhau2?.data?.data[index]?.ten
+                        : '',
+            });
+        });
+    }
 
     useEffect(() => {
         let ignore = false;
@@ -59,8 +112,8 @@ function AbsentList(props) {
         {
             title: 'Full Name',
             width: 100,
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'fullName',
+            key: 'fullName',
             fixed: 'left',
         },
         {

@@ -43,7 +43,7 @@ const sliderItems = [
         getNavItem('Danh sách loại thiết bị', '/equipment/type/', <UnorderedListOutlined />),
         getNavItem('Thêm thiết bị', '/equipment/add', <UnorderedListOutlined />),
         getNavItem('Mượn thiết bị', '/equipment/borrow', <UnorderedListOutlined />),
-        getNavItem('Danh sách mượn thiết bị', '/equipment/borrow/list', <UnorderedListOutlined />),
+        getNavItem('Danh sách phiếu mượn', '/equipment/borrow/list', <UnorderedListOutlined />),
     ]),
     getNavItem('Đơn từ', 'application', <WalletOutlined />, [
         getNavItem('Hộ khẩu', '/application/household', <UnorderedListOutlined />, [
@@ -54,9 +54,11 @@ const sliderItems = [
         ]),
         getNavItem('Nhân khẩu', '/application/resident', <UnorderedListOutlined />, [
             getNavItem('Đơn đính chính nhân khẩu', '/application/resident/update', <UnorderedListOutlined />),
+            getNavItem('Giấy khai sinh', '/application/resident/new-child', <UnorderedListOutlined />),
+            getNavItem('Giấy khai tử', '/application/resident/death', <UnorderedListOutlined />),
         ]),
-        getNavItem('Tạm trú', '/application/temporary', <UnorderedListOutlined />),
-        getNavItem('Tạm vắng', '/application/absent', <UnorderedListOutlined />),
+        // getNavItem('Tạm trú', '/application/temporary', <UnorderedListOutlined />),
+        // getNavItem('Tạm vắng', '/application/absent', <UnorderedListOutlined />),
     ]),
 ];
 

@@ -75,4 +75,15 @@ export const childRoutes = [
             return import('./pages/HouseholdAddResident');
         }),
     },
+    {
+        path: '/household/add-resident/',
+        key: 'add-resident',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([householdModule, residentModule], 'app');
+            return import('./pages/HouseholdAddResident');
+        }),
+    },
 ];

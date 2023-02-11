@@ -76,7 +76,11 @@ function HouseholdMove(props) {
             <AppForm onSubmit={(data) => onSubmit(data)}>
                 <Row gutter={[12, 8]}>
                     <Col xs={6}>
-                        <AppSelectApi apiURL="nhanKhau" label="Họ và tên - CCCD" name="donChuyenKhau.dai_dien_id" />
+                        <AppSelectApi
+                            apiURL="nhanKhau"
+                            label="CCCD - Họ và tên người đại diện"
+                            name="donChuyenKhau.dai_dien_id"
+                        />
                     </Col>
 
                     <Col xs={6}>

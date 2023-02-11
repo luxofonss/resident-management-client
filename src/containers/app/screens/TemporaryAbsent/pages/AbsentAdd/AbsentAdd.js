@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './AbsentAdd.module.sass';
 import classNames from 'classnames/bind';
 import AppButton from '~/components/AppButton/AppButton';
@@ -13,6 +13,9 @@ import moment from 'moment';
 import { TAO_TAM_VANG, TAO_TAM_VANG_RESET } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { REQUEST_STATE } from '~/app-configs';
+import AppInputSearch from '~/components/AppInputSearch';
+import { LAY_NK, LAY_NK_FAIL, LAY_NK_RESET } from '../../../Resident/redux/action';
+import useDebounceValue from '~/hooks/useDebounceValue';
 
 const cx = classNames.bind(styles);
 
@@ -42,7 +45,7 @@ function AbsentAdd(props) {
     return (
         <div style={{ width: '50%', minWidth: '500px', margin: '0 auto' }}>
             <AppForm onSubmit={onSubmit}>
-                <AppInput type="number" label="Họ và tên" name="nhan_khau_id"></AppInput>
+                <AppInput type="number" label="ID người tạm vắng" name="nhan_khau_id"></AppInput>
                 <AppDateInput
                     defaultValue={moment().format('YYYY-MM-DD')}
                     label="Ngày làm đơn"

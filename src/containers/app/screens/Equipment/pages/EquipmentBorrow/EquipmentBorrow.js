@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './EquipmentBorrow.module.sass';
 import classNames from 'classnames/bind';
 import AppButton from '~/components/AppButton/AppButton';
@@ -8,24 +8,41 @@ import AppFileInput from '~/components/AppFileInput';
 import AppInput from '~/components/AppInput';
 import AppSelectInput from '~/components/AppSelectInput';
 import AppTextArea from '~/components/AppTextArea';
-import { Col, Row } from 'antd';
+import { Col, notification, Row } from 'antd';
 import { useState } from 'react';
 import AppCheckbox from '~/components/AppCheckbox';
+import { useDispatch, useSelector } from 'react-redux';
+import { MUON_THIET_BI, MUON_THIET_BI_RESET } from '../../redux/action';
+import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
-
-const options = [
-    { name: 'Phương án A', value: 'A' },
-    { name: 'Phương án B', value: 'B' },
-    { name: 'Phương án C', value: 'C' },
-    { name: 'Phương án E', value: 'E' },
-    { name: 'Phương án F', value: 'F' },
-];
 
 function EquipmentBorrow(props) {
     const [addType, setAddType] = useState(false);
     const [indexes, setIndexes] = React.useState([0]);
     const [counter, setCounter] = React.useState(1);
+    const muonThietBi = useSelector((state) => state.equipment.muonThietBi);
+
+    const dispatch = useDispatch();
+    const onSubmit = (data) => {
+        dispatch(MUON_THIET_BI(data));
+    };
+
+    useEffect(() => {
+        if (muonThietBi.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Mượn thiết bị thành công!',
+            });
+        }
+        if (muonThietBi?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Mượn thiết bị thất bại!',
+            });
+        }
+        dispatch(MUON_THIET_BI_RESET());
+    }, [muonThietBi?.state]);
 
     const addEquipment = () => {
         setIndexes((prevIndexes) => [...prevIndexes, counter]);
@@ -40,9 +57,10 @@ function EquipmentBorrow(props) {
     const clearAll = () => {
         setIndexes([]);
     };
+
     return (
         <div>
-            <AppForm onSubmit={(data) => console.log(data)}>
+            <AppForm onSubmit={onSubmit}>
                 <Row gutter={48}>
                     <Col xs={8}>
                         {indexes.map((index) => {
@@ -73,7 +91,7 @@ function EquipmentBorrow(props) {
                     <Col xs={8}>
                         <AppInput name="phieuMuon.cccd" label="CCCD" />
                         <AppInput name="phieuMuon.ho_va_ten" label="Họ và tên" />
-                        <AppInput type="text" name="phieuMuon.so_dien_thoai" label="Họ và tên" />
+                        <AppInput type="number" name="phieuMuon.so_dien_thoai" label="Số điện thoại" />
                         <AppInput type="email" name="phieuMuon.email" label="Email" />
                         <AppInput type="text" name="phieuMuon.ly_do" label="Lý do" />
                     </Col>

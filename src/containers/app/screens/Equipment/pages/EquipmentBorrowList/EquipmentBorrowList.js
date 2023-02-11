@@ -1,8 +1,9 @@
-import { Table } from 'antd';
+import { Button, Table, Tag } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LAY_LOAI_TB } from '../../redux/action';
+import { Link } from 'react-router-dom';
+import { LAY_LOAI_TB, LAY_PHIEU_MUON } from '../../redux/action';
 import styles from './EquipmentBorrowList.module.sass';
 
 const cx = classNames.bind(styles);
@@ -22,88 +23,107 @@ const dataSource = [
 
 const columns = [
     {
-        title: 'Tên loại thiết bị',
-        dataIndex: 'name',
-        key: 'name',
-        width: 200,
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+        width: 50,
     },
     {
-        title: 'Mô tả',
-        dataIndex: 'mo_ta',
-        key: 'mo_ta',
+        title: 'Họ và tên',
+        dataIndex: 'ho_va_ten',
+        key: 'ho_va_ten',
     },
     {
-        title: 'Xuất xứ',
-        dataIndex: 'xuat_xu',
-        key: 'xuat_xu',
+        title: 'CCCD',
+        dataIndex: 'cccd',
+        key: 'cccd',
         width: 100,
     },
     {
-        title: 'Giá trị',
-        dataIndex: 'gia_trị',
-        key: 'gia_trị',
+        title: 'Số điện thoại',
+        dataIndex: 'so_dien_thoai',
+        key: 'so_dien_thoai',
         width: 100,
     },
     {
-        title: 'Thu phí',
-        dataIndex: 'thu_phi',
-        key: 'thu_phi',
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
         width: 100,
     },
     {
-        title: 'Thu phí cọc',
-        dataIndex: 'thu_phi_coc',
-        key: 'thu_phi_coc',
+        title: 'Người tạo',
+        dataIndex: 'user_tao',
+        key: 'user_tao',
         width: 120,
     },
     {
-        title: 'Là công trình',
-        dataIndex: 'la_cong_trinh',
-        key: 'la_cong_trinh',
+        title: 'Người phê duyệt',
+        dataIndex: 'user_phe_duyet',
+        key: 'user_phe_duyet',
+    },
+
+    {
+        title: 'Lý do',
+        dataIndex: 'ly_do',
+        key: 'ly_do',
     },
     {
-        title: 'Ghi chú',
-        dataIndex: 'ghi_chu',
-        key: 'ghi_chu',
+        title: 'Đăng ký',
+        dataIndex: 'sao_ke_dang_ki',
+        key: 'sao_ke_dang_ki',
+    },
+    {
+        title: 'Trả',
+        dataIndex: 'sao_ke_tra',
+        key: 'sao_ke_tra',
+    },
+    {
+        title: 'Ngày phê duyệt',
+        dataIndex: 'ngay_phe_duyet',
+        key: 'ngay_phe_duyet',
+    },
+    {
+        title: 'Trạng thái',
+        key: 'trang_thai',
+        dataIndex: 'trang_thai',
+        render: (_, { trang_thai }) => (
+            <>
+                <Tag color={trang_thai === 'DONE' ? 'geekblue' : 'volcano'}>
+                    {trang_thai === 'DONE' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+                </Tag>
+            </>
+        ),
+    },
+    {
+        title: 'Action',
+        key: 'action',
+        fixed: 'right',
+        width: 150,
+        render: (_, record) => (
+            <Button>
+                <Link to="/">Xem chi tiết</Link>
+            </Button>
+        ),
     },
 ];
 
 function EquipmentBorrowList(props) {
     const dispatch = useDispatch();
-    const danhSachThietBi = useSelector((state) => {
+    const danhSachPhieuMuon = useSelector((state) => {
         console.log(state);
-        return state.equipment?.list;
+        return state.equipment?.layPhieuMuon;
     });
-    let data = [];
-    if (danhSachThietBi?.data?.data) {
-        console.log(danhSachThietBi?.data?.data);
-        danhSachThietBi?.data?.data.forEach((tb) => {
-            data = [
-                ...data,
-                {
-                    name: tb.name,
-                    thu_phi: tb.thu_phi,
-                    la_cong_trinh: tb.la_cong_trinh,
-                    xuat_xu: tb.xuat_xu,
-                    mo_ta: tb.mo_ta,
-                    ghi_chu: tb.ghi_chu,
-                    thu_phi_coc: tb.thu_phi_coc,
-                    gia_tri: tb.gia_tri,
-                },
-            ];
-        });
-    }
 
     useEffect(() => {
-        dispatch(LAY_LOAI_TB());
+        dispatch(LAY_PHIEU_MUON());
     }, []);
 
-    return <div>{data !== [] && <Table dataSource={dataSource} columns={columns} />}</div>;
-    // return (
-    //     <div>
-    //         <Table dataSource={dataSource} columns={columns} />
-    //     </div>
-    // );
+    return (
+        <div>
+            {danhSachPhieuMuon.state === 'SUCCESS' && <Table dataSource={danhSachPhieuMuon.data} columns={columns} />}
+        </div>
+    );
 }
 
 export default EquipmentBorrowList;

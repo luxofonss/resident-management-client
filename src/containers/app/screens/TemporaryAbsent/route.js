@@ -27,7 +27,7 @@ export const childRoutes = [
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
-            await initModules([temporaryAbsentModule], 'app');
+            await initModules([temporaryAbsentModule, residentModule], 'app');
             return import('./pages/AbsentAdd');
         }),
     },

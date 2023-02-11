@@ -5,7 +5,7 @@ import { LAY_HK, UPDATE_HK, UPDATE_HK_RESET } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { LAY_NK } from '../../../Resident/redux/action';
+import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import { IconEdit, IconTrash } from '~/assets/svgs';
@@ -23,7 +23,7 @@ function HouseholdDetail(props) {
     const updateHK = useSelector((state) => state.household.updateHK);
 
     const danhSachNhanKhau = useSelector((state) => {
-        return state.resident?.list;
+        return state.resident?.list2;
     });
     const { id } = useParams();
     let data = [];
@@ -49,7 +49,16 @@ function HouseholdDetail(props) {
     }, []);
 
     useEffect(() => {
-        dispatch(LAY_NK({ ids: danhSachHoKhau?.data?.data[0].nhanKhau }));
+        if (danhSachHoKhau?.data?.data[0]?.nhanKhau) {
+            dispatch(
+                LAY_NK_2({
+                    ids:
+                        danhSachHoKhau?.data?.data[0]?.nhanKhau.length > 0
+                            ? danhSachHoKhau?.data?.data[0].nhanKhau
+                            : -1,
+                }),
+            );
+        }
     }, [danhSachHoKhau?.data?.data[0]?.nhanKhau]);
 
     const columnsResident = [

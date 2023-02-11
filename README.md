@@ -4,3 +4,8 @@
 
 3. npm start
 
+tao tai nguye
+tao type tai nguyen
+muon thiet bi
+tra thiet bi
+phieu muon

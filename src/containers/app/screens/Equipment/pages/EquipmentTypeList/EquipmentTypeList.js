@@ -84,26 +84,23 @@ function EquipmentTypeList(props) {
     const dispatch = useDispatch();
     const danhSachThietBi = useSelector((state) => {
         console.log(state);
-        return state.equipment?.list;
+        return state.equipment.danhSachLoaiThietBi;
     });
-    let data = [];
-    if (danhSachThietBi?.data?.data) {
-        console.log(danhSachThietBi?.data?.data);
-        danhSachThietBi?.data?.data.forEach((tb) => {
-            data = [
-                ...data,
-                {
-                    id: tb.id,
-                    name: tb.name,
-                    thu_phi: tb.thu_phi,
-                    la_cong_trinh: tb.la_cong_trinh,
-                    xuat_xu: tb.xuat_xu,
-                    mo_ta: tb.mo_ta,
-                    ghi_chu: tb.ghi_chu,
-                    thu_phi_coc: tb.thu_phi_coc,
-                    gia_tri: tb.gia_tri,
-                },
-            ];
+    const data = [];
+    if (danhSachThietBi?.data) {
+        console.log(danhSachThietBi?.data);
+        danhSachThietBi?.data.forEach((tb) => {
+            data.push({
+                id: tb.id,
+                name: tb.name,
+                thu_phi: tb.thu_phi,
+                la_cong_trinh: tb.la_cong_trinh,
+                xuat_xu: tb.xuat_xu,
+                mo_ta: tb.mo_ta,
+                ghi_chu: tb.ghi_chu,
+                thu_phi_coc: tb.thu_phi_coc,
+                gia_tri: tb.gia_tri,
+            });
         });
     }
 
@@ -111,12 +108,7 @@ function EquipmentTypeList(props) {
         dispatch(LAY_LOAI_TB());
     }, []);
 
-    return <div>{data !== [] && <Table dataSource={dataSource} columns={columns} />}</div>;
-    // return (
-    //     <div>
-    //         <Table dataSource={dataSource} columns={columns} />
-    //     </div>
-    // );
+    return <div>{data !== [] && <Table dataSource={data} columns={columns} />}</div>;
 }
 
 export default EquipmentTypeList;
