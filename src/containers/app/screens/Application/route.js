@@ -54,4 +54,37 @@ export const childRoutes = [
             return import('./pages/HouseholdUpdate');
         }),
     },
+    {
+        path: '/application/household/update/detail/:id',
+        key: 'update-detail',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([applicationModule, residentModule, householdModule], 'app');
+            return import('./pages/HouseholdUpdateDetail');
+        }),
+    },
+    {
+        path: '/application/resident/new-child',
+        key: 'new-child',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([applicationModule, residentModule], 'app');
+            return import('./pages/ResidentAddChild');
+        }),
+    },
+    {
+        path: '/application/resident/death',
+        key: 'death',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([applicationModule, residentModule], 'app');
+            return import('./pages/ResidentDeath');
+        }),
+    },
 ];

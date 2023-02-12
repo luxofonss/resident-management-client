@@ -1,11 +1,15 @@
-1. git clone <repo>
+1.  git clone <repo>
 
-2. npm install
+2.  npm install
 
-3. npm start
+3.  npm start
+    {
 
-tao tai nguye
-tao type tai nguyen
-muon thiet bi
-tra thiet bi
-phieu muon
+    "noi_dang_ki": "asg",
+    "ghi_chu": "asgasg",
+
+            "quan_he": "ac",
+
+            "trang_thai": "CHO_DUYET",
+
+        },

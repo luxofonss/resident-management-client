@@ -13,6 +13,14 @@ import {
     KHAI_TU_NK_FAIL,
     KHAI_TU_NK_RESET,
     KHAI_TU_NK_SUCCESS,
+    LAY_KHAI_SINH_NK,
+    LAY_KHAI_SINH_NK_FAIL,
+    LAY_KHAI_SINH_NK_RESET,
+    LAY_KHAI_SINH_NK_SUCCESS,
+    LAY_KHAI_TU_NK,
+    LAY_KHAI_TU_NK_FAIL,
+    LAY_KHAI_TU_NK_RESET,
+    LAY_KHAI_TU_NK_SUCCESS,
     LAY_NK,
     LAY_NK_2,
     LAY_NK_FAIL,
@@ -161,6 +169,38 @@ export default combineReducers({
                 return state;
         }
     },
+    listKhaiSinhNK: (state = defaultState, action) => {
+        switch (action.type) {
+            case LAY_KHAI_SINH_NK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case LAY_KHAI_SINH_NK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case LAY_KHAI_SINH_NK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case LAY_KHAI_SINH_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
     capNhatNK: (state = defaultState, action) => {
         switch (action.type) {
             case CAP_NHAT_NK().type: {
@@ -215,6 +255,38 @@ export default combineReducers({
                 };
             }
             case KHAI_TU_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    listKhaiTuNK: (state = defaultState, action) => {
+        switch (action.type) {
+            case LAY_KHAI_TU_NK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case LAY_KHAI_TU_NK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case LAY_KHAI_TU_NK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case LAY_KHAI_TU_NK_RESET().type: {
                 return {
                     ...state,
                     state: null,

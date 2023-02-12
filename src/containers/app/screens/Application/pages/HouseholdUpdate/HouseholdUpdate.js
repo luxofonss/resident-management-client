@@ -126,7 +126,7 @@ function HouseholdUpdate(props) {
             title: 'Số hộ khẩu',
             dataIndex: 'so_ho_khau_id',
             key: 'so_ho_khau_id',
-            width: 50,
+            width: 120,
         },
         {
             title: 'Ngày làm đơn',
@@ -138,41 +138,37 @@ function HouseholdUpdate(props) {
             title: 'Ngày phê duyệt',
             dataIndex: 'ngay_phe_duyet',
             key: 'ngay_phe_duyet',
-            width: 140,
+            width: 160,
         },
 
         {
             title: 'Người phê duyệt',
             dataIndex: 'user_phe_duyet',
             key: 'user_phe_duyet',
-            width: 140,
+            width: 170,
         },
-        {
-            title: 'Thông tin thay đổi',
-            key: 'mo_ta',
-            width: 400,
-            render: (_, record) => (
-                <>
-                    <div>
-                        <div>thong tin cu</div>
-                        <div>tt</div>
-                    </div>
-                    <div>
-                        <div>thong tin moi</div>
-                        <div>{record.mo_ta}</div>
-                    </div>
-                </>
-            ),
-        },
+        // {
+        //     title: 'Thông tin thay đổi',
+        //     key: 'mo_ta',
+        //     width: 400,
+        //     render: (_, record) => (
+        //         <>
+        //             <div>{record.mo_ta}</div>
+        //         </>
+        //     ),
+        // },
         {
             title: 'Ghi chú',
             dataIndex: 'ghi_chu',
             key: 'ghi_chu',
+            width: 250,
         },
         {
             title: 'Trạng thái',
             key: 'trang_thai',
             dataIndex: 'trang_thai',
+            width: 100,
+
             render: (_, { trang_thai }) => (
                 <>
                     <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : 'volcano'}>
@@ -185,13 +181,18 @@ function HouseholdUpdate(props) {
             title: 'Action',
             key: 'action',
             fixed: 'right',
-            width: 150,
+            width: 250,
             render: (_, record) => (
-                <div
-                    style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
-                    className={cx('action-wrapper')}
-                >
-                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div
+                        style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
+                        className={cx('action-wrapper')}
+                    >
+                        <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                    </div>
+                    <Link to={`/application/household/update/detail/${record.id}`}>
+                        <Button>Xem chi tiết</Button>
+                    </Link>
                 </div>
             ),
         },

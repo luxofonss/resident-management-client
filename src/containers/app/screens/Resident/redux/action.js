@@ -110,6 +110,34 @@ export function KHAI_SINH_NK_RESET(payload) {
     };
 }
 
+export function LAY_KHAI_SINH_NK(payload) {
+    return {
+        type: 'LAY_KHAI_SINH_NK',
+        payload,
+    };
+}
+
+export function LAY_KHAI_SINH_NK_SUCCESS(payload) {
+    return {
+        type: 'LAY_KHAI_SINH_NK_SUCCESS',
+        payload,
+    };
+}
+
+export function LAY_KHAI_SINH_NK_FAIL(payload) {
+    return {
+        type: 'LAY_KHAI_SINH_NK_FAIL',
+        payload,
+    };
+}
+
+export function LAY_KHAI_SINH_NK_RESET(payload) {
+    return {
+        type: 'LAY_KHAI_SINH_NK_RESET',
+        payload,
+    };
+}
+
 export function CAP_NHAT_NK(payload) {
     return {
         type: 'CAP_NHAT_NK',
@@ -162,6 +190,34 @@ export function KHAI_TU_NK_FAIL(payload) {
 export function KHAI_TU_NK_RESET(payload) {
     return {
         type: 'KHAI_TU_NK_RESET',
+        payload,
+    };
+}
+
+export function LAY_KHAI_TU_NK(payload) {
+    return {
+        type: 'LAY_KHAI_TU_NK',
+        payload,
+    };
+}
+
+export function LAY_KHAI_TU_NK_SUCCESS(payload) {
+    return {
+        type: 'LAY_KHAI_TU_NK_SUCCESS',
+        payload,
+    };
+}
+
+export function LAY_KHAI_TU_NK_FAIL(payload) {
+    return {
+        type: 'LAY_KHAI_TU_NK_FAIL',
+        payload,
+    };
+}
+
+export function LAY_KHAI_TU_NK_RESET(payload) {
+    return {
+        type: 'LAY_KHAI_TU_NK_RESET',
         payload,
     };
 }

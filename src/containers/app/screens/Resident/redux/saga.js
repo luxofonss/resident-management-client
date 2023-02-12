@@ -1,6 +1,14 @@
 import { delay, put, takeLatest, call } from 'redux-saga/effects';
 import { REQUEST_STATE } from '~/app-configs';
-import { apiLayNK, apiThemNK, apiKhaiSinhNK, apiCapNhatNK, apiKhaiTuNK } from '~/app-data/nhanKhau';
+import {
+    apiLayNK,
+    apiThemNK,
+    apiKhaiSinhNK,
+    apiCapNhatNK,
+    apiKhaiTuNK,
+    apiLayKhaiSinhNK,
+    apiLayKhaiTuNK,
+} from '~/app-data/nhanKhau';
 import {
     CAP_NHAT_NK,
     CAP_NHAT_NK_FAIL,
@@ -11,6 +19,12 @@ import {
     KHAI_TU_NK,
     KHAI_TU_NK_FAIL,
     KHAI_TU_NK_SUCCESS,
+    LAY_KHAI_SINH_NK,
+    LAY_KHAI_SINH_NK_FAIL,
+    LAY_KHAI_SINH_NK_SUCCESS,
+    LAY_KHAI_TU_NK,
+    LAY_KHAI_TU_NK_FAIL,
+    LAY_KHAI_TU_NK_SUCCESS,
     LAY_NK,
     LAY_NK_2,
     LAY_NK_FAIL,
@@ -74,6 +88,19 @@ function* handleKhaiSinhNhanKhau({ type, payload }) {
     }
 }
 
+function* handleLayKhaiSinhNhanKhau({ type, payload }) {
+    try {
+        const response = yield call(apiLayKhaiSinhNK, payload);
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(LAY_KHAI_SINH_NK_SUCCESS(response.data));
+        } else {
+            yield put(LAY_KHAI_SINH_NK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 function* handleCapNhatNhanKhau({ type, payload }) {
     try {
         const response = yield call(apiCapNhatNK, payload);
@@ -100,11 +127,26 @@ function* handleKhaiTuNhanKhau({ type, payload }) {
     }
 }
 
+function* handleLayKhaiTuNhanKhau({ type, payload }) {
+    try {
+        const response = yield call(apiLayKhaiTuNK, payload);
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(LAY_KHAI_TU_NK_SUCCESS(response.data));
+        } else {
+            yield put(LAY_KHAI_TU_NK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 export default function* () {
     yield takeLatest(LAY_NK().type, handleLayNhanKhau);
     yield takeLatest(LAY_NK_2().type, handleLayNhanKhau2);
     yield takeLatest(THEM_NK().type, handleThemNhanKhau);
     yield takeLatest(KHAI_SINH_NK().type, handleKhaiSinhNhanKhau);
+    yield takeLatest(LAY_KHAI_SINH_NK().type, handleLayKhaiSinhNhanKhau);
     yield takeLatest(CAP_NHAT_NK().type, handleCapNhatNhanKhau);
     yield takeLatest(KHAI_TU_NK().type, handleKhaiTuNhanKhau);
+    yield takeLatest(LAY_KHAI_TU_NK().type, handleLayKhaiTuNhanKhau);
 }

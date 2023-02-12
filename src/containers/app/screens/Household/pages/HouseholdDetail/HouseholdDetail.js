@@ -246,7 +246,11 @@ function HouseholdDetail(props) {
                                         <AppButton onClick={() => setEdit(true)}>Chỉnh sửa</AppButton>
                                     </div>
                                 )}
-                                {edit === true && <AppButton type="submit">Xác nhận</AppButton>}
+                                {edit === true && (
+                                    <div className="bottom-right">
+                                        <AppButton type="submit">Xác nhận</AppButton>
+                                    </div>
+                                )}
                             </Col>
                         </Row>
                     </AppForm>

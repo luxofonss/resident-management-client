@@ -113,7 +113,7 @@ export const apiLayTaiNguyen = async (params) => {
         const response = await GET('/tai-nguyen', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
-            data: response.data,
+            data: response,
         };
     } catch (error) {
         console.log('error', error);

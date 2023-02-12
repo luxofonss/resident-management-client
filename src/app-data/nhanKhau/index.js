@@ -89,3 +89,36 @@ export const apiKhaiTuNK = async (params) => {
         };
     }
 };
+
+export const apiLayKhaiSinhNK = async (params) => {
+    try {
+        const response = await GET(`/nhankhau/khai-sinh`, params.data, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+export const apiLayKhaiTuNK = async (params) => {
+    try {
+        const response = await GET(`/nhankhau/khai-tu`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};

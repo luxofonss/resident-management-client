@@ -14,6 +14,7 @@ import AppCheckbox from '~/components/AppCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { TAO_TAI_NGUYEN, TAO_TAI_NGUYEN_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
+import AppSelectEquipment from '~/components/AppSelectEquipment';
 
 const cx = classNames.bind(styles);
 
@@ -41,21 +42,20 @@ function EquipmentAdd(props) {
         dispatch(TAO_TAI_NGUYEN_RESET());
     }, [taoTaiNguyen?.state]);
     return (
-        <div>
+        <div style={{ margin: '0 auto', width: '40%' }}>
+            <div className="page-header">Thêm thiết bị</div>
             <AppForm onSubmit={onSubmit}>
                 <Row gutter={48}>
-                    {
-                        <Col xs={12}>
-                            <AppInput required label="Loại thiết bị" name="themTB.loai_id"></AppInput>
-                            <AppInput required label="Mô tả" name="themTB.mo_ta"></AppInput>
-                            <AppInput required label="Tình trạng" name="themTB.tinh_trang"></AppInput>
-                            {/* <AppSelectInput required options={{ options }} label="Select" name="themTB.select"></AppSelectInput> */}
-                            <AppTextArea required label="Ghi chú" name="themTB.ghi_chu"></AppTextArea>
-                            {/* <button onClick={() => setAddType(false)}>delete type</button> */}
-                        </Col>
-                    }
+                    <Col xs={24}>
+                        <AppSelectEquipment label="Loại thiết bị" name="loai_id" />
+                        <AppInput required label="Mô tả" name="mo_ta"></AppInput>
+                        <AppInput type="number" required label="Tình trạng" name="tinh_trang"></AppInput>
+                        <AppTextArea required label="Ghi chú" name="ghi_chu"></AppTextArea>
+                    </Col>
                 </Row>
-                <AppButton type="submit">Submit</AppButton>
+                <div className="bottom-right" style={{ marginTop: '24px' }}>
+                    <AppButton type="submit">Submit</AppButton>
+                </div>
             </AppForm>
         </div>
     );
