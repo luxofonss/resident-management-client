@@ -78,7 +78,9 @@ export default function (props) {
                         <Avatar size={42} src={UserAvatar} className="hover-pointer" />
                     </Dropdown>
                     <div className={cx('user-info')}>
-                        <h6 className={cx('user-name')}>Welcome !</h6>
+                        <h6 className={cx('user-name')}>
+                            Welcome ! {userDetail?.state === 'SUCCESS' ? userDetail?.username : ''}
+                        </h6>
                         <h6 className={cx('user-position')}>To truong</h6>
                     </div>
                 </div>

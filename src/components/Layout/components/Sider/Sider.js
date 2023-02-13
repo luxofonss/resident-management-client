@@ -119,7 +119,7 @@ export default function AppSider(props) {
                         background: 'rgba(255, 255, 255, 0.2)',
                     }}
                 >
-                    LOGO
+                    Quản lý hộ khẩu
                 </div>
                 <div style={{ marginTop: '10px', flex: '1' }}>
                     <Menu

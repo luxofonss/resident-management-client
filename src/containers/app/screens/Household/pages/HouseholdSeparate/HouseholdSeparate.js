@@ -16,11 +16,14 @@ import useDebounceValue from '~/hooks/useDebounceValue';
 import AppSelectApi from '~/components/AppSelectApi';
 import { isEmptyValue } from '~/helpers/check';
 import { REQUEST_STATE } from '~/app-configs';
+import AppSelectInput from '~/components/AppSelectInput';
+import AppSelectDD from '~/components/AppSelectDD';
 
 const cx = classNames.bind(styles);
 
 function HouseholdSeparate(props) {
     const [nhanKhau, setNhanKhau] = useState([]);
+    const [optionDD, setOptionDD] = useState([]);
     const [indexes, setIndexes] = useState([]);
     const [counter, setCounter] = useState(0);
     const [soHoKhau, setSoHoKhau] = useState('');
@@ -52,9 +55,26 @@ function HouseholdSeparate(props) {
         dispatch(TACH_HK_RESET());
     }, [tachKhau?.state]);
 
+    let options = [];
+
     useEffect(() => {
         setNhanKhau(danhSachNhanKhau?.data?.data);
+
+        // if (!isEmptyValue(danhSachNhanKhau?.data?.data)) {
+        danhSachNhanKhau?.data?.data.forEach((nk, index) => {
+            console.log('nkkkkkkkkk', nk);
+            options.push({ name: nk.ho + ' ' + nk.ten_dem + ' ' + nk.ten, value: nk.id });
+            setOptionDD([...optionDD, { name: nk.ho + ' ' + nk.ten_dem + ' ' + nk.ten, value: nk.id }]);
+
+            console.log('options', options);
+            if (index === danhSachNhanKhau?.data?.data.length) {
+                // setOptionDD(options);
+            }
+            console.log('options', optionDD);
+        });
+        // }
     }, [danhSachNhanKhau?.data?.data]);
+    console.log('options', options);
 
     const onSubmit = (data) => {
         let submitData;
@@ -103,11 +123,13 @@ function HouseholdSeparate(props) {
         // dispatch(LAY_NK_RESET_2());
         if (!isEmptyValue(hoKhauInfo?.data?.data[0]?.nhanKhau))
             // dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
-            dispatch(LAY_NK_2({ ids: [...hoKhauInfo?.data?.data[0]?.nhanKhau, hoKhauInfo?.data?.data[0]?.chu_ho_id] }));
+            dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
         else {
             dispatch(LAY_NK_RESET_2());
         }
     }, [hoKhauInfo?.data?.data[0]]);
+
+    console.log('danhSachNhanKhau?.data?.data', danhSachNhanKhau?.data?.data);
 
     return (
         <div>
@@ -123,8 +145,28 @@ function HouseholdSeparate(props) {
                             required
                         ></AppInputSearch>
                     </Col>
-                    <Col xs={6}>
+                    {/* <Col xs={6}>
                         <AppSelectApi apiURL="nhanKhau" label="Họ và tên - CCCD" name="donTachKhau.dai_dien_id" />
+                    </Col> */}
+                    <Col xs={6}>
+                        {/* {optionDD.length === danhSachNhanKhau?.data?.data.length && ( */}
+                        {danhSachNhanKhau.state === 'SUCCESS' ? (
+                            <AppSelectDD
+                                // options={{ options: [{ id: 1, ten: 'tes', ho: 'test', ten_dem: 'test' }] }}
+                                options={{ options: danhSachNhanKhau?.data?.data }}
+                                label="Người đại diện"
+                                name="donTachKhau.dai_dien_id"
+                            />
+                        ) : (
+                            <AppInput
+                                type="text"
+                                label="Người đại diện"
+                                // name="donTachKhau.dia_chi_moi"
+                                // required={false}
+                                disabled
+                            ></AppInput>
+                        )}
+                        {/* )} */}
                     </Col>
                     <Col xs={6}>
                         <AppDateInput label="Ngày tách" name="donTachKhau.ngay_tach" required></AppDateInput>

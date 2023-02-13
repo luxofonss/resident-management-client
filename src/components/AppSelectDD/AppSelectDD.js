@@ -2,14 +2,17 @@ import classNames from 'classnames/bind';
 import { useEffect, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CheckIcon, ChevronDown } from '~/assets/svgs';
-import styles from './AppSelectInput.module.sass';
+import styles from './AppSelectDD.module.sass';
 
 const cx = classNames.bind(styles);
 
-const AppSelectInput = ({ name, required, options, label, ...props }) => {
+const AppSelectDD = ({ name, required, options, label, ...props }) => {
     const { register, setValue } = useFormContext();
-    const [selectValue, setSelectValue] = useState(options?.options[0]?.value);
-    const [selectValueName, setSelectValueName] = useState(options?.options[0]?.name);
+    console.log('options', options);
+    const [selectValue, setSelectValue] = useState(options?.options[0]?.id);
+    const [selectValueName, setSelectValueName] = useState(
+        options?.options[0]?.ho + ' ' + options?.options[0]?.ten_dem + ' ' + options?.options[0]?.ten,
+    );
     const [active, setActive] = useState(0);
     const [iconClick, setIconClick] = useState(false);
     const selections = useRef();
@@ -39,7 +42,7 @@ const AppSelectInput = ({ name, required, options, label, ...props }) => {
     };
 
     useEffect(() => {
-        setValue(name, options.options[0].value);
+        setValue(name, options?.options[0]?.id);
         document.addEventListener('click', handleClick);
         return () => {
             document.removeEventListener('click', handleClick);
@@ -63,24 +66,31 @@ const AppSelectInput = ({ name, required, options, label, ...props }) => {
                     </div>
                 </div>
                 <ul ref={selections} className={cx('selections', 'hide')} id="select">
-                    {options.options.map((option, index) => {
-                        return (
-                            <li
-                                key={index}
-                                className={cx(active === index ? 'active' : '')}
-                                onClick={() => handleSelect(option.value, option.name, index)}
-                            >
-                                <div>{option.name}</div>
-                                <div className={cx(active !== index ? 'hide' : '')}>
-                                    <CheckIcon />
-                                </div>
-                            </li>
-                        );
-                    })}
+                    {options &&
+                        options?.options?.map((option, index) => {
+                            return (
+                                <li
+                                    key={index}
+                                    className={cx(active === index ? 'active' : '')}
+                                    onClick={() =>
+                                        handleSelect(
+                                            option.id,
+                                            option.ho + ' ' + option.ten_dem + ' ' + option.ten,
+                                            index,
+                                        )
+                                    }
+                                >
+                                    <div>{option.ho + ' ' + option.ten_dem + ' ' + option.ten}</div>
+                                    <div className={cx(active !== index ? 'hide' : '')}>
+                                        <CheckIcon />
+                                    </div>
+                                </li>
+                            );
+                        })}
                 </ul>
             </div>
         </div>
     );
 };
 
-export default AppSelectInput;
+export default AppSelectDD;
