@@ -180,6 +180,10 @@ function ResidentList(props) {
     const onFilter = (data) => {
         dispatch(LAY_NK(data));
     };
+
+    useEffect(() => {
+        document.title = 'Danh sách nhân khẩu';
+    }, []);
     return (
         <div>
             <div className="page-header">Danh sách nhân khẩu</div>

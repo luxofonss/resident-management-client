@@ -53,6 +53,9 @@ function ResidentEdit(props) {
         dispatch(LAY_NK({ ids: [id.slice(1)] }));
     }, []);
 
+    useEffect(() => {
+        document.title = 'Đính chính nhân khẩu';
+    }, []);
     console.log('residentInfo', residentInfo);
     return (
         <div>

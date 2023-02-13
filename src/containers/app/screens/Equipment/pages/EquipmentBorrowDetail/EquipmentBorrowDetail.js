@@ -134,6 +134,10 @@ function EquipmentBorrowDetail(props) {
             name: record.name,
         }),
     };
+
+    useEffect(() => {
+        document.title = 'Chi tiết phiếu mượn';
+    }, []);
     return (
         <div>
             <div className="page-header">Chi tiết phiếu mượn</div>

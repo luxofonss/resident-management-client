@@ -164,6 +164,10 @@ function HouseholdDetail(props) {
         },
     ];
 
+    useEffect(() => {
+        document.title = 'Chi tiết hộ khẩu ';
+    }, []);
+
     let dataNK = [];
     if (danhSachNhanKhau.state === 'SUCCESS') {
         console.log('test: ', danhSachNhanKhau.data?.data);

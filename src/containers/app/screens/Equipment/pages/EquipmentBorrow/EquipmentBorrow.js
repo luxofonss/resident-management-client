@@ -84,6 +84,10 @@ function EquipmentBorrow(props) {
         setIndexes([]);
     };
 
+    useEffect(() => {
+        document.title = 'Mượn tài nguyên';
+    }, []);
+
     return (
         <div>
             <div className="page-header">Mượn tài nguyên</div>

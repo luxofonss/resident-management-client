@@ -116,6 +116,10 @@ function EquipmentTypeList(props) {
         dispatch(LAY_LOAI_TB());
     }, []);
 
+    useEffect(() => {
+        document.title = 'Danh sách loại tài nguyên';
+    }, []);
+
     return (
         <div>
             <div className="page-header flex-center">Danh sách loại tài nguyên</div>

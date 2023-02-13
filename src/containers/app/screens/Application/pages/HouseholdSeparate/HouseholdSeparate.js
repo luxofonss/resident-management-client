@@ -272,6 +272,9 @@ function HouseholdSeparate(props) {
               }
             : {},
     ];
+    useEffect(() => {
+        document.title = 'Đơn tách khẩu';
+    }, []);
     return (
         <div>
             <div className="page-header">Đơn tách khẩu</div>

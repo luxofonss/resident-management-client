@@ -41,6 +41,10 @@ function EquipmentAddType(props) {
         dispatch(TAO_LOAI_TAI_NGUYEN_RESET());
     }, [taoLoaiTaiNguyen?.state]);
 
+    useEffect(() => {
+        document.title = 'Thêm loại tài nguyên';
+    }, []);
+
     return (
         <div style={{ margin: '0 auto', width: '75%' }}>
             <div className="page-header flex-center">Thêm loại tài nguyên</div>

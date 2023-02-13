@@ -52,6 +52,10 @@ function AbsentAdd(props) {
         dispatch(TAO_TAM_VANG_RESET());
     }, [addTamVang?.state]);
 
+    useEffect(() => {
+        document.title = 'Thêm tạm vắng';
+    }, []);
+
     return (
         <div style={{ width: '50%', minWidth: '450px', margin: '0 auto' }}>
             <AppForm onSubmit={onSubmit}>

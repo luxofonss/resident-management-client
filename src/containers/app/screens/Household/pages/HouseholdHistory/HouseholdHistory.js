@@ -62,6 +62,10 @@ function HouseholdHistory(props) {
         }
     };
 
+    useEffect(() => {
+        document.title = 'Lịch sử thay đổi hộ khẩu';
+    }, []);
+
     return (
         <div>
             <div className="page-header">Lịch sử thay đổi hộ khẩu</div>

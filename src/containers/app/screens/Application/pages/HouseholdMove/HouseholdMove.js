@@ -263,6 +263,11 @@ function HouseholdMove(props) {
               }
             : {},
     ];
+
+    useEffect(() => {
+        document.title = 'Đơn chuyển khẩu';
+    }, []);
+
     return (
         <div>
             {/* <Tooltip color="cyan" placement="top" title={<span>Đính chính</span>} arrow={mergedArrow}></Tooltip> */}

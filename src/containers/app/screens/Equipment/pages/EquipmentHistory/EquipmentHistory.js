@@ -50,9 +50,13 @@ function EquipmentHistory(props) {
         );
     };
 
+    useEffect(() => {
+        document.title = 'Lịch sử mượn tài nguyên';
+    }, []);
+
     return (
         <div>
-            <div className="page-header">Lịch sử mượn thiết bị</div>
+            <div className="page-header">Lịch sử mượn tài nguyên</div>
             <div>
                 <AppForm onSubmit={onSubmit}>
                     <Row gutter={24}>

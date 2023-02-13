@@ -58,6 +58,9 @@ function ResidentUpdateDetail(props) {
         dispatch(ACCEPT_UPDATE_HK({ id: id }));
     };
 
+    useEffect(() => {
+        document.title = 'Chi tiết đơn đính chính nhân khẩu';
+    }, []);
     return (
         <div>
             {don.state === REQUEST_STATE.SUCCESS && nhanKhau.state === REQUEST_STATE.SUCCESS && (

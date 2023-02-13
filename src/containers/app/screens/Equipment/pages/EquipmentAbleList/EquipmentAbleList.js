@@ -83,6 +83,10 @@ function EquipmentAbleList(props) {
         );
     }, []);
 
+    useEffect(() => {
+        document.title = 'Danh sách tài nguyên khả dụng';
+    }, []);
+
     return (
         <div>
             <div className="page-header flex-center">Danh sách tài nguyên khả dụng</div>

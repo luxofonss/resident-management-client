@@ -41,6 +41,11 @@ function EquipmentAdd(props) {
         }
         dispatch(TAO_TAI_NGUYEN_RESET());
     }, [taoTaiNguyen?.state]);
+
+    useEffect(() => {
+        document.title = 'Thêm tài nguyên';
+    }, []);
+
     return (
         <div style={{ margin: '0 auto', width: '40%' }}>
             <div className="page-header">Thêm tài nguyên</div>

@@ -75,6 +75,10 @@ function ResidentDeath(props) {
             key: 'ghi_chu',
         },
     ];
+
+    useEffect(() => {
+        document.title = 'Giấy khai tử';
+    }, []);
     return (
         <div>
             <div className="page-header">Giấy khai tử</div>

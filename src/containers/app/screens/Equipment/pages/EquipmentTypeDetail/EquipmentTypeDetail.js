@@ -110,6 +110,9 @@ function EquipmentTypeDetail(props) {
     useEffect(() => {
         dispatch(LAY_LOAI_TB());
     }, []);
+    useEffect(() => {
+        document.title = 'Chi tiết loại tài nguyên';
+    }, []);
 
     return <div>{data !== [] && <Table dataSource={dataSource} columns={columns} />}</div>;
     // return (

@@ -78,6 +78,10 @@ function HouseholdUpdateDetail(props) {
         dispatch(REJECT_DINH_CHINH_KHAU({ id: id }));
     };
 
+    useEffect(() => {
+        document.title = 'Đơn đính chính chi tiết';
+    }, []);
+
     return (
         <div>
             {don.state === REQUEST_STATE.SUCCESS && (

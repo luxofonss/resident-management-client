@@ -37,7 +37,9 @@ function TemporaryAdd(props) {
         }
         dispatch(TAO_TAM_TRU_RESET());
     }, [addTamTru?.state]);
-
+    useEffect(() => {
+        document.title = 'Thêm tạm trú';
+    }, []);
     return (
         <div>
             <AppForm onSubmit={onSubmit}>

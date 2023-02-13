@@ -106,6 +106,13 @@ function HouseholdMove(props) {
         }
     }, [hoKhauInfo?.data?.data[0]?.id]);
 
+    useEffect(() => {
+        dispatch(LAY_HK());
+    }, []);
+
+    useEffect(() => {
+        document.title = 'Chuyển hộ khẩu';
+    }, []);
     return (
         <div>
             <div className={cx('page-header')}>Chuyển hộ khẩu</div>

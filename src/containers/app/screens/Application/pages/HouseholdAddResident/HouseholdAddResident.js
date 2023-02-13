@@ -281,9 +281,14 @@ function HouseholdAddResident(props) {
               }
             : {},
     ];
+
+    useEffect(() => {
+        document.title = 'Đơn nhập khẩu';
+    }, []);
+
     return (
         <div>
-            <div className="page-header">Đơn tách khẩu</div>
+            <div className="page-header">Đơn nhập khẩu</div>
 
             {dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}
         </div>

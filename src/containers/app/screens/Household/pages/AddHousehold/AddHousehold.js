@@ -67,6 +67,10 @@ function AddHousehold(props) {
 
     console.log('nkInfo', nkInfo);
 
+    useEffect(() => {
+        document.title = 'Thêm hộ khẩu ';
+    }, []);
+
     return (
         <div style={{ width: '40%', minWidth: '400px', margin: '0 auto' }}>
             <div className={cx('page-header')}>Thêm hộ khẩu mới</div>

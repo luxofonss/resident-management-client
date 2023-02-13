@@ -254,6 +254,10 @@ function AbsentList(props) {
               }
             : {},
     ];
+
+    useEffect(() => {
+        document.title = 'Danh sách đơn tạm vắng';
+    }, []);
     return (
         <div>
             <div className="page-header">Danh sách đơn tạm vắng</div>

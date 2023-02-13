@@ -139,6 +139,10 @@ function ResidentAddChild(props) {
         //     ),
         // },
     ];
+
+    useEffect(() => {
+        document.title = 'Giấy khai sinh';
+    }, []);
     return (
         <div>
             <div className="page-header">Giấy khai sinh</div>

@@ -77,7 +77,17 @@ function HouseholdList(props) {
         dispatch(LAY_HK());
     }, []);
 
-    return <div>{data !== [] && <Table dataSource={data} columns={columns} />}</div>;
+    useEffect(() => {
+        document.title = 'Danh sách hộ khẩu';
+    }, []);
+
+    return (
+        <div>
+            <div className="page-header">Danh sách hộ khẩu</div>
+
+            {data !== [] && <Table dataSource={data} columns={columns} />}
+        </div>
+    );
 }
 
 export default HouseholdList;

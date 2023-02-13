@@ -178,6 +178,9 @@ function ResidentUpdate(props) {
             ),
         },
     ];
+    useEffect(() => {
+        document.title = 'Đơn đính chính nhân khẩu';
+    }, []);
     return (
         <div>
             <div className="page-header">Đơn đính chính nhân khẩu</div>

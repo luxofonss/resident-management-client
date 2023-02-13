@@ -119,6 +119,10 @@ function EquipmentBorrowList(props) {
         dispatch(LAY_PHIEU_MUON());
     }, []);
 
+    useEffect(() => {
+        document.title = 'Danh sách phiếu mượnn';
+    }, []);
+
     return (
         <div>
             <div className="page-header flex-center">Danh sách phiếu mượn</div>

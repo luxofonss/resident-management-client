@@ -85,6 +85,10 @@ function HouseholdAddResident(props) {
         }
     }, [nhapKhau?.state]);
 
+    useEffect(() => {
+        document.title = 'Thêm nhân khẩu vào hộ khẩu ';
+    }, []);
+
     console.log('danhSachNhanKhau', danhSachNhanKhau);
     return (
         <div>

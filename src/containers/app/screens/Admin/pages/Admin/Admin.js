@@ -141,6 +141,11 @@ function Admin(props) {
         //     ),
         // },
     ];
+
+    useEffect(() => {
+        document.title = 'Quản lý nhân sự';
+    }, []);
+
     const onSubmit = (data) => {
         console.log(data);
         dispatch(TAO_USER(data));

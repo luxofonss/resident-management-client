@@ -65,6 +65,10 @@ function EquipmentBack(props) {
         dispatch(TRA_TAI_NGUYEN(data));
     };
 
+    useEffect(() => {
+        document.title = 'Trả tài nguyên';
+    }, []);
+
     return (
         <div>
             <div className="page-header">Trả tài nguyên</div>

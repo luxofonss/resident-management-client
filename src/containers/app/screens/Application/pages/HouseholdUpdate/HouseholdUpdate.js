@@ -200,6 +200,9 @@ function HouseholdUpdate(props) {
             ),
         },
     ];
+    useEffect(() => {
+        document.title = 'Đơn đính chính sổ hộ khẩu';
+    }, []);
     return (
         <div>
             <div className="page-header">Đơn đính chính sổ hộ khẩu</div>

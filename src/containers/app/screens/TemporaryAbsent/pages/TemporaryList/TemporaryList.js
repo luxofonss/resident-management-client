@@ -253,6 +253,9 @@ function TemporaryList(props) {
             ),
         },
     ];
+    useEffect(() => {
+        document.title = 'Danh sách đơn tạm trú';
+    }, []);
     return (
         <div>
             {tamTruList.state === REQUEST_STATE.SUCCESS && (
@@ -269,15 +272,3 @@ function TemporaryList(props) {
 }
 
 export default TemporaryList;
-
-// "id": 6,
-// "nhan_khau_id": 81,
-// "ngay_lam_don": "2023-02-12T17:00:00.000Z",
-// "ly_do": "asg",
-// "dia_chi_tam_chu": "asg",
-// "trang_thai": "PHE_DUYET",
-// "so_ho_khau_id": 41,
-// "ghi_chu": "",
-// "user_phe_duyet": 1,
-// "ngay_phe_duyet": "2023-02-07T17:00:00.000Z",
-// "ngay_het_han": "2023-02-18T17:00:00.000Z"
