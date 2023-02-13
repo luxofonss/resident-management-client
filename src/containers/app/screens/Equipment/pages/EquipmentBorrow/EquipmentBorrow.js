@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import styles from './EquipmentBorrow.module.sass';
 import classNames from 'classnames/bind';
 import AppButton from '~/components/AppButton/AppButton';
@@ -12,11 +12,12 @@ import { Button, Col, notification, Row } from 'antd';
 import { useState } from 'react';
 import AppCheckbox from '~/components/AppCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
-import { MUON_THIET_BI, MUON_THIET_BI_RESET } from '../../redux/action';
+import { LAY_LOAI_TB, MUON_THIET_BI, MUON_THIET_BI_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 import AppSelectEquipment from '~/components/AppSelectEquipment';
 import { IconPlus, IconX } from '~/assets/svgs';
 import { isEmptyValue } from '~/helpers/check';
+import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -27,13 +28,19 @@ function EquipmentBorrow(props) {
     const muonThietBi = useSelector((state) => state.equipment.muonThietBi);
 
     const dispatch = useDispatch();
+    const { id } = useParams();
+
+    useEffect(() => {
+        dispatch(LAY_LOAI_TB({ id: id }));
+    }, []);
+
     const onSubmit = (data) => {
         let phienSuDungSubmit = [];
         data.phienSuDung.forEach((phien) => {
             if (phien.id !== '' && phien.ngay_muon && phien.ngay_hen_tra && !isEmptyValue(phien.so_luong)) {
                 for (let i = 1; i <= phien.so_luong; i++) {
                     phienSuDungSubmit.push({
-                        tai_nguyen_id: phien.tai_nguyen_id,
+                        tai_nguyen_id: id,
                         mo_ta: phien.mo_ta,
                         ngay_muon: phien.ngay_muon,
                         ngay_hen_tra: phien.ngay_hen_tra,
@@ -51,13 +58,13 @@ function EquipmentBorrow(props) {
         if (muonThietBi.state == REQUEST_STATE.SUCCESS) {
             notification.success({
                 message: 'Success',
-                description: 'Mượn thiết bị thành công!',
+                description: 'Mượn tài nguyên thành công!',
             });
         }
         if (muonThietBi?.state === REQUEST_STATE.ERROR) {
             notification.error({
                 message: 'Error',
-                description: 'Mượn thiết bị thất bại!',
+                description: 'Mượn tài nguyên thất bại!',
             });
         }
         dispatch(MUON_THIET_BI_RESET());
@@ -79,12 +86,12 @@ function EquipmentBorrow(props) {
 
     return (
         <div>
-            <div className="page-header">Mượn thiết bị</div>
+            <div className="page-header">Mượn tài nguyên</div>
 
             <AppForm onSubmit={onSubmit}>
                 <Row gutter={16}>
                     <Col xs={4}>
-                        <AppInput name="phieuMuon.cccd" label="CCCD" required />
+                        <AppInput type="number" name="phieuMuon.cccd" label="CCCD" required />
                     </Col>
                     <Col xs={5}>
                         <AppInput name="phieuMuon.ho_va_ten" label="Họ và tên" required />
@@ -113,37 +120,52 @@ function EquipmentBorrow(props) {
                     <Col xs={5}>
                         <AppDateInput type="number" name="saoKe.ngay_gio" label="Ngày thu" required />
                     </Col>
-                    <div className="second-header">Loại thiết bị mượn</div>
+                    <div className="second-header">Loại tài nguyên mượn</div>
                     <Col xs={24}>
                         {indexes.map((index) => {
                             return (
                                 <div style={{ marginBottom: '24px' }}>
                                     <Row gutter={16}>
-                                        <Col xs={4}>
-                                            <AppSelectEquipment
-                                                label="Loại thiết bị"
+                                        <Col xs={2}>
+                                            {/* <AppSelectEquipment
+                                                label="Loại tài nguyên"
                                                 name={`phienSuDung[${index}].tai_nguyen_id`}
                                                 required
+                                            /> */}
+                                            <AppInput
+                                                // name={`phienSuDung[${index}].tai_nguyen_id`}
+                                                label="ID"
+                                                value={id}
+                                                // required
+                                                disabled
                                             />
                                         </Col>
+                                        {/* <Col xs={2}>
+                                            <AppInput
+                                                // name={`phienSuDung[${index}].tai_nguyen_id`}
+                                                label="Tên tài nguyên"
+                                                // required
+                                                disabled
+                                            />
+                                        </Col> */}
                                         <Col xs={5}>
                                             <AppInput name={`phienSuDung[${index}].mo_ta`} label="Mô tả" required />
                                         </Col>
-                                        <Col xs={3}>
+                                        <Col xs={4}>
                                             <AppDateInput
                                                 name={`phienSuDung[${index}].ngay_muon`}
                                                 label="Ngày mượn"
                                                 required
                                             />
                                         </Col>
-                                        <Col xs={3}>
+                                        <Col xs={4}>
                                             <AppDateInput
                                                 name={`phienSuDung[${index}].ngay_hen_tra`}
                                                 label="Ngày hẹn trả"
                                                 required
                                             />
                                         </Col>
-                                        <Col xs={4}>
+                                        <Col xs={5}>
                                             <AppInput name={`phienSuDung[${index}].ghi_chu`} label="Ghi chú" />
                                         </Col>
                                         <Col xs={4}>
@@ -158,9 +180,9 @@ function EquipmentBorrow(props) {
                                                 onClick={removeEquipment(index)}
                                                 className="action-wrapper bottom-right"
                                             >
-                                                <div className="action-icon">
+                                                {/* <div className="action-icon">
                                                     <IconX width={18} height={18} />
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </Col>
                                     </Row>
@@ -173,18 +195,18 @@ function EquipmentBorrow(props) {
                         <AppButton type="button" onClick={clearAll}>
                             Xóa tất cả
                         </AppButton> */}
-                        <div className="flex-right">
-                            {/* <AppButton type="button" onClick={addResident}> */}
-                            <div style={{ marginTop: '18px' }} onClick={addEquipment} className="action-wrapper">
-                                <div className="action-icon">
-                                    <IconPlus />
+                        {/* <Fragment>
+                            <div className="flex-right">
+                                <div style={{ marginTop: '18px' }} onClick={addEquipment} className="action-wrapper">
+                                    <div className="action-icon">
+                                        <IconPlus />
+                                    </div>
                                 </div>
+                                <Button danger onClick={clearAll}>
+                                    Clear All
+                                </Button>
                             </div>
-                            {/* </AppButton> */}
-                            <Button danger onClick={clearAll}>
-                                Clear All
-                            </Button>
-                        </div>
+                        </Fragment> */}
                     </Col>
                     {/* <Col xs={8}>
                         <AppInput name="phieuMuon.cccd" label="CCCD" required />

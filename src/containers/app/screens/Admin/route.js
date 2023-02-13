@@ -3,20 +3,20 @@ import { USER_ROLE } from '~/app-configs';
 import AppLayout from '~/components/Layout/AppLayout';
 import { initModules } from '~/router/index';
 
-export const featureModule = {
-    key: 'feature',
-    path: 'Feature',
+export const adminModule = {
+    key: 'admin',
+    path: 'Admin',
 };
 
 export default {
-    path: '/',
+    path: '/user-manager',
     exact: true,
-    role: [USER_ROLE.ADMIN, USER_ROLE.USER],
+    role: [USER_ROLE.ADMIN],
     isPrivate: true,
     layout: AppLayout,
     component: lazy(async () => {
-        await initModules([featureModule], 'app');
-        return import('./pages/Demo');
+        await initModules([adminModule], 'app');
+        return import('./pages/Admin');
     }),
 };
 

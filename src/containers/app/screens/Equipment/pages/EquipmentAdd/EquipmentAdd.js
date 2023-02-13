@@ -43,11 +43,11 @@ function EquipmentAdd(props) {
     }, [taoTaiNguyen?.state]);
     return (
         <div style={{ margin: '0 auto', width: '40%' }}>
-            <div className="page-header">Thêm thiết bị</div>
+            <div className="page-header">Thêm tài nguyên</div>
             <AppForm onSubmit={onSubmit}>
                 <Row gutter={48}>
                     <Col xs={24}>
-                        <AppSelectEquipment label="Loại thiết bị" name="loai_id" />
+                        <AppSelectEquipment label="Loại tài nguyên" name="loai_id" />
                         <AppInput required label="Mô tả" name="mo_ta"></AppInput>
                         <AppInput type="number" required label="Tình trạng" name="tinh_trang"></AppInput>
                         <AppTextArea required label="Ghi chú" name="ghi_chu"></AppTextArea>

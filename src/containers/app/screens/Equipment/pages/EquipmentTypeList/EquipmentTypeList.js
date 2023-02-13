@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import classNames from 'classnames/bind';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,7 +29,7 @@ const columns = [
         width: 50,
     },
     {
-        title: 'Tên loại thiết bị',
+        title: 'Tên loại tài nguyên',
         dataIndex: 'name',
         key: 'name',
         width: 200,
@@ -73,17 +73,19 @@ const columns = [
         dataIndex: 'ghi_chu',
         key: 'ghi_chu',
     },
-    // {
-    //     title: 'Action',
-    //     key: 'id',
-    //     fixed: 'right',
-    //     width: 150,
-    //     render: (_, id) => (
-    //         <div className={cx('action-wrapper')}>
-    //             <Link to={`/equipment/type/${id}`}>move</Link>
-    //         </div>
-    //     ),
-    // },
+    {
+        title: 'Action',
+        key: 'id',
+        fixed: 'right',
+        width: 150,
+        render: (_, { id }) => (
+            <div className={cx('action-wrapper')}>
+                <Link to={`/equipment/history/${id}`}>
+                    <Button>Lịch sử</Button>
+                </Link>
+            </div>
+        ),
+    },
 ];
 
 function EquipmentTypeList(props) {
@@ -116,7 +118,7 @@ function EquipmentTypeList(props) {
 
     return (
         <div>
-            <div className="page-header flex-center">Danh sách loại thiết bị</div>
+            <div className="page-header flex-center">Danh sách loại tài nguyên</div>
             {danhSachThietBi.state === 'SUCCESS' && <Table dataSource={data} columns={columns} />}
         </div>
     );

@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { USER_ROLE } from '~/app-configs';
 import AppLayout from '~/components/Layout/AppLayout';
 import { initModules } from '~/router/index';
 import { residentModule } from '../Resident/route';
@@ -12,6 +13,7 @@ export default {
     path: '/household/create',
     exact: true,
     isPrivate: true,
+    role: [USER_ROLE.ADMIN, USER_ROLE.USER],
     layout: AppLayout,
     component: lazy(async () => {
         await initModules([householdModule, residentModule], 'app');
@@ -24,6 +26,7 @@ export const childRoutes = [
         path: '/household/list',
         key: 'list',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -35,6 +38,7 @@ export const childRoutes = [
         path: '/household/move',
         key: 'move',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -46,6 +50,7 @@ export const childRoutes = [
         path: '/household/separate',
         key: 'separate',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -57,6 +62,7 @@ export const childRoutes = [
         path: '/household/detail/:id',
         key: 'detail',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -68,6 +74,7 @@ export const childRoutes = [
         path: '/household/add-resident/:id',
         key: 'add-resident',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -79,6 +86,7 @@ export const childRoutes = [
         path: '/household/add-resident/',
         key: 'add-resident',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -90,6 +98,7 @@ export const childRoutes = [
         path: '/household/history/:id',
         key: 'history',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {

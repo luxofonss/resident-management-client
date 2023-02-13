@@ -23,7 +23,7 @@ const dataSource = [
 
 const columns = [
     {
-        title: 'Tên loại thiết bị',
+        title: 'Tên loại tài nguyên',
         dataIndex: 'name',
         key: 'name',
         width: 200,

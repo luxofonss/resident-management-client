@@ -152,7 +152,7 @@ function Login({ authAction = 'login' }) {
                                         <label htmlFor="remember-login">Remember me</label>
                                     </div>
                                     <div className={cx('forget-password')}>
-                                        <Link to="#">Forget password?</Link>
+                                        <Link to="#">Forgot password?</Link>
                                     </div>
                                 </div>
                             </Form.Group>

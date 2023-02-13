@@ -1,99 +1,139 @@
 import { Button, Col, Row, Table, Tag } from 'antd';
 import classNames from 'classnames/bind';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import AppDateInput from '~/components/AppDateInput';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
+import { isEmptyValue } from '~/helpers/check';
 import { LAY_LOAI_TB, LAY_PHIEU_MUON } from '../../redux/action';
 import styles from './EquipmentBorrowDetail.module.sass';
 
 const cx = classNames.bind(styles);
 
-const columns = [
-    {
-        title: 'STT',
-        render: (_, record, index) => index + 1,
-        key: 'id',
-        width: 50,
-    },
-    {
-        title: 'Loại tài nguyên',
-        dataIndex: 'tai_nguyen_id',
-        key: 'tai_nguyen_id',
-        width: 130,
-    },
-    {
-        title: 'Mô tả',
-        dataIndex: 'mo_ta',
-        key: 'mo_ta',
-        width: 200,
-    },
-    {
-        title: 'Ngày mượn',
-        // dataIndex: 'ngay_muon',
-        render: (_, record) => {
-            return record.ngay_muon.slice(0, 10);
-        },
-        key: 'ngay_muon',
-        width: 130,
-    },
-    {
-        title: 'Ngày hẹn trả',
-        render: (_, record) => {
-            return record.ngay_hen_tra.slice(0, 10);
-        },
-        key: 'ngay_hen_tra',
-        width: 130,
-    },
-    {
-        title: 'Ngày trả',
-        dataIndex: 'ngay_tra',
-        key: 'ngay_tra',
-        width: 100,
-    },
-
-    {
-        title: 'Ghi chú',
-        dataIndex: 'ghi_chu',
-        key: 'ghi_chu',
-    },
-    {
-        title: 'Trạng thái',
-        key: 'trang_thai',
-        dataIndex: 'trang_thai',
-        width: 130,
-        render: (_, { ngay_tra }) => (
-            <>
-                <Tag color={ngay_tra ? 'geekblue' : 'volcano'}>{ngay_tra ? 'Đã trả' : 'Chưa trả'}</Tag>
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        fixed: 'right',
-        width: 150,
-        render: (_, record) => (
-            <Button>
-                <Link to={`/equipment/back/${record.id}`}>Trả</Link>
-            </Button>
-        ),
-    },
-];
-
 function EquipmentBorrowDetail(props) {
     const dispatch = useDispatch();
+    const [selected, setSelected] = useState();
     const danhSachPhieuMuon = useSelector((state) => {
         console.log(state);
         return state.equipment?.layPhieuMuon;
     });
 
+    const { id } = useParams();
+
     useEffect(() => {
-        dispatch(LAY_PHIEU_MUON());
+        dispatch(LAY_PHIEU_MUON({ id: id }));
     }, []);
 
+    const columns = [
+        {
+            title: 'STT',
+            render: (_, record, index) => index + 1,
+            key: 'id',
+            width: 50,
+        },
+        {
+            title: 'Loại tài nguyên',
+            dataIndex: 'tai_nguyen_id',
+            key: 'tai_nguyen_id',
+            width: 130,
+        },
+        // {
+        //     title: 'Mô tả',
+        //     dataIndex: 'mo_ta',
+        //     key: 'mo_ta',
+        //     width: 200,
+        // },
+        {
+            title: 'Ngày mượn',
+            // dataIndex: 'ngay_muon',
+            render: (_, record) => {
+                return record.ngay_muon.slice(0, 10);
+            },
+            key: 'ngay_muon',
+            width: 130,
+        },
+        {
+            title: 'Ngày hẹn trả',
+            render: (_, record) => {
+                return record.ngay_hen_tra.slice(0, 10);
+            },
+            key: 'ngay_hen_tra',
+            width: 130,
+        },
+        {
+            title: 'Ngày trả',
+            dataIndex: 'ngay_tra',
+            key: 'ngay_tra',
+            width: 100,
+        },
+
+        {
+            title: 'Ghi chú',
+            dataIndex: 'ghi_chu',
+            key: 'ghi_chu',
+        },
+        {
+            title: 'Trạng thái',
+            key: 'trang_thai',
+            dataIndex: 'trang_thai',
+            width: 130,
+            render: (_, { ngay_tra }) => (
+                <>
+                    <Tag color={ngay_tra ? 'geekblue' : 'volcano'}>{ngay_tra ? 'Đã trả' : 'Chưa trả'}</Tag>
+                </>
+            ),
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            fixed: 'right',
+            width: 150,
+            render: (_, record) => (
+                <Link to={`/equipment/back/${id}?${selected}`}>
+                    <Button>Trả</Button>
+                </Link>
+            ),
+        },
+    ];
+
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            let selectedChange = [];
+            if (!isEmptyValue(selectedRows)) {
+                selectedRows.forEach((selection) => {
+                    selectedChange.push(selection.id);
+                });
+            } else {
+                selectedChange = [];
+            }
+            const multiSelectHandler = (option) => {
+                if (!isEmptyValue(option)) {
+                }
+                const details = option.selectedChange;
+                let stringData;
+                details?.forEach((value, index) => {
+                    if (index !== 0) {
+                        stringData = stringData + '&ids=' + value;
+                    } else {
+                        stringData = `ids=${value}`;
+                    }
+                });
+                console.log(stringData);
+                return stringData;
+            };
+
+            const params = multiSelectHandler({ selectedChange });
+            setSelected(params);
+        },
+        getCheckboxProps: (record) => ({
+            disabled: record.name === 'Disabled User',
+            // Column configuration not to be checked
+            name: record.name,
+        }),
+    };
     return (
         <div>
             <div className="page-header">Chi tiết phiếu mượn</div>
@@ -149,7 +189,14 @@ function EquipmentBorrowDetail(props) {
                 {danhSachPhieuMuon.state === 'SUCCESS' && (
                     <Fragment>
                         <div className="second-header">Danh sách phiên sử dụng</div>
-                        <Table dataSource={danhSachPhieuMuon.data[2].phien_su_dung} columns={columns} />
+                        <Table
+                            rowSelection={{
+                                type: 'checkbox',
+                                ...rowSelection,
+                            }}
+                            dataSource={danhSachPhieuMuon.data[0].phien_su_dung}
+                            columns={columns}
+                        />
                     </Fragment>
                 )}
             </div>

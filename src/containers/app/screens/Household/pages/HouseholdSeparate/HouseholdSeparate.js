@@ -102,7 +102,8 @@ function HouseholdSeparate(props) {
         // if (!isEmptyValue(hoKhauInfo?.data?.data[0]?.nhanKhau))
         // dispatch(LAY_NK_RESET_2());
         if (!isEmptyValue(hoKhauInfo?.data?.data[0]?.nhanKhau))
-            dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
+            // dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
+            dispatch(LAY_NK_2({ ids: [...hoKhauInfo?.data?.data[0]?.nhanKhau, hoKhauInfo?.data?.data[0]?.chu_ho_id] }));
         else {
             dispatch(LAY_NK_RESET_2());
         }

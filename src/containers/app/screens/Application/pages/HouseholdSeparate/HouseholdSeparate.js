@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { REQUEST_STATE } from '~/app-configs';
+import { REQUEST_STATE, USER_ROLE } from '~/app-configs';
 import { CheckIcon, XCircleIcon } from '~/assets/svgs';
 import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
 import {
@@ -30,6 +30,7 @@ function HouseholdSeparate(props) {
     });
     const acpTachKhau = useSelector((state) => state.application.acpTachKhau);
     const rejectTachKhau = useSelector((state) => state.application.rejectTachKhau);
+    const user = useSelector((state) => state.user?.profile);
 
     const [showArrow, setShowArrow] = useState(true);
     const [arrowAtCenter, setArrowAtCenter] = useState(false);
@@ -229,44 +230,47 @@ function HouseholdSeparate(props) {
                 </>
             ),
         },
-        {
-            title: 'Action',
-            key: 'action',
-            fixed: 'right',
-            width: 150,
-            render: (_, record) => (
-                <div
-                    style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
-                    className={cx('action-wrapper')}
-                >
-                    {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button> */}
-                    <Tooltip
-                        style={{ cursor: 'poiner' }}
-                        onClick={() => handleAccept(record.id)}
-                        color="cyan"
-                        placement="top"
-                        title={<span>Phê duyệt</span>}
-                        arrow={mergedArrow}
-                    >
-                        <div style={{ cursor: 'pointer' }}>
-                            <CheckIcon stroke="green" />
-                        </div>
-                    </Tooltip>
-                    <Tooltip
-                        style={{ cursor: 'poiner' }}
-                        onClick={() => handleReject(record.id)}
-                        color="cyan"
-                        placement="top"
-                        title={<span>Từ chối</span>}
-                        arrow={mergedArrow}
-                    >
-                        <div style={{ cursor: 'pointer' }}>
-                            <XCircleIcon stroke="red" />
-                        </div>
-                    </Tooltip>
-                </div>
-            ),
-        },
+
+        user.roles === USER_ROLE.ADMIN
+            ? {
+                  title: 'Action',
+                  key: 'action',
+                  fixed: 'right',
+                  width: 150,
+                  render: (_, record) => (
+                      <div
+                          style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
+                          className={cx('action-wrapper')}
+                      >
+                          {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button> */}
+                          <Tooltip
+                              style={{ cursor: 'poiner' }}
+                              onClick={() => handleAccept(record.id)}
+                              color="cyan"
+                              placement="top"
+                              title={<span>Phê duyệt</span>}
+                              arrow={mergedArrow}
+                          >
+                              <div style={{ cursor: 'pointer' }}>
+                                  <CheckIcon stroke="green" />
+                              </div>
+                          </Tooltip>
+                          <Tooltip
+                              style={{ cursor: 'poiner' }}
+                              onClick={() => handleReject(record.id)}
+                              color="cyan"
+                              placement="top"
+                              title={<span>Từ chối</span>}
+                              arrow={mergedArrow}
+                          >
+                              <div style={{ cursor: 'pointer' }}>
+                                  <XCircleIcon stroke="red" />
+                              </div>
+                          </Tooltip>
+                      </div>
+                  ),
+              }
+            : {},
     ];
     return (
         <div>{dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}</div>

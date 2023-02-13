@@ -9,6 +9,9 @@ function AppInput({ name, defaultValue, wrapperStyle = {}, required = false, ...
         setValue,
         formState: { errors },
     } = useFormContext();
+    if (defaultValue && name) {
+        setValue(name, defaultValue);
+    }
     return (
         <div className={cx('input-wrapper')} style={wrapperStyle}>
             <label htmlFor={name} className={cx(required ? 'required' : '')}>
@@ -46,3 +49,15 @@ function AppInput({ name, defaultValue, wrapperStyle = {}, required = false, ...
 }
 
 export default AppInput;
+
+// [
+//     {
+//         "id": 6,
+//         "mo_ta": "Bàn dài đẹp",
+//         "ghi_chu": "Đẹp",
+//         "ngay_them": "2023-02-12T17:00:00.000Z",
+//         "tinh_trang": 9,
+//         "loai_id": 10,
+//         "ten_tai_nguyen": "Bàn dài"
+//     }
+// ]

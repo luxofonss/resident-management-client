@@ -5,7 +5,7 @@ import AppInput from '~/components/AppInput';
 import { Button, Col, Modal, notification, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import AppButton from '~/components/AppButton/AppButton';
-import { LAY_HK_FAIL, THEM_HK, THEM_HK_FAIL, THEM_HK_RESET } from '../../redux/action';
+import { LAY_HK_FAIL, LAY_HK_RESET, THEM_HK, THEM_HK_FAIL, THEM_HK_RESET } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import useDebounceValue from '~/hooks/useDebounceValue';
 import { LAY_NK, LAY_NK_FAIL } from '../../../Resident/redux/action';
@@ -33,7 +33,7 @@ function AddHousehold(props) {
     };
 
     useEffect(() => {
-        dispatch(LAY_HK_FAIL());
+        dispatch(LAY_HK_RESET());
     }, []);
 
     useEffect(() => {

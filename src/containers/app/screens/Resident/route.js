@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { USER_ROLE } from '~/app-configs';
 import AppLayout from '~/components/Layout/AppLayout';
 import { initModules } from '~/router/index';
 import { householdModule } from '../Household/route';
@@ -11,6 +12,7 @@ export const residentModule = {
 export default {
     path: '/resident/list',
     exact: true,
+    role: [USER_ROLE.ADMIN, USER_ROLE.USER],
     isPrivate: true,
     layout: AppLayout,
     component: lazy(async () => {
@@ -24,6 +26,7 @@ export const childRoutes = [
         path: '/resident/create',
         key: 'add',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -35,6 +38,7 @@ export const childRoutes = [
         path: '/resident/create-child',
         key: 'add',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -46,6 +50,7 @@ export const childRoutes = [
         path: '/resident/edit/:id',
         key: 'edit',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -57,6 +62,7 @@ export const childRoutes = [
         path: '/resident/delete/:id',
         key: 'edit',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -68,6 +74,7 @@ export const childRoutes = [
         path: '/resident/death/:id',
         key: 'death',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
@@ -79,6 +86,7 @@ export const childRoutes = [
         path: '/resident/history/:id',
         key: 'history',
         exact: true,
+        role: [USER_ROLE.ADMIN, USER_ROLE.USER],
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {

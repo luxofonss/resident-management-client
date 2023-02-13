@@ -192,3 +192,87 @@ export function LAY_TAI_NGUYEN_RESET(payload) {
         payload,
     };
 }
+
+export function TRA_TAI_NGUYEN(payload) {
+    return {
+        type: 'TRA_TAI_NGUYEN',
+        payload,
+    };
+}
+
+export function TRA_TAI_NGUYEN_SUCCESS(payload) {
+    return {
+        type: 'TRA_TAI_NGUYEN_SUCCESS',
+        payload,
+    };
+}
+
+export function TRA_TAI_NGUYEN_ERROR(payload) {
+    return {
+        type: 'TRA_TAI_NGUYEN_ERROR',
+        payload,
+    };
+}
+
+export function TRA_TAI_NGUYEN_RESET(payload) {
+    return {
+        type: 'TRA_TAI_NGUYEN_RESET',
+        payload,
+    };
+}
+
+export function LAY_TN_KHA_DUNG(payload) {
+    return {
+        type: 'LAY_TN_KHA_DUNG',
+        payload,
+    };
+}
+
+export function LAY_TN_KHA_DUNG_SUCCESS(payload) {
+    return {
+        type: 'LAY_TN_KHA_DUNG_SUCCESS',
+        payload,
+    };
+}
+
+export function LAY_TN_KHA_DUNG_ERROR(payload) {
+    return {
+        type: 'LAY_TN_KHA_DUNG_ERROR',
+        payload,
+    };
+}
+
+export function LAY_TN_KHA_DUNG_RESET(payload) {
+    return {
+        type: 'LAY_TN_KHA_DUNG_RESET',
+        payload,
+    };
+}
+
+export function TRACK_BACK_TN(payload) {
+    return {
+        type: 'TRACK_BACK_TN',
+        payload,
+    };
+}
+
+export function TRACK_BACK_TN_SUCCESS(payload) {
+    return {
+        type: 'TRACK_BACK_TN_SUCCESS',
+        payload,
+    };
+}
+
+export function TRACK_BACK_TN_ERROR(payload) {
+    return {
+        type: 'TRACK_BACK_TN_ERROR',
+        payload,
+    };
+}
+
+export function TRACK_BACK_TN_RESET(payload) {
+    return {
+        type: 'TRACK_BACK_TN_RESET',
+        payload,
+    };
+}

@@ -1,12 +1,12 @@
 import { REQUEST_STATE } from '~/app-configs';
-import { PUT } from '~/app-data/fetch';
+import { PATCH, PUT } from '~/app-data/fetch';
 import { DELETE } from '~/app-data/fetch';
 import { POST } from '~/app-data/fetch';
 import { GET } from '~/app-data/fetch';
 
-export const apiListIssuer = async (params) => {
+export const apiLayUser = async (params) => {
     try {
-        const response = await GET('/issuer/list/institution', params, { isFullPath: false });
+        const response = await GET('/user/all', params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -21,9 +21,9 @@ export const apiListIssuer = async (params) => {
     }
 };
 
-export const apiCreateIssuer = async (params) => {
+export const apiDuyetUser = async (params) => {
     try {
-        const response = await POST('/user/new', params, { isFullPath: false });
+        const response = await PATCH(`/user/accept/${params.id}`, params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -38,77 +38,9 @@ export const apiCreateIssuer = async (params) => {
     }
 };
 
-export const apiDeleteIssuerAccount = async (params) => {
+export const apiTaoUser = async (params) => {
     try {
-        const response = await DELETE('/issuer', params, { isFullPath: false });
-        return {
-            state: REQUEST_STATE.SUCCESS,
-            data: response,
-        };
-    } catch (error) {
-        console.log('error', error);
-        return {
-            error: error,
-            state: REQUEST_STATE.ERROR,
-            data: {},
-        };
-    }
-};
-
-export const apiActiveIssuerAccount = async (params) => {
-    try {
-        const response = await PUT('/issuer/activate', params, { isFullPath: false });
-        return {
-            state: REQUEST_STATE.SUCCESS,
-            data: response,
-        };
-    } catch (error) {
-        console.log('error', error);
-        return {
-            error: error,
-            state: REQUEST_STATE.ERROR,
-            data: {},
-        };
-    }
-};
-
-export const apiDeActiveIssuerAccount = async (params) => {
-    try {
-        const response = await PUT('/issuer/deActivate', params, { isFullPath: false });
-        return {
-            state: REQUEST_STATE.SUCCESS,
-            data: response,
-        };
-    } catch (error) {
-        console.log('error', error);
-        return {
-            error: error,
-            state: REQUEST_STATE.ERROR,
-            data: {},
-        };
-    }
-};
-
-export const apiFilterIssuer = async (params) => {
-    try {
-        const response = await GET('/issuer/list/filter', params, { isFullPath: false });
-        return {
-            state: REQUEST_STATE.SUCCESS,
-            data: response,
-        };
-    } catch (error) {
-        console.log('error', error);
-        return {
-            error: error,
-            state: REQUEST_STATE.ERROR,
-            data: {},
-        };
-    }
-};
-
-export const apiUpdateInstitution = async (params) => {
-    try {
-        const response = await PUT('/institution', params, { isFullPath: false });
+        const response = await POST(`/user/new`, params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

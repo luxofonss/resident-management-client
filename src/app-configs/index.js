@@ -14,6 +14,11 @@ export const REQUEST_STATE = {
     RESET: 'RESET',
 };
 
+export const USER_ROLE = {
+    ADMIN: 'admin',
+    USER: 'user',
+};
+
 // key store in localStorage, Cookies, Session
 export const I18LANGUAGE_KEY = 'i18nextLng';
 export const TOKEN_KEY = 'authencation_COBGBRPIIP';

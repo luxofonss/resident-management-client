@@ -130,21 +130,35 @@ function ResidentList(props) {
                 </>
             ),
         },
+
         {
             title: 'Hành động',
             key: 'id',
-            fixed: 'right',
-            width: 280,
+            // fixed: 'right',
+            width: 320,
             render: (_, record) => (
                 <div className={cx('action-wrapper')}>
+                    <Link to={`/resident/history/${record.id}`}>
+                        <Button>Lịch sử </Button>
+                    </Link>
                     {isEmptyValue(record.chu_ho_id) && (
                         <Link to={`/household/add-resident/${record.id}`}>
                             <Button>Nhập khẩu </Button>
                         </Link>
                     )}
-                    <Link to={`/resident/history/${record.id}`}>
-                        <Button>Lịch sử </Button>
+                    <Link to={`/temporary-absent/new-absent?id=${record.id}`}>
+                        <Button>Tạm vắng</Button>
                     </Link>
+                </div>
+            ),
+        },
+        {
+            title: '',
+            key: 'delete',
+            // fixed: 'right',
+            width: 80,
+            render: (_, record) => (
+                <div className={cx('action-wrapper')}>
                     <div className={cx('action-icon')}>
                         <Tooltip color="cyan" placement="top" title={<span>Đính chính</span>} arrow={mergedArrow}>
                             <Link to={`/resident/edit/:${record.id}`}>

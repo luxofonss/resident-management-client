@@ -1,6 +1,6 @@
 import { Col, notification, Row } from 'antd';
 import classNames from 'classnames/bind';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { REQUEST_STATE } from '~/app-configs';
 import AppButton from '~/components/AppButton/AppButton';
@@ -13,13 +13,15 @@ const cx = classNames.bind(styles);
 
 function EquipmentAddType(props) {
     const dispatch = useDispatch();
+    const [laCongTrinh, setLaCongTrinh] = useState(false);
     const taoLoaiTaiNguyen = useSelector((state) => state.equipment.taoLoaiTaiNguyen);
 
     const onSubmit = (data) => {
         const submitData = {
             ...data,
-            la_cong_trinh: data.la_cong_trinh ? data.la_cong_trinh : false,
+            la_cong_trinh: laCongTrinh,
         };
+
         dispatch(TAO_LOAI_TAI_NGUYEN(submitData));
     };
 
@@ -38,13 +40,14 @@ function EquipmentAddType(props) {
         }
         dispatch(TAO_LOAI_TAI_NGUYEN_RESET());
     }, [taoLoaiTaiNguyen?.state]);
+
     return (
         <div style={{ margin: '0 auto', width: '75%' }}>
-            <div className="page-header flex-center">Thêm loại thiết bị</div>
+            <div className="page-header flex-center">Thêm loại tài nguyên</div>
             <AppForm onSubmit={onSubmit}>
                 <Row gutter={[12, 12]}>
                     <Col xs={12}>
-                        <AppInput required label="Tên thiết bị" name="name"></AppInput>
+                        <AppInput required label="Tên tài nguyên" name="name"></AppInput>
                     </Col>
                     <Col xs={12}>
                         <AppInput required label="Xuất xứ" name="xuat_xu"></AppInput>
@@ -71,6 +74,7 @@ function EquipmentAddType(props) {
                                 id="la_cong_trinh"
                                 type="checkbox"
                                 name="la_cong_trinh"
+                                onChange={(e) => setLaCongTrinh(e.target.checked)}
                             ></input>
                             <label for="la_cong_trinh">Là công trình</label>
                         </div>

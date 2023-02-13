@@ -144,3 +144,11 @@ function ResidentAddChild(props) {
 }
 
 export default ResidentAddChild;
+
+// {
+
+//     "user_phe_duyet": null,
+//     "trang_thai": "s",
+//
+//     "role": "admin"
+// },

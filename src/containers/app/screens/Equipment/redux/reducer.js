@@ -13,6 +13,10 @@ import {
     LAY_TAI_NGUYEN_ERROR,
     LAY_TAI_NGUYEN_RESET,
     LAY_TAI_NGUYEN_SUCCESS,
+    LAY_TN_KHA_DUNG,
+    LAY_TN_KHA_DUNG_ERROR,
+    LAY_TN_KHA_DUNG_RESET,
+    LAY_TN_KHA_DUNG_SUCCESS,
     MUON_THIET_BI,
     MUON_THIET_BI_ERROR,
     MUON_THIET_BI_RESET,
@@ -25,6 +29,14 @@ import {
     TAO_TAI_NGUYEN_ERROR,
     TAO_TAI_NGUYEN_RESET,
     TAO_TAI_NGUYEN_SUCCESS,
+    TRACK_BACK_TN,
+    TRACK_BACK_TN_ERROR,
+    TRACK_BACK_TN_RESET,
+    TRACK_BACK_TN_SUCCESS,
+    TRA_TAI_NGUYEN,
+    TRA_TAI_NGUYEN_ERROR,
+    TRA_TAI_NGUYEN_RESET,
+    TRA_TAI_NGUYEN_SUCCESS,
     TRA_THIET_BI,
     TRA_THIET_BI_ERROR,
     TRA_THIET_BI_RESET,
@@ -59,6 +71,38 @@ export default combineReducers({
                 };
             }
             case LAY_LOAI_TB_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    danhSachTNKhaDung: (state = defaultState, action) => {
+        switch (action.type) {
+            case LAY_TN_KHA_DUNG().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case LAY_TN_KHA_DUNG_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case LAY_TN_KHA_DUNG_ERROR().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case LAY_TN_KHA_DUNG_RESET().type: {
                 return {
                     ...state,
                     state: null,
@@ -251,6 +295,70 @@ export default combineReducers({
                 };
             }
             case LAY_TAI_NGUYEN_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    traTaiNguyen: (state = defaultState, action) => {
+        switch (action.type) {
+            case TRA_TAI_NGUYEN().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case TRA_TAI_NGUYEN_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case TRA_TAI_NGUYEN_ERROR().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case TRA_TAI_NGUYEN_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    trackBackTN: (state = defaultState, action) => {
+        switch (action.type) {
+            case TRACK_BACK_TN().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case TRACK_BACK_TN_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case TRACK_BACK_TN_ERROR().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case TRACK_BACK_TN_RESET().type: {
                 return {
                     ...state,
                     state: null,

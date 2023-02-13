@@ -3,7 +3,6 @@ import { TOKEN_KEY } from '~/app-configs';
 import { REQUEST_STATE } from '~/app-configs';
 import { apiProfile } from '~/app-data/auth';
 import { apiLogin } from '~/app-data/auth';
-import { apiUpdateInstitution } from '~/app-data/users';
 import { CHECK_VALID_TOKEN_FAIL } from '~/redux/actions/user';
 import { UPDATE_DOCUMENT_STORE_ADDRESS } from '~/redux/actions/user';
 import { UPDATE_DOCUMENT_STORE_ADDRESS_FAIL } from '~/redux/actions/user';
@@ -23,24 +22,6 @@ function* handleLogin({ type, payload }) {
             yield put(LOGIN_SUCCESS(profile.data));
         } else {
             yield put(LOGIN_FAIL());
-        }
-    } catch (error) {
-        console.log('error: ', error);
-    }
-}
-
-function* updateDocumentStoreAddress({ type, payload }) {
-    const { documentStoreAddress } = payload;
-    try {
-        const response = yield call(apiUpdateInstitution, { documentStoreAddress });
-        if (response.state === REQUEST_STATE.SUCCESS) {
-            yield put(
-                UPDATE_DOCUMENT_STORE_ADDRESS_SUCCESS({
-                    data: documentStoreAddress,
-                }),
-            );
-        } else {
-            yield put(UPDATE_DOCUMENT_STORE_ADDRESS_FAIL());
         }
     } catch (error) {
         console.log('error: ', error);

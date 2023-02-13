@@ -22,6 +22,23 @@ export const apiLayLoaiTB = async (params) => {
     }
 };
 
+export const apiLayTNKhaDung = async (params) => {
+    try {
+        const response = await GET('/tai-nguyen/kha-dung', params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
 export const apiTaoTaiNguyen = async (params) => {
     try {
         const response = await POST('/tai-nguyen', params, { isFullPath: false });
@@ -124,3 +141,53 @@ export const apiLayTaiNguyen = async (params) => {
         };
     }
 };
+
+export const apiTraTaiNguyen = async (params) => {
+    try {
+        const response = await POST(`/tai-nguyen/tra`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiTrackBackTN = async (params) => {
+    try {
+        const response = await GET(`/tai-nguyen/track-back/${params.id}`, params.params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+// "cu": {
+//     "id": 7,
+//     "mo_ta": "string",
+//     "ghi_chu": "string",
+//     "ngay_them": "2023-02-12T17:00:00.000Z",
+//     "tinh_trang": 10,
+//     "loai_id": 10
+// },
+// "moi": {
+//     "id": 7,
+//     "mo_ta": "xuoc_dam",
+//     "ghi_chu": "string",
+//     "ngay_them": "2023-02-12T17:00:00.000Z",
+//     "tinh_trang": 8,
+//     "loai_id": 10
+// }

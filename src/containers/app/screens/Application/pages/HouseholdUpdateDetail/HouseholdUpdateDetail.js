@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { REQUEST_STATE } from '~/app-configs';
+import { REQUEST_STATE, USER_ROLE } from '~/app-configs';
 import AppButton from '~/components/AppButton/AppButton';
 import AppDateInput from '~/components/AppDateInput';
 import AppForm from '~/components/AppForm';
@@ -21,6 +21,7 @@ function HouseholdUpdateDetail(props) {
     const hoKhau = useSelector((state) => state.household.danhSach);
     const acceptUpdateHK = useSelector((state) => state.household.acceptUpdateHK);
     const rejectDinhChinhKhau = useSelector((state) => state.application.rejectDinhChinhKhau);
+    const user = useSelector((state) => state.user?.profile);
     const { id } = useParams();
 
     console.log('don', don.data);
@@ -164,7 +165,7 @@ function HouseholdUpdateDetail(props) {
                             </AppForm>
                         </Col>
                     </Row>
-                    {don?.data[0]?.trang_thai === 'TAO_MOI' && (
+                    {user.roles === USER_ROLE.ADMIN && don?.data[0]?.trang_thai === 'TAO_MOI' && (
                         <Row>
                             <div style={{ marginTop: '24px', gap: '12px' }} className="bottom-right">
                                 <AppButton onClick={handleAccept}>Phê duyệt</AppButton>

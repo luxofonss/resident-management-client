@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { IconEdit, IconTrash } from '~/assets/svgs';
 import { Link } from 'react-router-dom';
-import { REQUEST_STATE } from '~/app-configs';
+import { REQUEST_STATE, USER_ROLE } from '~/app-configs';
 import { ACCEPT_CHUYEN_KHAU_RESET } from '../../../Application/redux/action';
 
 const cx = classNames.bind(styles);
@@ -33,6 +33,7 @@ function AbsentList(props) {
     const danhSachNhanKhau = useSelector((state) => {
         return state.resident?.list;
     });
+    const user = useSelector((state) => state.user?.profile);
 
     const danhSachNhanKhau2 = useSelector((state) => {
         return state.resident?.list2;
@@ -215,30 +216,32 @@ function AbsentList(props) {
             ),
         },
 
-        {
-            title: 'Hành động',
-            key: 'id',
-            fixed: 'right',
-            width: 220,
-            render: (_, record) => (
-                <div
-                    style={
-                        record.trang_thai === 'TAO_MOI'
-                            ? {
-                                  display: 'flex',
-                                  justifyContent: 'space-between',
-                              }
-                            : { display: 'none' }
-                    }
-                    className={cx('action-wrapper')}
-                >
-                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
-                    <Button danger onClick={() => handleReject(record.id)}>
-                        Từ chối
-                    </Button>
-                </div>
-            ),
-        },
+        user.roles === USER_ROLE.ADMIN
+            ? {
+                  title: 'Hành động',
+                  key: 'id',
+                  fixed: 'right',
+                  width: 220,
+                  render: (_, record) => (
+                      <div
+                          style={
+                              record.trang_thai === 'TAO_MOI'
+                                  ? {
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }
+                                  : { display: 'none' }
+                          }
+                          className={cx('action-wrapper')}
+                      >
+                          <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                          <Button danger onClick={() => handleReject(record.id)}>
+                              Từ chối
+                          </Button>
+                      </div>
+                  ),
+              }
+            : {},
     ];
     return (
         <div>
