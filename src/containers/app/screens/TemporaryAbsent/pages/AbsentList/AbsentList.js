@@ -68,6 +68,9 @@ function AbsentList(props) {
             dataSource.push({
                 stt: index + 1,
                 key: tamvang.id,
+                ho: tamvang.ho,
+                ten_dem: tamvang.ten_dem,
+                ten: tamvang.ten,
                 dia_chi_tam_tru: tamvang.dia_chi_tam_tru,
                 ghi_chu: tamvang.ghi_chu,
                 fullName: danhSachNhanKhau?.data?.data[index]
@@ -78,8 +81,8 @@ function AbsentList(props) {
                       danhSachNhanKhau?.data?.data[index]?.ten
                     : '',
                 ly_do: tamvang.ly_do,
-                ngay_het_han: tamvang.ngay_het_han?.slice(0, 10),
-                ngay_lam_don: tamvang.ngay_lam_don?.slice(0, 10),
+                ngay_het_han: tamvang.ngay_het_han.slice(0, 10),
+                ngay_lam_don: tamvang.ngay_lam_don.slice(0, 10),
                 ngay_phe_duyet: tamvang.ngay_phe_duyet?.slice(0, 10),
                 trang_thai: tamvang.trang_thai,
                 user_phe_duyet:
@@ -148,17 +151,13 @@ function AbsentList(props) {
         {
             title: 'Full Name',
             width: 100,
-            dataIndex: 'fullName',
+            render: (_, { ho, ten, ten_dem }) => {
+                return ho + ' ' + ten_dem + ' ' + ten;
+            },
             key: 'fullName',
             fixed: 'left',
         },
-        {
-            title: 'Ngày làm đơn',
-            width: 120,
-            dataIndex: 'ngay_lam_don',
-            key: 'ngay_lam_don',
-            sorter: true,
-        },
+
         {
             title: 'Lý do',
             dataIndex: 'ly_do',
@@ -174,22 +173,32 @@ function AbsentList(props) {
             dataIndex: 'so_ho_khau_id',
             key: 'so_ho_khau_id',
         },
+        // {
+        //     title: 'Nguời phê duyệt',
+        //     dataIndex: 'user_phe_duyet',
+        //     key: 'user_phe_duyet',
+        // },
         {
-            title: 'Nguời phê duyệt',
-            dataIndex: 'user_phe_duyet',
-            key: 'user_phe_duyet',
+            title: 'Ngày làm đơn',
+            width: 120,
+            render: (_, record) => record.ngay_lam_don.slice(0, 10),
+
+            key: 'ngay_lam_don',
+            sorter: true,
         },
         {
             title: 'Ngày phê duyệt',
             width: 120,
-            dataIndex: 'ngay_phe_duyet',
+            render: (_, record) => record.ngay_phe_duyet?.slice(0, 10),
+
             key: 'ngay_phe_duyet',
             sorter: true,
         },
         {
             title: 'Ngày hết hạn',
             width: 120,
-            dataIndex: 'ngay_het_han',
+            render: (_, record) => record.ngay_het_han?.slice(0, 10),
+
             key: 'ngay_het_han',
             sorter: true,
         },
@@ -210,6 +219,8 @@ function AbsentList(props) {
                             ? 'Đã phê duyệt'
                             : trang_thai === 'TU_CHOI'
                             ? 'Từ chối'
+                            : trang_thai === 'HUY_BO'
+                            ? 'Đã hủy'
                             : 'Chưa xử lý'}
                     </Tag>
                 </>
@@ -245,6 +256,7 @@ function AbsentList(props) {
     ];
     return (
         <div>
+            <div className="page-header">Danh sách đơn tạm vắng</div>
             {tamVangList.state === REQUEST_STATE.SUCCESS && (
                 <Table
                     dataSource={tamVangList.data}

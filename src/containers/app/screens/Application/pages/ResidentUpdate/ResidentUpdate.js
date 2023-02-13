@@ -179,7 +179,11 @@ function ResidentUpdate(props) {
         },
     ];
     return (
-        <div>{dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}</div>
+        <div>
+            <div className="page-header">Đơn đính chính nhân khẩu</div>
+
+            {dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}
+        </div>
     );
 }
 

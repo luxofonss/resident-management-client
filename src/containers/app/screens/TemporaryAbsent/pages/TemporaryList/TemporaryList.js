@@ -118,6 +118,9 @@ function TemporaryList(props) {
             dataSource.push({
                 stt: index + 1,
                 key: tamtru.key,
+                ho: tamtru.ho,
+                ten: tamtru.ten,
+                ten_dem: tamtru.ten_dem,
                 dia_chi_tam_tru: tamtru.dia_chi_tam_tru,
                 dia_chi_thuong_tru: tamtru.dia_chi_thuong_tru,
                 ghi_chu: tamtru.ghi_chu,
@@ -130,8 +133,8 @@ function TemporaryList(props) {
                       danhSachNhanKhau?.data?.data[index]?.ten
                     : '',
                 ly_do: tamtru.ly_do,
-                ngay_het_han: tamtru.ngay_het_han?.slice(0, 10),
-                ngay_lam_don: tamtru.ngay_lam_don?.slice(0, 10),
+                ngay_het_han: tamtru.ngay_het_han.slice(0, 10),
+                ngay_lam_don: tamtru.ngay_lam_don.slice(0, 10),
                 ngay_phe_duyet: tamtru.ngay_phe_duyet?.slice(0, 10),
                 ngay_tam_tru: tamtru.ngay_tam_tru,
                 nhan_khau_id: tamtru.nhan_khau_id,
@@ -162,17 +165,14 @@ function TemporaryList(props) {
         {
             title: 'Full Name',
             width: 150,
-            dataIndex: 'fullName',
+            // dataIndex: 'fullName',
+            render: (_, { ho, ten, ten_dem }) => {
+                return ho + ' ' + ten_dem + ' ' + ten;
+            },
             key: 'fullName',
             fixed: 'left',
         },
-        {
-            title: 'Ngày làm đơn',
-            width: 120,
-            dataIndex: 'ngay_lam_don',
-            key: 'ngay_lam_don',
-            sorter: true,
-        },
+
         {
             title: 'Lý do',
             dataIndex: 'ly_do',
@@ -189,21 +189,26 @@ function TemporaryList(props) {
             key: 'so_ho_khau_id',
         },
         {
-            title: 'Nguời phê duyệt',
-            dataIndex: 'user_phe_duyet',
-            key: 'user_phe_duyet',
+            title: 'Ngày làm đơn',
+            width: 120,
+            render: (_, record) => record.ngay_lam_don?.slice(0, 10),
+
+            key: 'ngay_lam_don',
+            sorter: true,
         },
         {
             title: 'Ngày phê duyệt',
             width: 120,
-            dataIndex: 'ngay_phe_duyet',
+            render: (_, record) => record.ngay_phe_duyet?.slice(0, 10),
+
             key: 'ngay_phe_duyet',
             sorter: true,
         },
         {
             title: 'Ngày hết hạn',
             width: 120,
-            dataIndex: 'ngay_het_han',
+            render: (_, record) => record.ngay_het_han?.slice(0, 10),
+
             key: 'ngay_het_han',
             sorter: true,
         },

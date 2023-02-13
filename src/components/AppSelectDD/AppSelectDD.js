@@ -94,3 +94,5 @@ const AppSelectDD = ({ name, required, options, label, ...props }) => {
 };
 
 export default AppSelectDD;
+
+// render: (_, record) => record.ngay_phe_duyet.slice(0, 10),

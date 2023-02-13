@@ -97,7 +97,7 @@ function ResidentAdd(props) {
                         <Row gutter={8}>
                             <Col xl={12}>
                                 <AppInput
-                                    type="text"
+                                    type="number"
                                     label="Điện thoại"
                                     name="nhanKhauInfo.so_dien_thoai"
                                     required

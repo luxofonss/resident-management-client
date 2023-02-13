@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styles from './Demo.module.sass';
 import classNames from 'classnames/bind';
 import AppButton from '~/components/AppButton/AppButton';
@@ -8,6 +8,7 @@ import AppFileInput from '~/components/AppFileInput';
 import AppInput from '~/components/AppInput';
 import AppSelectInput from '~/components/AppSelectInput';
 import AppTextArea from '~/components/AppTextArea';
+import { Col, Row } from 'antd';
 
 const cx = classNames.bind(styles);
 
@@ -21,16 +22,39 @@ const options = [
 
 function Demo(props) {
     return (
-        <div>
-            <AppForm onSubmit={(data) => console.log(data)}>
-                <AppDateInput required label="Date" name="date"></AppDateInput>
-                <AppFileInput required label="File" name="file"></AppFileInput>
-                <AppInput required label="Text" name="name"></AppInput>
-                <AppSelectInput required options={{ options }} label="Select" name="select"></AppSelectInput>
-                <AppTextArea required label="Textarea" name="textarea"></AppTextArea>
-                <AppButton type="submit">Submit</AppButton>
-            </AppForm>
-        </div>
+        <Fragment>
+            <div className="page-header flex-center">Hệ thống quản lý sộ hộ khẩu</div>
+            <div className="flex-center" style={{ width: '50%', minWidth: '400px', margin: '0 auto' }}>
+                <AppForm>
+                    <Row gutter={[24, 12]}>
+                        <Col xs={24}>
+                            <AppInput label="Giảng viên" value="Tên giảng viên" disabled />
+                        </Col>
+                        <Col xs={24}>
+                            <AppInput label="Môn" value="Công nghệ phần mềm" disabled />
+                        </Col>
+                        <Col xs={24}>
+                            <div className="second-header">Thành viên nhóm</div>
+                        </Col>
+                        <Col xs={24}>
+                            <AppInput value="Nguyễn Khánh An" disabled />
+                        </Col>
+                        <Col xs={24}>
+                            <AppInput value="Vũ Việt Bách" diasbled />
+                        </Col>
+                        <Col xs={24}>
+                            <AppInput value="Nguyễn Văn Quyền" diasbled />
+                        </Col>
+                        <Col xs={24}>
+                            <AppInput value="Nguyễn Minh Tuấn" disabled />
+                        </Col>
+                        <Col xs={24}>
+                            <AppInput value="Nguyễn Văn Thọ" disabled />
+                        </Col>
+                    </Row>
+                </AppForm>
+            </div>
+        </Fragment>
     );
 }
 

@@ -64,45 +64,48 @@ function ResidentAddChild(props) {
             title: 'Họ và tên',
             dataIndex: 'ten',
             key: 'ten',
+            width: 150,
         },
 
         {
-            title: 'Bố',
+            title: 'Họ và tên bố',
             dataIndex: 'ten_bo',
             key: 'ten_bo',
-            width: 100,
+            width: 150,
         },
-        {
-            title: 'Người khai sinh',
-            dataIndex: 'ten_nguoi_khai_sinh',
-            key: 'ten_nguoi_khai_sinh',
-            width: 140,
-        },
-        { title: 'Mẹ', dataIndex: 'ten_me', key: 'ten_me', width: 100 },
+        // {
+        //     title: 'Người khai sinh',
+        //     dataIndex: 'ten_nguoi_khai_sinh',
+        //     key: 'ten_nguoi_khai_sinh',
+        //     width: 140,
+        // },
+        { title: 'Họ và tên mẹ', dataIndex: 'ten_me', key: 'ten_me', width: 150 },
         {
             title: 'Sổ hộ khẩu',
             dataIndex: 'ho_khau_id',
             key: 'ho_khau_id',
-            width: 100,
+            width: 120,
         },
         {
             title: 'Nơi đăng ký',
             dataIndex: 'noi_dang_ki',
             key: 'noi_dang_ki',
-            width: 100,
+            width: 150,
         },
         {
             title: 'Ngày khai sinh',
-            dataIndex: 'ngay_khai_sinh',
+            // dataIndex: 'ngay_khai_sinh',
+            render: (_, record) => record.ngay_khai_sinh.slice(0, 1),
             key: 'ngay_khai_sinh',
             width: 140,
         },
-        {
-            title: 'Ngày phê duyệt',
-            dataIndex: 'ngay_phe_duyet',
-            key: 'ngay_phe_duyet',
-            width: 140,
-        },
+        // {
+        //     title: 'Ngày phê duyệt',
+        //     dataIndex: 'ngay_phe_duyet',
+        //     render: (_, record) => record.ngay_phe_duyet.slice(0, 1),
+        //     key: 'ngay_phe_duyet',
+        //     width: 140,
+        // },
 
         {
             title: 'Ghi chú',
@@ -138,6 +141,8 @@ function ResidentAddChild(props) {
     ];
     return (
         <div>
+            <div className="page-header">Giấy khai sinh</div>
+
             <Table dataSource={dons?.data} columns={columns} />
         </div>
     );

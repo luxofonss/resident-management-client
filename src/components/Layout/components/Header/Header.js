@@ -49,7 +49,7 @@ export default function (props) {
                 alignItems: 'center',
             }}
         >
-            <div className="flex-center">Logo</div>
+            <div className="flex-center">Hệ thống quản lý sổ hộ khẩu và nhân khẩu số 1 thế giới</div>
 
             <div
                 style={{

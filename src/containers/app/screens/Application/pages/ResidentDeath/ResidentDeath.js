@@ -77,6 +77,8 @@ function ResidentDeath(props) {
     ];
     return (
         <div>
+            <div className="page-header">Giấy khai tử</div>
+
             <Table dataSource={dons?.data} columns={columns} />
         </div>
     );

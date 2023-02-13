@@ -265,7 +265,9 @@ function HouseholdMove(props) {
     ];
     return (
         <div>
-            <Tooltip color="cyan" placement="top" title={<span>Đính chính</span>} arrow={mergedArrow}></Tooltip>
+            {/* <Tooltip color="cyan" placement="top" title={<span>Đính chính</span>} arrow={mergedArrow}></Tooltip> */}
+            <div className="page-header">Đơn chuyển khẩu</div>
+
             {dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}
         </div>
     );

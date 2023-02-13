@@ -245,7 +245,7 @@ function HouseholdAddResident(props) {
                   title: 'Action',
                   key: 'action',
                   fixed: 'right',
-                  width: 120,
+                  width: 100,
                   render: (_, record) => (
                       <div
                           style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
@@ -282,7 +282,11 @@ function HouseholdAddResident(props) {
             : {},
     ];
     return (
-        <div>{dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}</div>
+        <div>
+            <div className="page-header">Đơn tách khẩu</div>
+
+            {dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}
+        </div>
     );
 }
 

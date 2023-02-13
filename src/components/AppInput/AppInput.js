@@ -14,9 +14,11 @@ function AppInput({ name, defaultValue, wrapperStyle = {}, required = false, ...
     }
     return (
         <div className={cx('input-wrapper')} style={wrapperStyle}>
-            <label htmlFor={name} className={cx(required ? 'required' : '')}>
-                {props.label}
-            </label>
+            {props.label && (
+                <label htmlFor={name} className={cx(required ? 'required' : '')}>
+                    {props.label}
+                </label>
+            )}
             {name && (
                 <input
                     id={name}

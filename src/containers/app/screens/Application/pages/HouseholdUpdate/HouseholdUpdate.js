@@ -201,25 +201,12 @@ function HouseholdUpdate(props) {
         },
     ];
     return (
-        <div>{dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}</div>
+        <div>
+            <div className="page-header">Đơn đính chính sổ hộ khẩu</div>
+
+            {dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}
+        </div>
     );
 }
 
 export default HouseholdUpdate;
-
-bi_danh: 'string';
-cccd: '123';
-cccd_ngay_cap: '2002-09-01';
-cccd_noi_cap: 'string';
-dan_toc: 'string';
-email: 'string@gmail.com';
-ho: 'string';
-ngay_sinh: '2002-02-24';
-nghe_nhiep: 'string';
-nguyen_quan: 'string';
-noi_lam_viec: 'string test update noi lam veic';
-noi_sinh: 'string';
-so_dien_thoai: '123456';
-ten: 'string';
-ten_dem: 'string';
-ton_giao: 'string';
