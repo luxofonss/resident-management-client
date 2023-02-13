@@ -518,9 +518,9 @@ export const IconTrash = ({ width, height }) => (
         <path
             d="M2.40002 5.39999H21.6M9.60002 17.4V10.2M14.4 17.4V10.2M16.8 22.2H7.20002C5.87454 22.2 4.80002 21.1255 4.80002 19.8V6.59999C4.80002 5.93725 5.33728 5.39999 6.00002 5.39999H18C18.6628 5.39999 19.2 5.93725 19.2 6.59999V19.8C19.2 21.1255 18.1255 22.2 16.8 22.2ZM9.60002 5.39999H14.4C15.0628 5.39999 15.6 4.86273 15.6 4.19999V2.99999C15.6 2.33725 15.0628 1.79999 14.4 1.79999H9.60002C8.93728 1.79999 8.40002 2.33725 8.40002 2.99999V4.19999C8.40002 4.86273 8.93728 5.39999 9.60002 5.39999Z"
             stroke="black"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
         />
     </svg>
 );
@@ -621,17 +621,17 @@ export const SearchIcon = () => (
     </svg>
 );
 
-export const CheckIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M16.8002 8.3999L9.64068 15.5999L7.2002 13.1456"
-            stroke="#2C3038"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        />
-    </svg>
-);
+// export const CheckIcon = () => (
+//     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+//         <path
+//             d="M16.8002 8.3999L9.64068 15.5999L7.2002 13.1456"
+//             stroke="#2C3038"
+//             strokeWidth="2"
+//             strokeLinecap="round"
+//             strokeLinejoin="round"
+//         />
+//     </svg>
+// );
 
 export const ChevronDown = ({ width, height }) => (
     <svg width={width ?? 24} height={height ?? 24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -841,5 +841,26 @@ export const IconX = ({ width, height, stroke = 'black' }) => (
 export const IconPlus = ({ width, height, stroke = 'black' }) => (
     <svg width={width ?? 24} height={height ?? 24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 6L12 18M18 12L6 12" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+    </svg>
+);
+
+export const CheckIcon = ({ width, height, stroke = 'black' }) => (
+    <svg width={width ?? 24} height={height ?? 24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M15.3514 9.84855L10.7999 14.4L9.24843 12.8486M11.9999 2.40002C6.69797 2.40002 2.3999 6.69809 2.3999 12C2.3999 17.302 6.69797 21.6 11.9999 21.6C17.3018 21.6 21.5999 17.302 21.5999 12C21.5999 6.69809 17.3018 2.40002 11.9999 2.40002Z"
+            stroke={stroke}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);
+
+export const XCircleIcon = ({ width, height, stroke = 'black' }) => (
+    <svg width={width ?? 24} height={height ?? 24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M16.1012 9.31299C16.4918 8.92246 16.4918 8.2893 16.1012 7.89878C15.7107 7.50825 15.0776 7.50825 14.687 7.89878L16.1012 9.31299ZM7.8988 14.687C7.50828 15.0775 7.50828 15.7107 7.8988 16.1012C8.28933 16.4917 8.92249 16.4917 9.31302 16.1012L7.8988 14.687ZM14.687 16.1012C15.0776 16.4917 15.7107 16.4917 16.1012 16.1012C16.4918 15.7107 16.4918 15.0775 16.1012 14.687L14.687 16.1012ZM9.31302 7.89877C8.92249 7.50825 8.28933 7.50825 7.8988 7.89877C7.50828 8.2893 7.50828 8.92246 7.8988 9.31299L9.31302 7.89877ZM20.6 12C20.6 16.7496 16.7497 20.6 12 20.6V22.6C17.8542 22.6 22.6 17.8542 22.6 12H20.6ZM12 20.6C7.25038 20.6 3.40002 16.7496 3.40002 12H1.40002C1.40002 17.8542 6.14581 22.6 12 22.6V20.6ZM3.40002 12C3.40002 7.25034 7.25038 3.39999 12 3.39999V1.39999C6.14581 1.39999 1.40002 6.14578 1.40002 12H3.40002ZM12 3.39999C16.7497 3.39999 20.6 7.25034 20.6 12H22.6C22.6 6.14578 17.8542 1.39999 12 1.39999V3.39999ZM14.687 7.89878L11.2929 11.2929L12.7071 12.7071L16.1012 9.31299L14.687 7.89878ZM11.2929 11.2929L7.8988 14.687L9.31302 16.1012L12.7071 12.7071L11.2929 11.2929ZM16.1012 14.687L12.7071 11.2929L11.2929 12.7071L14.687 16.1012L16.1012 14.687ZM12.7071 11.2929L9.31302 7.89877L7.8988 9.31299L11.2929 12.7071L12.7071 11.2929Z"
+            fill={stroke}
+        />
     </svg>
 );

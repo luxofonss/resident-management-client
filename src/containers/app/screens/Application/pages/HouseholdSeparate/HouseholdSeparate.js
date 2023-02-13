@@ -1,9 +1,10 @@
-import { Button, notification, Table, Tag } from 'antd';
+import { Button, notification, Table, Tag, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
+import { CheckIcon, XCircleIcon } from '~/assets/svgs';
 import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
 import {
     ACCEPT_CHUYEN_KHAU,
@@ -11,6 +12,8 @@ import {
     ACCEPT_TACH_KHAU,
     ACCEPT_TACH_KHAU_RESET,
     LAY_DON,
+    REJECT_TACH_KHAU,
+    REJECT_TACH_KHAU_RESET,
 } from '../../redux/action';
 import styles from './HouseholdSeparate.module.sass';
 
@@ -26,6 +29,18 @@ function HouseholdSeparate(props) {
         return state.resident?.list2;
     });
     const acpTachKhau = useSelector((state) => state.application.acpTachKhau);
+    const rejectTachKhau = useSelector((state) => state.application.rejectTachKhau);
+
+    const [showArrow, setShowArrow] = useState(true);
+    const [arrowAtCenter, setArrowAtCenter] = useState(false);
+
+    const mergedArrow = useMemo(() => {
+        if (arrowAtCenter)
+            return {
+                arrowPointAtCenter: true,
+            };
+        return showArrow;
+    }, [showArrow, arrowAtCenter]);
 
     console.log('dons', dons);
 
@@ -100,6 +115,7 @@ function HouseholdSeparate(props) {
                 message: 'Success',
                 description: 'Phê duyệt thành công!',
             });
+            dispatch(LAY_DON({ type: 'don_tach_khau' }));
         }
         if (acpTachKhau?.state === REQUEST_STATE.ERROR) {
             notification.error({
@@ -108,8 +124,29 @@ function HouseholdSeparate(props) {
             });
         }
         dispatch(ACCEPT_TACH_KHAU_RESET());
-        dispatch(LAY_DON({ type: 'don_tach_khau' }));
     }, [acpTachKhau?.state]);
+
+    useEffect(() => {
+        let ignore = false;
+        if (rejectTachKhau.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Đã từ chối đơn thành công!',
+            });
+            dispatch(LAY_DON({ type: 'don_tach_khau' }));
+        }
+        if (rejectTachKhau?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Từ chối thất bại!',
+            });
+        }
+        dispatch(REJECT_TACH_KHAU_RESET());
+    }, [rejectTachKhau?.state]);
+
+    const handleReject = (id) => {
+        dispatch(REJECT_TACH_KHAU({ id: id }));
+    };
 
     const columns = [
         {
@@ -160,12 +197,12 @@ function HouseholdSeparate(props) {
             key: 'ngay_tach',
             width: 120,
         },
-        {
-            title: 'Người phê duyệt',
-            dataIndex: 'user_phe_duyet',
-            key: 'user_phe_duyet',
-            width: 120,
-        },
+        // {
+        //     title: 'Người phê duyệt',
+        //     dataIndex: 'user_phe_duyet',
+        //     key: 'user_phe_duyet',
+        //     width: 120,
+        // },
         {
             title: 'Lý do',
             dataIndex: 'ly_do',
@@ -182,8 +219,12 @@ function HouseholdSeparate(props) {
             dataIndex: 'trang_thai',
             render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : 'volcano'}>
-                        {trang_thai === 'PHE_DUYET' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : trang_thai === 'TU_CHOI' ? 'red' : 'volcano'}>
+                        {trang_thai === 'PHE_DUYET'
+                            ? 'Đã phê duyệt'
+                            : trang_thai === 'TU_CHOI'
+                            ? 'Từ chối'
+                            : 'Chờ phê duyệt'}
                     </Tag>
                 </>
             ),
@@ -198,7 +239,31 @@ function HouseholdSeparate(props) {
                     style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
                     className={cx('action-wrapper')}
                 >
-                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                    {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button> */}
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleAccept(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Phê duyệt</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <CheckIcon stroke="green" />
+                        </div>
+                    </Tooltip>
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleReject(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Từ chối</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <XCircleIcon stroke="red" />
+                        </div>
+                    </Tooltip>
                 </div>
             ),
         },

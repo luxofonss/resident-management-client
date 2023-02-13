@@ -75,4 +75,15 @@ export const childRoutes = [
             return import('./pages/ResidentDeath');
         }),
     },
+    {
+        path: '/resident/history/:id',
+        key: 'history',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([residentModule], 'app');
+            return import('./pages/ResidentHistory');
+        }),
+    },
 ];

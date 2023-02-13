@@ -8,7 +8,9 @@ import {
     apiKhaiTuNK,
     apiLayKhaiSinhNK,
     apiLayKhaiTuNK,
+    apiTrackBackNK,
 } from '~/app-data/nhanKhau';
+import { TRACK_BACK_HK_SUCCESS } from '../../Household/redux/action';
 import {
     CAP_NHAT_NK,
     CAP_NHAT_NK_FAIL,
@@ -34,6 +36,9 @@ import {
     THEM_NK,
     THEM_NK_FAIL,
     THEM_NK_SUCCESS,
+    TRACK_BACK_NK,
+    TRACK_BACK_NK_FAIL,
+    TRACK_BACK_NK_SUCCESS,
 } from './action';
 
 function* handleLayNhanKhau({ type, payload }) {
@@ -139,6 +144,18 @@ function* handleLayKhaiTuNhanKhau({ type, payload }) {
         console.log('error: ', error);
     }
 }
+function* handleTrackBackNhanKhau({ type, payload }) {
+    try {
+        const response = yield call(apiTrackBackNK, payload);
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(TRACK_BACK_NK_SUCCESS(response.data));
+        } else {
+            yield put(TRACK_BACK_NK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
 
 export default function* () {
     yield takeLatest(LAY_NK().type, handleLayNhanKhau);
@@ -149,4 +166,5 @@ export default function* () {
     yield takeLatest(CAP_NHAT_NK().type, handleCapNhatNhanKhau);
     yield takeLatest(KHAI_TU_NK().type, handleKhaiTuNhanKhau);
     yield takeLatest(LAY_KHAI_TU_NK().type, handleLayKhaiTuNhanKhau);
+    yield takeLatest(TRACK_BACK_NK().type, handleTrackBackNhanKhau);
 }

@@ -1,9 +1,10 @@
-import { Button, notification, Table, Tag } from 'antd';
+import { Button, notification, Table, Tag, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
+import { CheckIcon, XCircleIcon } from '~/assets/svgs';
 import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
 import {
     ACCEPT_CHUYEN_KHAU,
@@ -11,6 +12,9 @@ import {
     ACCEPT_NHAP_KHAU,
     ACCEPT_NHAP_KHAU_RESET,
     LAY_DON,
+    REJECT_CHUYEN_KHAU_RESET,
+    REJECT_NHAP_KHAU,
+    REJECT_NHAP_KHAU_RESET,
 } from '../../redux/action';
 import styles from './HouseholdAddResident.module.sass';
 
@@ -25,7 +29,19 @@ function HouseholdAddResident(props) {
     const danhSachNhanKhau2 = useSelector((state) => {
         return state.resident?.list2;
     });
+    const rejectNhapKhau = useSelector((state) => state.application.rejectNhapKhau);
+
     const acpNhapKhau = useSelector((state) => state.application.acpNhapKhau);
+    const [showArrow, setShowArrow] = useState(true);
+    const [arrowAtCenter, setArrowAtCenter] = useState(false);
+
+    const mergedArrow = useMemo(() => {
+        if (arrowAtCenter)
+            return {
+                arrowPointAtCenter: true,
+            };
+        return showArrow;
+    }, [showArrow, arrowAtCenter]);
 
     console.log('dons', dons);
 
@@ -94,6 +110,10 @@ function HouseholdAddResident(props) {
         dispatch(ACCEPT_NHAP_KHAU({ id: id }));
     };
 
+    const handleReject = (id) => {
+        dispatch(REJECT_NHAP_KHAU({ id: id }));
+    };
+
     useEffect(() => {
         let ignore = false;
         if (acpNhapKhau.state == REQUEST_STATE.SUCCESS) {
@@ -101,6 +121,7 @@ function HouseholdAddResident(props) {
                 message: 'Success',
                 description: 'Phê duyệt thành công!',
             });
+            dispatch(LAY_DON({ type: 'don_nhap_khau' }));
         }
         if (acpNhapKhau?.state === REQUEST_STATE.ERROR) {
             notification.error({
@@ -109,8 +130,25 @@ function HouseholdAddResident(props) {
             });
         }
         dispatch(ACCEPT_NHAP_KHAU_RESET());
-        dispatch(LAY_DON({ type: 'don_nhap_khau' }));
     }, [acpNhapKhau?.state]);
+
+    useEffect(() => {
+        let ignore = false;
+        if (rejectNhapKhau.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Đã từ chối đơn!',
+            });
+            dispatch(LAY_DON({ type: 'don_tach_khau' }));
+        }
+        if (rejectNhapKhau?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Từ chối đơn thất bại!',
+            });
+        }
+        dispatch(REJECT_NHAP_KHAU_RESET());
+    }, [rejectNhapKhau?.state]);
 
     const columns = [
         {
@@ -167,12 +205,12 @@ function HouseholdAddResident(props) {
             key: 'ngay_chuyen',
             width: 120,
         },
-        {
-            title: 'Người phê duyệt',
-            dataIndex: 'user_phe_duyet',
-            key: 'user_phe_duyet',
-            width: 120,
-        },
+        // {
+        //     title: 'Người phê duyệt',
+        //     dataIndex: 'user_phe_duyet',
+        //     key: 'user_phe_duyet',
+        //     width: 120,
+        // },
         {
             title: 'Lý do',
             dataIndex: 'ly_do',
@@ -189,8 +227,12 @@ function HouseholdAddResident(props) {
             dataIndex: 'trang_thai',
             render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : 'volcano'}>
-                        {trang_thai === 'PHE_DUYET' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : trang_thai === 'TU_CHOI' ? 'red' : 'volcano'}>
+                        {trang_thai === 'PHE_DUYET'
+                            ? 'Đã phê duyệt'
+                            : trang_thai === 'TU_CHOI'
+                            ? 'Từ chối'
+                            : 'Chờ phê duyệt'}
                     </Tag>
                 </>
             ),
@@ -199,13 +241,37 @@ function HouseholdAddResident(props) {
             title: 'Action',
             key: 'action',
             fixed: 'right',
-            width: 150,
+            width: 120,
             render: (_, record) => (
                 <div
                     style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
                     className={cx('action-wrapper')}
                 >
-                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                    {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button> */}
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleAccept(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Phê duyệt</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <CheckIcon stroke="green" />
+                        </div>
+                    </Tooltip>
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleReject(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Từ chối</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <XCircleIcon stroke="red" />
+                        </div>
+                    </Tooltip>
                 </div>
             ),
         },

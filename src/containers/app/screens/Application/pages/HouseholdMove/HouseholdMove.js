@@ -1,11 +1,18 @@
-import { Button, notification, Table, Tag } from 'antd';
+import { Button, notification, Table, Tag, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
+import { CheckIcon, XCircleIcon } from '~/assets/svgs';
 import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
-import { ACCEPT_CHUYEN_KHAU, ACCEPT_CHUYEN_KHAU_RESET, LAY_DON } from '../../redux/action';
+import {
+    ACCEPT_CHUYEN_KHAU,
+    ACCEPT_CHUYEN_KHAU_RESET,
+    LAY_DON,
+    REJECT_CHUYEN_KHAU,
+    REJECT_CHUYEN_KHAU_RESET,
+} from '../../redux/action';
 import styles from './HouseholdMove.module.sass';
 
 const cx = classNames.bind(styles);
@@ -20,6 +27,18 @@ function HouseholdMove(props) {
         return state.resident?.list2;
     });
     const acpChuyenKhau = useSelector((state) => state.application.acpChuyenKhau);
+    const rejectChuyenKhau = useSelector((state) => state.application.rejectChuyenKhau);
+
+    const [showArrow, setShowArrow] = useState(true);
+    const [arrowAtCenter, setArrowAtCenter] = useState(false);
+
+    const mergedArrow = useMemo(() => {
+        if (arrowAtCenter)
+            return {
+                arrowPointAtCenter: true,
+            };
+        return showArrow;
+    }, [showArrow, arrowAtCenter]);
 
     console.log('dons', dons);
 
@@ -85,6 +104,10 @@ function HouseholdMove(props) {
         dispatch(ACCEPT_CHUYEN_KHAU({ id: id }));
     };
 
+    const handleReject = (id) => {
+        dispatch(REJECT_CHUYEN_KHAU({ id: id }));
+    };
+
     useEffect(() => {
         let ignore = false;
         if (acpChuyenKhau.state == REQUEST_STATE.SUCCESS) {
@@ -92,6 +115,7 @@ function HouseholdMove(props) {
                 message: 'Success',
                 description: 'Phê duyệt thành công!',
             });
+            dispatch(LAY_DON({ type: 'don_chuyen_khau' }));
         }
         if (acpChuyenKhau?.state === REQUEST_STATE.ERROR) {
             notification.error({
@@ -100,8 +124,25 @@ function HouseholdMove(props) {
             });
         }
         dispatch(ACCEPT_CHUYEN_KHAU_RESET());
-        dispatch(LAY_DON({ type: 'don_chuyen_khau' }));
     }, [acpChuyenKhau?.state]);
+
+    useEffect(() => {
+        let ignore = false;
+        if (rejectChuyenKhau.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Đã từ chối đơn!',
+            });
+            dispatch(LAY_DON({ type: 'don_tach_khau' }));
+        }
+        if (rejectChuyenKhau?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Từ chối đơn thất bại!',
+            });
+        }
+        dispatch(REJECT_CHUYEN_KHAU_RESET());
+    }, [rejectChuyenKhau?.state]);
 
     const columns = [
         {
@@ -114,6 +155,7 @@ function HouseholdMove(props) {
             title: 'Người đại diện',
             dataIndex: 'dai_dien_id',
             key: 'dai_dien_id',
+            width: 150,
         },
 
         {
@@ -146,12 +188,12 @@ function HouseholdMove(props) {
             key: 'ngay_chuyen',
             width: 120,
         },
-        {
-            title: 'Người phê duyệt',
-            dataIndex: 'user_phe_duyet',
-            key: 'user_phe_duyet',
-            width: 120,
-        },
+        // {
+        //     title: 'Người phê duyệt',
+        //     dataIndex: 'user_phe_duyet',
+        //     key: 'user_phe_duyet',
+        //     width: 120,
+        // },
         {
             title: 'Lý do',
             dataIndex: 'ly_do',
@@ -168,8 +210,12 @@ function HouseholdMove(props) {
             dataIndex: 'trang_thai',
             render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : 'volcano'}>
-                        {trang_thai === 'PHE_DUYET' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : trang_thai === 'TU_CHOI' ? 'red' : 'volcano'}>
+                        {trang_thai === 'PHE_DUYET'
+                            ? 'Đã phê duyệt'
+                            : trang_thai === 'TU_CHOI'
+                            ? 'Từ chối'
+                            : 'Chờ phê duyệt'}
                     </Tag>
                 </>
             ),
@@ -178,19 +224,47 @@ function HouseholdMove(props) {
             title: 'Action',
             key: 'action',
             fixed: 'right',
-            width: 150,
+            width: 90,
             render: (_, record) => (
                 <div
                     style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
                     className={cx('action-wrapper')}
                 >
-                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleAccept(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Phê duyệt</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <CheckIcon stroke="green" />
+                        </div>
+                    </Tooltip>
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleReject(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Từ chối</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <XCircleIcon stroke="red" />
+                        </div>
+                    </Tooltip>
+
+                    {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button> */}
                 </div>
             ),
         },
     ];
     return (
-        <div>{dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}</div>
+        <div>
+            <Tooltip color="cyan" placement="top" title={<span>Đính chính</span>} arrow={mergedArrow}></Tooltip>
+            {dons.state === REQUEST_STATE.SUCCESS && <Table dataSource={dataSourceInput} columns={columns} />}
+        </div>
     );
 }
 

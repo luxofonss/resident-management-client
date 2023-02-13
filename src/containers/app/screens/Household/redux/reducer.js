@@ -22,6 +22,16 @@ import {
     UPDATE_HK_RESET,
     UPDATE_HK_SUCCESS,
     LAY_HK_RESET,
+    ACCEPT_UPDATE_HK,
+    ACCEPT_UPDATE_HK_SUCCESS,
+    ACCEPT_UPDATE_HK_FAIL,
+    ACCEPT_UPDATE_HK_RESET,
+    CHUYEN_HK_RESET,
+    TACH_HK_RESET,
+    TRACK_BACK_HK,
+    TRACK_BACK_HK_SUCCESS,
+    TRACK_BACK_HK_FAIL,
+    TRACK_BACK_HK_RESET,
 } from './action';
 
 const defaultState = {
@@ -94,6 +104,38 @@ export default combineReducers({
                 return state;
         }
     },
+    acceptUpdateHK: (state = defaultState, action) => {
+        switch (action.type) {
+            case ACCEPT_UPDATE_HK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case ACCEPT_UPDATE_HK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case ACCEPT_UPDATE_HK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case ACCEPT_UPDATE_HK_RESET().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.RESET,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
     danhSach: (state = defaultState, action) => {
         switch (action.type) {
             case LAY_HK().type: {
@@ -147,6 +189,13 @@ export default combineReducers({
                     state: REQUEST_STATE.ERROR,
                 };
             }
+            case CHUYEN_HK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
             default:
                 return state;
         }
@@ -172,6 +221,13 @@ export default combineReducers({
                     state: REQUEST_STATE.ERROR,
                 };
             }
+            case TACH_HK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
             default:
                 return state;
         }
@@ -195,6 +251,38 @@ export default combineReducers({
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    trackBackHK: (state = defaultState, action) => {
+        switch (action.type) {
+            case TRACK_BACK_HK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case TRACK_BACK_HK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case TRACK_BACK_HK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case TRACK_BACK_HK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:

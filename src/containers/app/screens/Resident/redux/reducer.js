@@ -33,6 +33,9 @@ import {
     THEM_NK_FAIL,
     THEM_NK_RESET,
     THEM_NK_SUCCESS,
+    TRACK_BACK_NK,
+    TRACK_BACK_NK_FAIL,
+    TRACK_BACK_NK_SUCCESS,
 } from './action';
 
 const defaultState = {
@@ -291,6 +294,31 @@ export default combineReducers({
                     ...state,
                     state: null,
                     data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    trackBackNK: (state = defaultState, action) => {
+        switch (action.type) {
+            case TRACK_BACK_NK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case TRACK_BACK_NK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case TRACK_BACK_NK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
                 };
             }
             default:

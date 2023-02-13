@@ -23,6 +23,12 @@ const dataSource = [
 
 const columns = [
     {
+        title: 'STT',
+        render: (_, record, index) => index + 1,
+        key: 'stt',
+        width: 50,
+    },
+    {
         title: 'Tên loại thiết bị',
         dataIndex: 'name',
         key: 'name',
@@ -41,8 +47,8 @@ const columns = [
     },
     {
         title: 'Giá trị',
-        dataIndex: 'gia_trị',
-        key: 'gia_trị',
+        dataIndex: 'gia_tri',
+        key: 'gia_tri',
         width: 100,
     },
     {
@@ -67,17 +73,17 @@ const columns = [
         dataIndex: 'ghi_chu',
         key: 'ghi_chu',
     },
-    {
-        title: 'Action',
-        key: 'id',
-        fixed: 'right',
-        width: 150,
-        render: (_, id) => (
-            <div className={cx('action-wrapper')}>
-                <Link to={`/equipment/type/${id}`}>move</Link>
-            </div>
-        ),
-    },
+    // {
+    //     title: 'Action',
+    //     key: 'id',
+    //     fixed: 'right',
+    //     width: 150,
+    //     render: (_, id) => (
+    //         <div className={cx('action-wrapper')}>
+    //             <Link to={`/equipment/type/${id}`}>move</Link>
+    //         </div>
+    //     ),
+    // },
 ];
 
 function EquipmentTypeList(props) {
@@ -108,7 +114,12 @@ function EquipmentTypeList(props) {
         dispatch(LAY_LOAI_TB());
     }, []);
 
-    return <div>{danhSachThietBi.state === 'SUCCESS' && <Table dataSource={data} columns={columns} />}</div>;
+    return (
+        <div>
+            <div className="page-header flex-center">Danh sách loại thiết bị</div>
+            {danhSachThietBi.state === 'SUCCESS' && <Table dataSource={data} columns={columns} />}
+        </div>
+    );
 }
 
 export default EquipmentTypeList;

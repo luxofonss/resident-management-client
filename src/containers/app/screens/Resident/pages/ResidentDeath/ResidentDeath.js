@@ -55,6 +55,7 @@ function ResidentDeath(props) {
     };
     return (
         <div style={{ width: '50%', minWidth: '500px', margin: '0 auto' }}>
+            <div className="page-header flex-center">Khai tử</div>
             <AppForm
                 onSubmit={(data) => {
                     onSubmit(data);
@@ -89,7 +90,9 @@ function ResidentDeath(props) {
                 <AppSelectApi apiURL="nhanKhau" label="Họ và tên - CCCD người đại diện" name="nguoi_lam_giay_id" />
                 <AppInput type="text" label="Quan hệ" name="quan_he" required></AppInput>
                 <AppInput type="text" label="Ghi chú" name="ghi_chu" required={false}></AppInput>
-                <AppButton type="submit">Xác nhận</AppButton>
+                <div style={{ marginTop: '24px' }} className="bottom-right">
+                    <AppButton type="submit">Xác nhận</AppButton>
+                </div>
             </AppForm>
         </div>
     );

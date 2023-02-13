@@ -122,3 +122,20 @@ export const apiLayKhaiTuNK = async (params) => {
         };
     }
 };
+
+export const apiTrackBackNK = async (params) => {
+    try {
+        const response = await GET(`/nhankhau/track-back/${params.id}`, params.params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};

@@ -30,6 +30,7 @@ const AppDateInput = ({ name, required = false, ...props }) => {
                     ...(required ? { required: 'Vui lòng chọn ngày' } : {}),
                     ...props.validate,
                 })}
+                disabled={props.disabled === true ? true : false}
                 format="YYYY-MM-DD"
                 placement="bottomRight"
                 onChange={onChange}

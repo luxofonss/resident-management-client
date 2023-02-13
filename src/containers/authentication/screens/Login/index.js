@@ -75,7 +75,7 @@ function Login({ authAction = 'login' }) {
                         >
                             Sign in
                         </div>
-                        <div
+                        {/* <div
                             className={cx(
                                 'nav-item',
                                 'd-flex justify-content-center',
@@ -87,7 +87,7 @@ function Login({ authAction = 'login' }) {
                             }}
                         >
                             Sign up
-                        </div>
+                        </div> */}
                         <div className={cx('slider-tab')}></div>
                     </div>
                     {action === 'login' && (
@@ -300,7 +300,7 @@ function Login({ authAction = 'login' }) {
                             }}
                         ></div>
                     )}
-                    {action !== 'login' && (
+                    {/* {action !== 'login' && (
                         <div className={cx('sign-up-right')}>
                             <div className={cx('mt-5 text-center mb-3')}> or Sign Up via</div>
                             <div
@@ -345,7 +345,7 @@ function Login({ authAction = 'login' }) {
                                 }}
                             ></div>
                         </div>
-                    )}
+                    )} */}
                 </Col>
             </Row>
         </div>

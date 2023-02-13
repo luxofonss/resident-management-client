@@ -56,13 +56,14 @@ function ResidentEdit(props) {
     console.log('residentInfo', residentInfo);
     return (
         <div>
-            <div
+            {/* <div
                 onClick={() => {
                     history.push('/resident/list');
                 }}
             >
-                quay lai
-            </div>
+                Quay lại
+            </div> */}
+            <div className="page-header">Đính chính nhân khẩu</div>
             {residentInfo.data && (
                 <AppForm
                     onSubmit={(data) => {

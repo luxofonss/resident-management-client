@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import AppForm from '~/components/AppForm';
 import styles from './HouseholdMove.module.sass';
@@ -7,28 +7,52 @@ import AppInput from '~/components/AppInput';
 import AppButton from '~/components/AppButton/AppButton';
 import AppDateInput from '~/components/AppDateInput';
 import AppTextArea from '~/components/AppTextArea';
-import { Row, Col } from 'antd';
+import { Row, Col, notification } from 'antd';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CHUYEN_HK, LAY_HK, LAY_HK_RESET } from '../../redux/action';
+import { CHUYEN_HK, CHUYEN_HK_RESET, LAY_HK, LAY_HK_RESET } from '../../redux/action';
 import AppInputSearch from '~/components/AppInputSearch';
 import useDebounceValue from '~/hooks/useDebounceValue';
-import { LAY_NK_2, LAY_NK_2_FAIL } from '../../../Resident/redux/action';
+import { LAY_NK_2, LAY_NK_2_FAIL, LAY_NK_RESET, LAY_NK_RESET_2 } from '../../../Resident/redux/action';
 import AppSelectApi from '~/components/AppSelectApi';
 import AppCheckbox from '~/components/AppCheckbox';
+import { isEmptyValue } from '~/helpers/check';
+import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
 
 function HouseholdMove(props) {
     const [soHoKhau, setSoHoKhau] = useState('');
+    const [nhanKhau, setNhanKhau] = useState([]);
     const searchValue = useDebounceValue(soHoKhau, 1000);
     const hoKhauInfo = useSelector((state) => {
         return state.household.danhSach;
     });
+    const chuyenKhau = useSelector((state) => state.household.chuyenHK);
     const danhSachNhanKhau = useSelector((state) => {
         return state.resident?.list2;
     });
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (chuyenKhau.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Gửi yêu cầu thành công!',
+            });
+            dispatch(CHUYEN_HK_RESET());
+        }
+        if (chuyenKhau?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Gửi yêu cầu thất bại!',
+            });
+        }
+    }, [chuyenKhau?.state]);
+
+    useEffect(() => {
+        setNhanKhau(danhSachNhanKhau?.data?.data);
+    }, [danhSachNhanKhau?.data?.data]);
 
     const onSubmit = (data) => {
         console.log('data: ', data);
@@ -38,7 +62,7 @@ function HouseholdMove(props) {
         data.donChuyenKhauCung.map((don) => {
             if (don.isChosen === true) {
                 submitDonChuyenKhauCung.push({
-                    nhan_khau_id: don.nhan_khau_id,
+                    nhan_khau_id: parseInt(don.nhan_khau_id),
                     quan_he_chu_ho: don.quan_he_chu_ho,
                     ghi_chu: don.ghi_chu,
                 });
@@ -54,21 +78,33 @@ function HouseholdMove(props) {
     };
 
     const onChange = (e) => {
-        console.log(e.target.value);
+        console.log('INPUT', e.target.value);
         setSoHoKhau(e.target.value);
     };
 
     useEffect(() => {
         dispatch(LAY_HK_RESET());
+        dispatch(LAY_NK_RESET_2());
     }, []);
 
     useEffect(() => {
-        if (searchValue !== '') dispatch(LAY_HK({ id: searchValue }));
+        if (!isEmptyValue(searchValue)) dispatch(LAY_HK({ id: searchValue }));
+        else {
+            dispatch(LAY_NK_RESET_2());
+            dispatch(LAY_HK_RESET());
+        }
     }, [searchValue]);
 
     useEffect(() => {
-        dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
-    }, [hoKhauInfo?.data?.data[0]?.nhanKhau]);
+        console.log('useEffect running', hoKhauInfo?.data?.data[0]?.id);
+        // if (!isEmptyValue(hoKhauInfo?.data?.data[0]?.nhanKhau))
+        // dispatch(LAY_NK_RESET_2());
+        if (!isEmptyValue(hoKhauInfo?.data?.data[0]?.nhanKhau))
+            dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
+        else {
+            dispatch(LAY_NK_RESET_2());
+        }
+    }, [hoKhauInfo?.data?.data[0]?.id]);
 
     return (
         <div>
@@ -123,53 +159,58 @@ function HouseholdMove(props) {
                     <div className="second-header">Thông tin nhân khẩu</div>
 
                     <Col xs={24}>
-                        {hoKhauInfo?.data?.data[0] &&
-                            danhSachNhanKhau?.data?.data.map((nk, index) => (
-                                <div className={cx('nk-wrapper')}>
-                                    <Row gutter={[24, 12]}>
-                                        <Col xs={4}>
-                                            <AppInput
-                                                type="number"
-                                                label="Nhân khẩu ID"
-                                                defaultValue={nk.id}
-                                                name={`donChuyenKhauCung[${index}].nhan_khau_id`}
-                                                required
-                                            ></AppInput>
-                                        </Col>
-                                        <Col xs={6}>
-                                            <AppInput
-                                                type="text"
-                                                label="Họ và tên"
-                                                defaultValue={nk.ho + nk.ten_dem + nk.ten}
-                                            ></AppInput>
-                                        </Col>
-                                        <Col xs={4}>
-                                            <AppInput
-                                                type="text"
-                                                label="Quan hệ chủ hộ"
-                                                name={`donChuyenKhauCung[${index}].quan_he_chu_ho`}
-                                                required={false}
-                                            ></AppInput>
-                                        </Col>
-                                        <Col xs={6}>
-                                            <AppInput
-                                                type="text"
-                                                label="Ghi chú chuyển khẩu cùng"
-                                                name={`donChuyenKhauCung[${index}].ghi_chu`}
-                                                required={false}
-                                            ></AppInput>
-                                        </Col>
-                                        <Col xs={4}>
-                                            <div className="bottom-right">
-                                                <AppCheckbox
-                                                    name={`donChuyenKhauCung[${index}].isChosen`}
-                                                    label="Chọn chuyển cùng"
-                                                />
-                                            </div>
-                                        </Col>
-                                    </Row>
+                        {nhanKhau?.map((nk, index) => {
+                            // {danhSachNhanKhau?.data?.data?.map((nk, index) => {
+                            return (
+                                <div>
+                                    <div style={{ display: 'none' }}>{nk.id} </div>
+                                    <div key={index} className={cx('nk-wrapper')}>
+                                        <Row gutter={[24, 12]}>
+                                            <Col xs={4}>
+                                                <AppInput
+                                                    type="number"
+                                                    label="Nhân khẩu ID"
+                                                    value={nk.id}
+                                                    name={`donChuyenKhauCung[${index}].nhan_khau_id`}
+                                                    required
+                                                ></AppInput>
+                                            </Col>
+                                            <Col xs={6}>
+                                                <AppInput
+                                                    type="text"
+                                                    label="Họ và tên"
+                                                    value={nk.ho + nk.ten_dem + nk.ten}
+                                                ></AppInput>
+                                            </Col>
+                                            <Col xs={4}>
+                                                <AppInput
+                                                    type="text"
+                                                    label="Quan hệ chủ hộ"
+                                                    name={`donChuyenKhauCung[${index}].quan_he_chu_ho`}
+                                                    required={false}
+                                                ></AppInput>
+                                            </Col>
+                                            <Col xs={6}>
+                                                <AppInput
+                                                    type="text"
+                                                    label="Ghi chú chuyển khẩu cùng"
+                                                    name={`donChuyenKhauCung[${index}].ghi_chu`}
+                                                    required={false}
+                                                ></AppInput>
+                                            </Col>
+                                            <Col xs={4}>
+                                                <div className="bottom-right">
+                                                    <AppCheckbox
+                                                        name={`donChuyenKhauCung[${index}].isChosen`}
+                                                        label="Chọn chuyển cùng"
+                                                    />
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </div>
                                 </div>
-                            ))}
+                            );
+                        })}
                     </Col>
                 </Row>
                 <div className="bottom-right">

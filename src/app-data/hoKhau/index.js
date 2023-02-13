@@ -38,6 +38,23 @@ export const apiUpdateHK = async (params) => {
     }
 };
 
+export const apiAcceptUpdateHK = async (params) => {
+    try {
+        const response = await PATCH(`/hokhau/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
 export const apiLayHK = async (params) => {
     try {
         const response = await GET('/hokhau', params, { isFullPath: false });
@@ -160,6 +177,91 @@ export const apiAcceptDinhChinhKhau = async (params) => {
 export const apiAcceptNhapKhau = async (params) => {
     try {
         const response = await POST(`/hokhau/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiRejectCK = async (params) => {
+    try {
+        const response = await DELETE(`/hokhau/chuyen-khau/tu-choi/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiRejectTK = async (params) => {
+    try {
+        const response = await PUT(`/hokhau/tach-khau/tu-choi/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiRejectDinhChinhKhau = async (params) => {
+    try {
+        const response = await PATCH(`/hokhau/sua-khau/tu-choi/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiRejectNhapKhau = async (params) => {
+    try {
+        const response = await POST(`/hokhau/nhap-khau/tu-choi/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiTrackBack = async (params) => {
+    try {
+        const response = await GET(`/hokhau/${params.id}/track-back`, params.params, { isFullPath: false });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,

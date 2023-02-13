@@ -10,7 +10,7 @@ import styles from './AppSelectApi.module.sass';
 
 const cx = classNames.bind(styles);
 
-const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, label, ...props }) => {
+const AppSelectApi = ({ apiURL, isFullPath = false, indexValue, minWidth, name, required, label, ...props }) => {
     const { register, setValue } = useFormContext();
     const [selected, setSelected] = useState('');
     const [active, setActive] = useState(0);
@@ -21,7 +21,7 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     const nkInfo = useSelector((state) => state.resident.list);
     const dispatch = useDispatch();
 
-    const selections = useRef();
+    const selections = useRef([]);
     const wrapperRef = useRef();
     const _name = name;
     const searchValue = useDebounceValue(cccd, 1000);
@@ -31,7 +31,7 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
         setValue(_name, id);
         dispatch(LAY_NK_RESET());
         setActive(index);
-        selections.current.classList.toggle('hide');
+        selections.current[indexValue].classList.toggle('hide');
         setIconClick(!iconClick);
     };
 
@@ -39,9 +39,9 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
 
     const handleClick = (event) => {
         const { target } = event;
-        if (!selections.current.classList.contains('hide'))
+        if (!selections.current[indexValue].classList.contains('hide'))
             if (!wrapperRef.current.contains(target)) {
-                selections.current.classList.add('hide');
+                selections.current[indexValue].classList.add('hide');
                 setIconClick(!iconClick);
             }
     };
@@ -59,14 +59,15 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
 
     useEffect(() => {
         if (params !== '') {
-            selections.current.classList.remove('hide');
+            selections.current[indexValue].classList.remove('hide');
         }
     }, [params]);
 
     useEffect(() => {
-        if (options) {
-            if (selections.current.classList.contains('hide')) selections.current.classList.remove('hide');
-        }
+        // if (options) {
+        //     if (selections.current[indexValue].classList.contains('hide'))
+        //         selections.current[indexValue].classList.remove('hide');
+        // }
         document.addEventListener('click', handleClick);
         return () => {
             document.removeEventListener('click', handleClick);
@@ -74,7 +75,7 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     }, [options]);
 
     const handleSelectClick = () => {
-        selections.current.classList.toggle('hide');
+        selections.current[indexValue].classList.toggle('hide');
         setIconClick(!iconClick);
     };
 
@@ -84,7 +85,7 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
     };
 
     return (
-        <div style={{ minWidth: minWidth ? minWidth : null }} ref={wrapperRef}>
+        <div id={indexValue} style={{ minWidth: minWidth ? minWidth : null }} ref={wrapperRef}>
             <div
                 // value={selectValue}
                 className={cx('form-select')}
@@ -107,9 +108,13 @@ const AppSelectApi = ({ apiURL, isFullPath = false, minWidth, name, required, la
                         <ChevronDown />
                     </div>
                 </div>
-                <ul ref={selections} className={cx('selections', 'hide')} id="select">
+                <ul
+                    ref={(el) => (selections.current[indexValue] = el)}
+                    className={cx('selections', 'hide')}
+                    id="select"
+                >
                     {options &&
-                        options.map((option, index) => {
+                        options?.map((option, index) => {
                             return (
                                 <li
                                     key={index}

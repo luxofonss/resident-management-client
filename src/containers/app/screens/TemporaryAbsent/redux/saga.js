@@ -7,6 +7,8 @@ import {
     apiAcceptTamTru,
     apiAddTamVang,
     apiAddTamTru,
+    apiRejectTamVang,
+    apiRejectTamTru,
 } from '~/app-data/tamTruTamVang';
 import {
     ACCEPT_TAM_TRU,
@@ -21,6 +23,12 @@ import {
     LAY_TAM_VANG,
     LAY_TAM_VANG_ERROR,
     LAY_TAM_VANG_SUCCESS,
+    REJECT_TAM_TRU,
+    REJECT_TAM_TRU_ERROR,
+    REJECT_TAM_TRU_SUCCESS,
+    REJECT_TAM_VANG,
+    REJECT_TAM_VANG_ERROR,
+    REJECT_TAM_VANG_SUCCESS,
     TAO_TAM_TRU,
     TAO_TAM_TRU_ERROR,
     TAO_TAM_TRU_SUCCESS,
@@ -113,6 +121,34 @@ function* handleAddTamTru({ type, payload }) {
     }
 }
 
+function* handleRejectTamTru({ type, payload }) {
+    try {
+        const response = yield call(apiRejectTamTru, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(REJECT_TAM_TRU_SUCCESS(response.data));
+        } else {
+            yield put(REJECT_TAM_TRU_ERROR());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+function* handleRejectTamVang({ type, payload }) {
+    try {
+        const response = yield call(apiRejectTamVang, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(REJECT_TAM_VANG_SUCCESS(response.data));
+        } else {
+            yield put(REJECT_TAM_VANG_ERROR());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 export default function* () {
     yield takeLatest(LAY_TAM_VANG().type, handleLayTamVang);
     yield takeLatest(ACCEPT_TAM_VANG().type, handleAcceptTamVang);
@@ -120,4 +156,6 @@ export default function* () {
     yield takeLatest(ACCEPT_TAM_TRU().type, handleAcceptTamTru);
     yield takeLatest(TAO_TAM_VANG().type, handleAddTamVang);
     yield takeLatest(TAO_TAM_TRU().type, handleAddTamTru);
+    yield takeLatest(REJECT_TAM_TRU().type, handleRejectTamTru);
+    yield takeLatest(REJECT_TAM_VANG().type, handleRejectTamVang);
 }

@@ -108,3 +108,39 @@ export const apiAcceptTamTru = async (params) => {
         };
     }
 };
+
+export const apiRejectTamTru = async (params) => {
+    try {
+        console.log(params);
+        const response = await DELETE(`/tamtru/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiRejectTamVang = async (params) => {
+    try {
+        console.log(params);
+        const response = await DELETE(`/tamvang/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};

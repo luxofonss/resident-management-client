@@ -221,3 +221,24 @@ export function LAY_KHAI_TU_NK_RESET(payload) {
         payload,
     };
 }
+
+export function TRACK_BACK_NK(payload) {
+    return {
+        type: 'TRACK_BACK_NK',
+        payload,
+    };
+}
+
+export function TRACK_BACK_NK_SUCCESS(payload) {
+    return {
+        type: 'TRACK_BACK_NK_SUCCESS',
+        payload,
+    };
+}
+
+export function TRACK_BACK_NK_FAIL(payload) {
+    return {
+        type: 'TRACK_BACK_NK_FAIL',
+        payload,
+    };
+}

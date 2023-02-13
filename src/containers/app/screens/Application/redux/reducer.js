@@ -17,6 +17,22 @@ import {
     ACCEPT_TACH_KHAU_FAIL,
     ACCEPT_TACH_KHAU_RESET,
     ACCEPT_TACH_KHAU_SUCCESS,
+    REJECT_CHUYEN_KHAU,
+    REJECT_CHUYEN_KHAU_FAIL,
+    REJECT_CHUYEN_KHAU_RESET,
+    REJECT_CHUYEN_KHAU_SUCCESS,
+    REJECT_DINH_CHINH_KHAU,
+    REJECT_DINH_CHINH_KHAU_FAIL,
+    REJECT_DINH_CHINH_KHAU_RESET,
+    REJECT_DINH_CHINH_KHAU_SUCCESS,
+    REJECT_NHAP_KHAU,
+    REJECT_NHAP_KHAU_FAIL,
+    REJECT_NHAP_KHAU_RESET,
+    REJECT_NHAP_KHAU_SUCCESS,
+    REJECT_TACH_KHAU,
+    REJECT_TACH_KHAU_FAIL,
+    REJECT_TACH_KHAU_RESET,
+    REJECT_TACH_KHAU_SUCCESS,
     LAY_DON,
     LAY_DON_FAIL,
     LAY_DON_RESET,
@@ -53,7 +69,7 @@ export default combineReducers({
             case LAY_DON_RESET().type: {
                 return {
                     ...state,
-                    state: REQUEST_STATE.RESET,
+                    state: null,
                     data: null,
                 };
             }
@@ -85,7 +101,7 @@ export default combineReducers({
             case ACCEPT_CHUYEN_KHAU_RESET().type: {
                 return {
                     ...state,
-                    state: REQUEST_STATE.RESET,
+                    state: null,
                     data: null,
                 };
             }
@@ -117,7 +133,7 @@ export default combineReducers({
             case ACCEPT_TACH_KHAU_RESET().type: {
                 return {
                     ...state,
-                    state: REQUEST_STATE.RESET,
+                    state: null,
                     data: null,
                 };
             }
@@ -149,7 +165,7 @@ export default combineReducers({
             case ACCEPT_DINH_CHINH_KHAU_RESET().type: {
                 return {
                     ...state,
-                    state: REQUEST_STATE.RESET,
+                    state: null,
                     data: null,
                 };
             }
@@ -181,7 +197,135 @@ export default combineReducers({
             case ACCEPT_NHAP_KHAU_RESET().type: {
                 return {
                     ...state,
-                    state: REQUEST_STATE.RESET,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    rejectChuyenKhau: (state = defaultState, action) => {
+        switch (action.type) {
+            case REJECT_CHUYEN_KHAU().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case REJECT_CHUYEN_KHAU_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case REJECT_CHUYEN_KHAU_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case REJECT_CHUYEN_KHAU_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    rejectTachKhau: (state = defaultState, action) => {
+        switch (action.type) {
+            case REJECT_TACH_KHAU().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case REJECT_TACH_KHAU_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case REJECT_TACH_KHAU_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case REJECT_TACH_KHAU_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    rejectDinhChinhKhau: (state = defaultState, action) => {
+        switch (action.type) {
+            case REJECT_DINH_CHINH_KHAU().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case REJECT_DINH_CHINH_KHAU_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case REJECT_DINH_CHINH_KHAU_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case REJECT_DINH_CHINH_KHAU_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    rejectNhapKhau: (state = defaultState, action) => {
+        switch (action.type) {
+            case REJECT_NHAP_KHAU().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case REJECT_NHAP_KHAU_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case REJECT_NHAP_KHAU_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case REJECT_NHAP_KHAU_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
                     data: null,
                 };
             }

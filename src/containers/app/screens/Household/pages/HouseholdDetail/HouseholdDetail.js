@@ -5,7 +5,7 @@ import { LAY_HK, UPDATE_HK, UPDATE_HK_RESET } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
+import { LAY_NK, LAY_NK_2, LAY_NK_RESET, LAY_NK_RESET_2 } from '../../../Resident/redux/action';
 import AppForm from '~/components/AppForm';
 import AppInput from '~/components/AppInput';
 import { IconEdit, IconTrash } from '~/assets/svgs';
@@ -45,7 +45,9 @@ function HouseholdDetail(props) {
     }
 
     useEffect(() => {
-        dispatch(LAY_HK({ cccd: id }));
+        dispatch(LAY_HK({ id: id }));
+        dispatch(LAY_NK_RESET());
+        dispatch(LAY_NK_RESET_2());
         // dispatch(LAY_NK({ ids: danhSachHoKhau?.data?.data[0].nhanKhau }));
     }, []);
 
@@ -55,12 +57,13 @@ function HouseholdDetail(props) {
                 LAY_NK_2({
                     ids:
                         danhSachHoKhau?.data?.data[0]?.nhanKhau.length > 0
-                            ? danhSachHoKhau?.data?.data[0].nhanKhau
-                            : -1,
+                            ? [...danhSachHoKhau?.data?.data[0].nhanKhau, danhSachHoKhau?.data?.data[0]?.chu_ho_id]
+                            : [danhSachHoKhau?.data?.data[0]?.chu_ho_id],
                 }),
             );
         }
-    }, [danhSachHoKhau?.data?.data[0]?.nhanKhau]);
+    }, [danhSachHoKhau?.state]);
+    // }, [danhSachHoKhau?.data?.data[0]?.nhanKhau]);
 
     const columnsResident = [
         {
@@ -240,7 +243,7 @@ function HouseholdDetail(props) {
                                 />
                             </Col>
 
-                            <Col xs={3}>
+                            <Col xs={4}>
                                 {edit === false && (
                                     <div className="bottom-right">
                                         <AppButton onClick={() => setEdit(true)}>Chỉnh sửa</AppButton>
@@ -251,6 +254,13 @@ function HouseholdDetail(props) {
                                         <AppButton type="submit">Xác nhận</AppButton>
                                     </div>
                                 )}
+                            </Col>
+                            <Col xs={6}>
+                                <div className="bottom-right">
+                                    <Link to={`/household/history/${id}`}>
+                                        <AppButton>Xem lịch sử thay đổi</AppButton>
+                                    </Link>
+                                </div>
                             </Col>
                         </Row>
                     </AppForm>

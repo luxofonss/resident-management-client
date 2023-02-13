@@ -31,7 +31,7 @@ const columns = [
         key: 'number',
         fixed: 'right',
         width: 150,
-        render: (_, record) => <div>{record.nhanKhau.length}</div>,
+        render: (_, record) => <div>{record.nhanKhau.length + 1}</div>,
     },
     {
         title: 'Hành động',
@@ -66,7 +66,7 @@ function HouseholdList(props) {
                     householdNumber: hk.id,
                     head: hk.ten_chu_ho,
                     address: hk.dia_chi,
-                    id: hk.chu_ho_id,
+                    id: hk.id,
                     nhanKhau: hk.nhanKhau,
                 },
             ];

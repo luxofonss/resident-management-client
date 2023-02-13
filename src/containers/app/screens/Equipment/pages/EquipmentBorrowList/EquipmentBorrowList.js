@@ -51,17 +51,17 @@ const columns = [
         key: 'email',
         width: 100,
     },
-    {
-        title: 'Người tạo',
-        dataIndex: 'user_tao',
-        key: 'user_tao',
-        width: 120,
-    },
-    {
-        title: 'Người phê duyệt',
-        dataIndex: 'user_phe_duyet',
-        key: 'user_phe_duyet',
-    },
+    // {
+    //     title: 'Người tạo',
+    //     dataIndex: 'user_tao',
+    //     key: 'user_tao',
+    //     width: 120,
+    // },
+    // {
+    //     title: 'Người phê duyệt',
+    //     dataIndex: 'user_phe_duyet',
+    //     key: 'user_phe_duyet',
+    // },
 
     {
         title: 'Lý do',
@@ -78,23 +78,23 @@ const columns = [
         dataIndex: 'sao_ke_tra',
         key: 'sao_ke_tra',
     },
-    {
-        title: 'Ngày phê duyệt',
-        dataIndex: 'ngay_phe_duyet',
-        key: 'ngay_phe_duyet',
-    },
-    {
-        title: 'Trạng thái',
-        key: 'trang_thai',
-        dataIndex: 'trang_thai',
-        render: (_, { trang_thai }) => (
-            <>
-                <Tag color={trang_thai === 'DONE' ? 'geekblue' : 'volcano'}>
-                    {trang_thai === 'DONE' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
-                </Tag>
-            </>
-        ),
-    },
+    // {
+    //     title: 'Ngày phê duyệt',
+    //     dataIndex: 'ngay_phe_duyet',
+    //     key: 'ngay_phe_duyet',
+    // },
+    // {
+    //     title: 'Trạng thái',
+    //     key: 'trang_thai',
+    //     dataIndex: 'trang_thai',
+    //     render: (_, { trang_thai }) => (
+    //         <>
+    //             <Tag color={trang_thai === 'DONE' ? 'geekblue' : 'volcano'}>
+    //                 {trang_thai === 'DONE' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+    //             </Tag>
+    //         </>
+    //     ),
+    // },
     {
         title: 'Action',
         key: 'action',
@@ -102,7 +102,7 @@ const columns = [
         width: 150,
         render: (_, record) => (
             <Button>
-                <Link to="/">Xem chi tiết</Link>
+                <Link to={`/equipment/borrow/detail/${record.id}`}>Xem chi tiết</Link>
             </Button>
         ),
     },
@@ -121,6 +121,8 @@ function EquipmentBorrowList(props) {
 
     return (
         <div>
+            <div className="page-header flex-center">Danh sách phiếu mượn</div>
+
             {danhSachPhieuMuon.state === 'SUCCESS' && <Table dataSource={danhSachPhieuMuon.data} columns={columns} />}
         </div>
     );

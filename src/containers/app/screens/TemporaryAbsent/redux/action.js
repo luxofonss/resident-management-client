@@ -40,6 +40,13 @@ export function ACCEPT_TAM_VANG_ERROR(payload) {
     };
 }
 
+export function ACCEPT_TAM_VANG_RESET(payload) {
+    return {
+        type: 'ACCEPT_TAM_VANG_RESET',
+        payload,
+    };
+}
+
 export function LAY_TAM_TRU(payload) {
     return {
         type: 'LAY_TAM_TRU',
@@ -141,6 +148,62 @@ export function TAO_TAM_TRU_ERROR(payload) {
 export function TAO_TAM_TRU_RESET(payload) {
     return {
         type: 'TAO_TAM_TRU_RESET',
+        payload,
+    };
+}
+
+export function REJECT_TAM_TRU(payload) {
+    return {
+        type: 'REJECT_TAM_TRU',
+        payload,
+    };
+}
+
+export function REJECT_TAM_TRU_SUCCESS(payload) {
+    return {
+        type: 'REJECT_TAM_TRU_SUCCESS',
+        payload,
+    };
+}
+
+export function REJECT_TAM_TRU_ERROR(payload) {
+    return {
+        type: 'REJECT_TAM_TRU_ERROR',
+        payload,
+    };
+}
+
+export function REJECT_TAM_TRU_RESET(payload) {
+    return {
+        type: 'REJECT_TAM_TRU_RESET',
+        payload,
+    };
+}
+
+export function REJECT_TAM_VANG(payload) {
+    return {
+        type: 'REJECT_TAM_VANG',
+        payload,
+    };
+}
+
+export function REJECT_TAM_VANG_SUCCESS(payload) {
+    return {
+        type: 'REJECT_TAM_VANG_SUCCESS',
+        payload,
+    };
+}
+
+export function REJECT_TAM_VANG_ERROR(payload) {
+    return {
+        type: 'REJECT_TAM_VANG_ERROR',
+        payload,
+    };
+}
+
+export function REJECT_TAM_VANG_RESET(payload) {
+    return {
+        type: 'REJECT_TAM_VANG_RESET',
         payload,
     };
 }

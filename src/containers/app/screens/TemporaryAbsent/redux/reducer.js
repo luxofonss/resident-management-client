@@ -7,6 +7,7 @@ import {
     ACCEPT_TAM_TRU_SUCCESS,
     ACCEPT_TAM_VANG,
     ACCEPT_TAM_VANG_ERROR,
+    ACCEPT_TAM_VANG_RESET,
     ACCEPT_TAM_VANG_SUCCESS,
     LAY_TAM_TRU,
     LAY_TAM_TRU_ERROR,
@@ -14,6 +15,14 @@ import {
     LAY_TAM_VANG,
     LAY_TAM_VANG_ERROR,
     LAY_TAM_VANG_SUCCESS,
+    REJECT_TAM_TRU,
+    REJECT_TAM_TRU_ERROR,
+    REJECT_TAM_TRU_RESET,
+    REJECT_TAM_TRU_SUCCESS,
+    REJECT_TAM_VANG,
+    REJECT_TAM_VANG_ERROR,
+    REJECT_TAM_VANG_RESET,
+    REJECT_TAM_VANG_SUCCESS,
     TAO_TAM_TRU,
     TAO_TAM_TRU_ERROR,
     TAO_TAM_TRU_RESET,
@@ -75,6 +84,13 @@ export default combineReducers({
                 return {
                     ...state,
                     state: REQUEST_STATE.ERROR,
+                };
+            }
+            case ACCEPT_TAM_VANG_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:
@@ -194,7 +210,74 @@ export default combineReducers({
             case ACCEPT_TAM_TRU_RESET().type: {
                 return {
                     ...state,
-                    state: REQUEST_STATE.ACCEPT_TAM_TRU_RESET,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+
+    rejectTamTru: (state = defaultState, action) => {
+        switch (action.type) {
+            case REJECT_TAM_TRU().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case REJECT_TAM_TRU_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case REJECT_TAM_TRU_ERROR().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case REJECT_TAM_TRU_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+
+    rejectTamVang: (state = defaultState, action) => {
+        switch (action.type) {
+            case REJECT_TAM_VANG().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case REJECT_TAM_VANG_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case REJECT_TAM_VANG_ERROR().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case REJECT_TAM_VANG_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
                 };
             }
             default:

@@ -1,12 +1,21 @@
 import { Table, Tag, Space, notification, Button } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './AbsentList.module.sass';
-import { ACCEPT_TAM_VANG, LAY_TAM_VANG } from '../../redux/action';
+import {
+    ACCEPT_TAM_TRU_RESET,
+    ACCEPT_TAM_VANG,
+    ACCEPT_TAM_VANG_RESET,
+    LAY_TAM_VANG,
+    REJECT_TAM_TRU_RESET,
+    REJECT_TAM_VANG,
+    REJECT_TAM_VANG_RESET,
+} from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { IconEdit, IconTrash } from '~/assets/svgs';
 import { Link } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
+import { ACCEPT_CHUYEN_KHAU_RESET } from '../../../Application/redux/action';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +26,9 @@ function AbsentList(props) {
     });
     const tamVangAcp = useSelector((state) => {
         return state.temporaryAbsent.acpTamVang;
+    });
+    const tamVangReject = useSelector((state) => {
+        return state.temporaryAbsent.rejectTamVang;
     });
     const danhSachNhanKhau = useSelector((state) => {
         return state.resident?.list;
@@ -29,6 +41,11 @@ function AbsentList(props) {
     const handleAccept = (id) => {
         dispatch(ACCEPT_TAM_VANG({ id: id }));
     };
+
+    const handleReject = (id) => {
+        dispatch(REJECT_TAM_VANG({ id: id }));
+    };
+
     const idList = [];
     const idPDList = [];
     const dataSource = [];
@@ -91,10 +108,28 @@ function AbsentList(props) {
                 description: 'Phê duyệt thất bại!',
             });
         }
-        return () => {
-            ignore = true;
-        };
+        dispatch(ACCEPT_TAM_VANG_RESET());
+        dispatch(LAY_TAM_VANG({ type: 'don_tam_vang' }));
     }, [tamVangAcp?.state]);
+
+    useEffect(() => {
+        let ignore = false;
+
+        if (tamVangReject.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Từ chối thành công!',
+            });
+        }
+        if (tamVangReject?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Từ chối thất bại!',
+            });
+        }
+        dispatch(REJECT_TAM_VANG_RESET());
+        dispatch(LAY_TAM_VANG({ type: 'don_tam_vang' }));
+    }, [tamVangReject?.state]);
 
     console.log('tamVangList', tamVangList);
     useEffect(() => {
@@ -158,34 +193,49 @@ function AbsentList(props) {
             sorter: true,
         },
         {
+            title: 'Ghi chú',
+            dataIndex: 'ghi_chu',
+            key: 'ghi_chu',
+        },
+        {
             title: 'Trạng thái',
             key: 'trang_thai',
             dataIndex: 'trang_thai',
             width: 120,
             render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : 'volcano'}>
-                        {trang_thai === 'PHE_DUYET' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : trang_thai === 'TU_CHOI' ? 'red' : ''}>
+                        {trang_thai === 'PHE_DUYET'
+                            ? 'Đã phê duyệt'
+                            : trang_thai === 'TU_CHOI'
+                            ? 'Từ chối'
+                            : 'Chưa xử lý'}
                     </Tag>
                 </>
             ),
         },
+
         {
-            title: 'Ghi chú',
-            dataIndex: 'ghi_chu',
-            key: 'ghi_chu',
-        },
-        {
-            title: 'Action',
+            title: 'Hành động',
             key: 'id',
             fixed: 'right',
-            width: 150,
+            width: 220,
             render: (_, record) => (
                 <div
-                    style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
+                    style={
+                        record.trang_thai === 'TAO_MOI'
+                            ? {
+                                  display: 'flex',
+                                  justifyContent: 'space-between',
+                              }
+                            : { display: 'none' }
+                    }
                     className={cx('action-wrapper')}
                 >
                     <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                    <Button danger onClick={() => handleReject(record.id)}>
+                        Từ chối
+                    </Button>
                 </div>
             ),
         },

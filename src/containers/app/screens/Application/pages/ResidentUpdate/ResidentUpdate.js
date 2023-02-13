@@ -8,15 +8,15 @@ import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
 import {
     ACCEPT_CHUYEN_KHAU,
     ACCEPT_CHUYEN_KHAU_RESET,
-    ACCEPT_TACH_KHAU,
-    ACCEPT_TACH_KHAU_RESET,
+    ACCEPT_NHAP_KHAU,
+    ACCEPT_NHAP_KHAU_RESET,
     LAY_DON,
 } from '../../redux/action';
-import styles from './HouseholdSeparate.module.sass';
+import styles from './ResidentUpdate.module.sass';
 
 const cx = classNames.bind(styles);
 
-function HouseholdSeparate(props) {
+function ResidentUpdate(props) {
     const dispatch = useDispatch();
     const dons = useSelector((state) => state.application.list);
     const danhSachNhanKhau = useSelector((state) => {
@@ -25,12 +25,14 @@ function HouseholdSeparate(props) {
     const danhSachNhanKhau2 = useSelector((state) => {
         return state.resident?.list2;
     });
-    const acpTachKhau = useSelector((state) => state.application.acpTachKhau);
+    const acpNhapKhau = useSelector((state) => state.application.acpNhapKhau);
 
     console.log('dons', dons);
 
     const idList = [];
     const idPDList = [];
+
+    console.log('idList', idList);
     const dataSourceInput = [];
 
     useEffect(() => {
@@ -41,7 +43,7 @@ function HouseholdSeparate(props) {
 
     if (dons.state === 'SUCCESS') {
         dons.data.forEach((don, index) => {
-            idList.push(don.dai_dien_id);
+            idList.push(don.nhan_khau_id);
             if (don.user_phe_duyet) {
                 idPDList.push(don.user_phe_duyet);
             } else {
@@ -53,23 +55,31 @@ function HouseholdSeparate(props) {
     if (dons.state === 'SUCCESS' && danhSachNhanKhau?.state === 'SUCCESS') {
         console.log('test: ', dons.data);
 
+        const getNK = (nhanKhauId) => {
+            let fullName = [];
+            dons.data.forEach((don, index) => {
+                danhSachNhanKhau?.data?.data.forEach((nk) => {
+                    if (don.nhan_khau_id === nk.id) {
+                        fullName.push(nk.ho + ' ' + nk.ten_dem + ' ' + nk.ten);
+                    }
+                });
+            });
+            console.log('fullName', fullName);
+            return fullName[nhanKhauId];
+        };
+
         dons.data.forEach((don, index) => {
             dataSourceInput.push({
                 stt: index + 1,
                 id: don.id,
-                so_ho_khau_cu: don.so_ho_khau_cu,
-                so_ho_khau_moi: don.so_ho_khau_moi,
+                so_ho_khau_moi_id: don.so_ho_khau_moi_id,
                 ghi_chu: don.ghi_chu,
-                dai_dien_id: danhSachNhanKhau?.data?.data[index]
-                    ? danhSachNhanKhau?.data?.data[index]?.ho +
-                      ' ' +
-                      danhSachNhanKhau?.data?.data[index]?.ten_dem +
-                      ' ' +
-                      danhSachNhanKhau?.data?.data[index]?.ten
-                    : '',
+                nhan_khau_id: getNK(index),
                 ly_do: don.ly_do,
+                dia_chi_cu: don.dia_chi_cu,
                 dia_chi_moi: don.dia_chi_moi,
-                ngay_tach: don.ngay_tach?.slice(0, 10),
+                dia_chi_co_quan: don.dia_chi_co_quan,
+                ngay_chuyen: don.ngay_chuyen?.slice(0, 10),
                 ngay_lam_don: don.ngay_lam_don?.slice(0, 10),
                 ngay_phe_duyet: don.ngay_phe_duyet?.slice(0, 10),
                 trang_thai: don.trang_thai,
@@ -86,91 +96,59 @@ function HouseholdSeparate(props) {
     }
 
     useEffect(() => {
-        dispatch(LAY_DON({ type: 'don_tach_khau' }));
+        dispatch(LAY_DON({ type: 'don_dinh_chinh_nhan_khau' }));
     }, []);
 
     const handleAccept = (id) => {
-        dispatch(ACCEPT_TACH_KHAU({ id: id }));
+        dispatch(ACCEPT_NHAP_KHAU({ id: id }));
     };
 
     useEffect(() => {
         let ignore = false;
-        if (acpTachKhau.state == REQUEST_STATE.SUCCESS) {
+        if (acpNhapKhau.state == REQUEST_STATE.SUCCESS) {
             notification.success({
                 message: 'Success',
                 description: 'Phê duyệt thành công!',
             });
         }
-        if (acpTachKhau?.state === REQUEST_STATE.ERROR) {
+        if (acpNhapKhau?.state === REQUEST_STATE.ERROR) {
             notification.error({
                 message: 'Error',
                 description: 'Phê duyệt thất bại!',
             });
         }
-        dispatch(ACCEPT_TACH_KHAU_RESET());
-        dispatch(LAY_DON({ type: 'don_tach_khau' }));
-    }, [acpTachKhau?.state]);
+        dispatch(ACCEPT_NHAP_KHAU_RESET());
+        dispatch(LAY_DON({ type: 'don_dinh_chinh_nhan_khau' }));
+    }, [acpNhapKhau?.state]);
 
     const columns = [
         {
-            title: 'ID',
-            dataIndex: 'id',
+            title: 'STT',
+            render: (_, record, index) => index + 1,
             key: 'id',
             width: 50,
         },
-        {
-            title: 'Người đại diện',
-            dataIndex: 'dai_dien_id',
-            key: 'dai_dien_id',
-        },
 
         {
-            title: 'Sổ hộ khẩu cũ',
-            dataIndex: 'so_ho_khau_cu',
-            key: 'so_ho_khau_cu',
-            width: 100,
+            title: 'Nhân khẩu',
+            dataIndex: 'nhan_khau_id',
+            key: 'nhan_khau_id',
+            width: 180,
         },
-        {
-            title: 'Sổ hộ khẩu mới',
-            dataIndex: 'so_ho_khau_moi',
-            key: 'so_ho_khau_moi',
-            width: 100,
-        },
-        {
-            title: 'Địa chỉ mới',
-            dataIndex: 'dia_chi_moi',
-            key: 'dia_chi_moi',
-            width: 100,
-        },
+
         {
             title: 'Ngày làm đơn',
             dataIndex: 'ngay_lam_don',
             key: 'ngay_lam_don',
-            width: 120,
+            width: 140,
         },
         {
             title: 'Ngày phê duyệt',
             dataIndex: 'ngay_phe_duyet',
             key: 'ngay_phe_duyet',
-            width: 120,
+            width: 140,
         },
-        {
-            title: 'Ngày tách',
-            dataIndex: 'ngay_tach',
-            key: 'ngay_tach',
-            width: 120,
-        },
-        {
-            title: 'Người phê duyệt',
-            dataIndex: 'user_phe_duyet',
-            key: 'user_phe_duyet',
-            width: 120,
-        },
-        {
-            title: 'Lý do',
-            dataIndex: 'ly_do',
-            key: 'ly_do',
-        },
+
         {
             title: 'Ghi chú',
             dataIndex: 'ghi_chu',
@@ -194,12 +172,9 @@ function HouseholdSeparate(props) {
             fixed: 'right',
             width: 150,
             render: (_, record) => (
-                <div
-                    style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
-                    className={cx('action-wrapper')}
-                >
-                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
-                </div>
+                <Link to={`/application/resident/update/detail/${record.id}`}>
+                    <Button>Xem chi tiết</Button>
+                </Link>
             ),
         },
     ];
@@ -208,4 +183,4 @@ function HouseholdSeparate(props) {
     );
 }
 
-export default HouseholdSeparate;
+export default ResidentUpdate;

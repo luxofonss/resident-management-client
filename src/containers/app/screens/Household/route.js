@@ -86,4 +86,15 @@ export const childRoutes = [
             return import('./pages/HouseholdAddResident');
         }),
     },
+    {
+        path: '/household/history/:id',
+        key: 'history',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([householdModule, residentModule], 'app');
+            return import('./pages/HouseholdHistory');
+        }),
+    },
 ];

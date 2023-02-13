@@ -3,21 +3,24 @@ import classNames from 'classnames/bind';
 import AppForm from '~/components/AppForm';
 import styles from './HouseholdSeparate.module.sass';
 import AppInput from '~/components/AppInput';
-import { Col, Row } from 'antd';
+import { Col, notification, Row } from 'antd';
 import AppDateInput from '~/components/AppDateInput';
 import AppTextArea from '~/components/AppTextArea';
 import AppButton from '~/components/AppButton/AppButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { LAY_HK, LAY_HK_RESET, TACH_HK } from '../../redux/action';
+import { LAY_HK, LAY_HK_RESET, TACH_HK, TACH_HK_RESET } from '../../redux/action';
 import AppInputSearch from '~/components/AppInputSearch';
-import { LAY_NK_2 } from '../../../Resident/redux/action';
+import { LAY_NK_2, LAY_NK_RESET_2 } from '../../../Resident/redux/action';
 import AppCheckbox from '~/components/AppCheckbox';
 import useDebounceValue from '~/hooks/useDebounceValue';
 import AppSelectApi from '~/components/AppSelectApi';
+import { isEmptyValue } from '~/helpers/check';
+import { REQUEST_STATE } from '~/app-configs';
 
 const cx = classNames.bind(styles);
 
 function HouseholdSeparate(props) {
+    const [nhanKhau, setNhanKhau] = useState([]);
     const [indexes, setIndexes] = useState([]);
     const [counter, setCounter] = useState(0);
     const [soHoKhau, setSoHoKhau] = useState('');
@@ -29,8 +32,30 @@ function HouseholdSeparate(props) {
     const danhSachNhanKhau = useSelector((state) => {
         return state.resident?.list2;
     });
+    const tachKhau = useSelector((state) => state.household.tachHK);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (tachKhau.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Gửi yêu cầu thành công!',
+            });
+        }
+        if (tachKhau?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Gửi yêu cầu thất bại!',
+            });
+        }
+        dispatch(TACH_HK_RESET());
+    }, [tachKhau?.state]);
+
+    useEffect(() => {
+        setNhanKhau(danhSachNhanKhau?.data?.data);
+    }, [danhSachNhanKhau?.data?.data]);
+
     const onSubmit = (data) => {
         let submitData;
         let submitDonTachKhauCung = [];
@@ -38,8 +63,8 @@ function HouseholdSeparate(props) {
         data.donTachKhauCung.map((don) => {
             if (don.isChosen === true) {
                 submitDonTachKhauCung.push({
-                    nhan_khau_id: don.nhan_khau_id,
-                    quan_he_chu_ho: don.quan_he_chu_ho,
+                    nhan_khau_id: parseInt(don.nhan_khau_id),
+                    quan_he: don.quan_he,
                     ghi_chu: don.ghi_chu,
                 });
             }
@@ -60,15 +85,29 @@ function HouseholdSeparate(props) {
 
     useEffect(() => {
         dispatch(LAY_HK_RESET());
+        dispatch(LAY_NK_RESET_2());
     }, []);
 
     useEffect(() => {
-        if (searchValue !== '') dispatch(LAY_HK({ id: searchValue }));
+        if (!isEmptyValue(searchValue)) dispatch(LAY_HK({ id: searchValue }));
+        else {
+            dispatch(LAY_NK_RESET_2());
+
+            dispatch(LAY_HK_RESET());
+        }
     }, [searchValue]);
 
     useEffect(() => {
-        dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0].nhanKhau }));
+        console.log('useEffect running', hoKhauInfo?.data?.data[0]?.id);
+        // if (!isEmptyValue(hoKhauInfo?.data?.data[0]?.nhanKhau))
+        // dispatch(LAY_NK_RESET_2());
+        if (!isEmptyValue(hoKhauInfo?.data?.data[0]?.nhanKhau))
+            dispatch(LAY_NK_2({ ids: hoKhauInfo?.data?.data[0]?.nhanKhau }));
+        else {
+            dispatch(LAY_NK_RESET_2());
+        }
     }, [hoKhauInfo?.data?.data[0]]);
+
     return (
         <div>
             <div className="page-header">Tách hộ khẩu</div>
@@ -107,15 +146,19 @@ function HouseholdSeparate(props) {
                 <div className="second-header">Thông tin nhân khẩu</div>
 
                 <Col xs={24}>
-                    {hoKhauInfo?.data?.data[0] &&
-                        danhSachNhanKhau?.data?.data.map((nk, index) => (
-                            <div className={cx('nk-wrapper')}>
+                    {/* {danhSachNhanKhau?.data?.data.map((nk, index) => ( */}
+                    {nhanKhau?.map((nk, index) => (
+                        <div key={index} className={cx('nk-wrapper')}>
+                            {/* <div>{nk.id} </div> */}
+                            <div style={{ display: 'none' }}>{nk.id} </div>
+
+                            <div key={index} className={cx('nk-wrapper')}>
                                 <Row gutter={24}>
                                     <Col xs={3}>
                                         <AppInput
                                             type="number"
                                             label="Nhân khẩu ID"
-                                            defaultValue={nk.id}
+                                            value={nk.id}
                                             name={`donTachKhauCung[${index}].nhan_khau_id`}
                                             required
                                         ></AppInput>
@@ -124,7 +167,7 @@ function HouseholdSeparate(props) {
                                         <AppInput
                                             type="text"
                                             label="Họ và tên"
-                                            defaultValue={nk.ho + nk.ten_dem + nk.ten}
+                                            value={nk.ho + nk.ten_dem + nk.ten}
                                         ></AppInput>
                                     </Col>
                                     <Col xs={4}>
@@ -153,10 +196,11 @@ function HouseholdSeparate(props) {
                                     </Col>
                                 </Row>
                             </div>
-                        ))}
+                        </div>
+                    ))}
                 </Col>
 
-                <AppButton type="submit">Thêm</AppButton>
+                <AppButton type="submit">Xác nhận</AppButton>
             </AppForm>
         </div>
     );

@@ -1,7 +1,16 @@
 import { delay, put, takeLatest, call } from 'redux-saga/effects';
 import { REQUEST_STATE } from '~/app-configs';
 import { apiLayDon } from '~/app-data/don';
-import { apiAcceptCK, apiAcceptTK, apiAcceptDinhChinhKhau, apiAcceptNhapKhau } from '~/app-data/hoKhau';
+import {
+    apiAcceptCK,
+    apiAcceptTK,
+    apiAcceptDinhChinhKhau,
+    apiAcceptNhapKhau,
+    apiRejectCK,
+    apiRejectTK,
+    apiRejectDinhChinhKhau,
+    apiRejectNhapKhau,
+} from '~/app-data/hoKhau';
 import {
     ACCEPT_CHUYEN_KHAU,
     ACCEPT_CHUYEN_KHAU_FAIL,
@@ -15,6 +24,18 @@ import {
     ACCEPT_TACH_KHAU,
     ACCEPT_TACH_KHAU_FAIL,
     ACCEPT_TACH_KHAU_SUCCESS,
+    REJECT_CHUYEN_KHAU,
+    REJECT_CHUYEN_KHAU_FAIL,
+    REJECT_CHUYEN_KHAU_SUCCESS,
+    REJECT_DINH_CHINH_KHAU,
+    REJECT_DINH_CHINH_KHAU_FAIL,
+    REJECT_DINH_CHINH_KHAU_SUCCESS,
+    REJECT_NHAP_KHAU,
+    REJECT_NHAP_KHAU_FAIL,
+    REJECT_NHAP_KHAU_SUCCESS,
+    REJECT_TACH_KHAU,
+    REJECT_TACH_KHAU_FAIL,
+    REJECT_TACH_KHAU_SUCCESS,
     LAY_DON,
     LAY_DON_ERROR,
     LAY_DON_SUCCESS,
@@ -92,10 +113,70 @@ function* handleAcceptNhapKhau({ type, payload }) {
     }
 }
 
+function* handleRejectCK({ type, payload }) {
+    try {
+        const response = yield call(apiRejectCK, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(REJECT_CHUYEN_KHAU_SUCCESS(response.data));
+        } else {
+            yield put(REJECT_CHUYEN_KHAU_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+function* handleRejectTK({ type, payload }) {
+    try {
+        const response = yield call(apiRejectTK, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(REJECT_TACH_KHAU_SUCCESS(response.data));
+        } else {
+            yield put(REJECT_TACH_KHAU_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+function* handleRejectDinhChinhKhau({ type, payload }) {
+    try {
+        const response = yield call(apiRejectDinhChinhKhau, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(REJECT_DINH_CHINH_KHAU_SUCCESS(response.data));
+        } else {
+            yield put(REJECT_DINH_CHINH_KHAU_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+function* handleRejectNhapKhau({ type, payload }) {
+    try {
+        const response = yield call(apiRejectNhapKhau, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(REJECT_NHAP_KHAU_SUCCESS(response.data));
+        } else {
+            yield put(REJECT_NHAP_KHAU_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 export default function* () {
     yield takeLatest(LAY_DON().type, handleLayDon);
     yield takeLatest(ACCEPT_CHUYEN_KHAU().type, handleAcceptCK);
     yield takeLatest(ACCEPT_TACH_KHAU().type, handleAcceptTK);
     yield takeLatest(ACCEPT_DINH_CHINH_KHAU().type, handleAcceptDinhChinhKhau);
     yield takeLatest(ACCEPT_NHAP_KHAU().type, handleAcceptNhapKhau);
+    yield takeLatest(REJECT_CHUYEN_KHAU().type, handleRejectCK);
+    yield takeLatest(REJECT_TACH_KHAU().type, handleRejectTK);
+    yield takeLatest(REJECT_DINH_CHINH_KHAU().type, handleRejectDinhChinhKhau);
+    yield takeLatest(REJECT_NHAP_KHAU().type, handleRejectNhapKhau);
 }

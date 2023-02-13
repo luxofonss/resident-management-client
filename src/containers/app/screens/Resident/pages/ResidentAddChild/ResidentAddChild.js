@@ -74,7 +74,7 @@ function ResidentAddChild(props) {
                     <Col xs={6}>
                         <AppInput type="text" label="Tên" name="nhanKhauInfo.ten" required></AppInput>
                     </Col>
-                    <Col xs={6}>
+                    {/* <Col xs={6}>
                         <AppInput type="number" label="CCCD" name="nhanKhauInfo.cccd" required></AppInput>
                     </Col>
                     <Col xs={6}>
@@ -82,7 +82,7 @@ function ResidentAddChild(props) {
                     </Col>
                     <Col xs={6}>
                         <AppInput type="text" label="Nơi cấp" name="nhanKhauInfo.cccd_noi_cap" required></AppInput>
-                    </Col>
+                    </Col> */}
                     <Col xs={6}>
                         <AppInput type="text" label="Bí danh" name="nhanKhauInfo.bi_danh" required></AppInput>
                     </Col>
@@ -101,12 +101,12 @@ function ResidentAddChild(props) {
                     <Col xs={6}>
                         <AppInput type="text" label="Tôn giáo" name="nhanKhauInfo.ton_giao" required></AppInput>
                     </Col>
-                    <Col xs={6}>
+                    {/* <Col xs={6}>
                         <AppInput type="text" label="Nghề nghiệp" name="nhanKhauInfo.nghe_nhiep" required></AppInput>
                     </Col>
                     <Col xs={6}>
                         <AppInput type="text" label="Nơi làm việc" name="nhanKhauInfo.noi_lam_viec" required></AppInput>
-                    </Col>
+                    </Col> */}
                     <Col xs={6}>
                         <AppInput type="text" label="Điện thoại" name="nhanKhauInfo.so_dien_thoai" required></AppInput>
                     </Col>
@@ -119,6 +119,7 @@ function ResidentAddChild(props) {
                     </Col>
                     <Col xs={6}>
                         <AppSelectApi
+                            indexValue={1}
                             apiURL="nhanKhau"
                             label="CCCD - Họ và tên bố"
                             name="giayKhaiSinh.bo_id"
@@ -128,6 +129,7 @@ function ResidentAddChild(props) {
 
                     <Col xs={6}>
                         <AppSelectApi
+                            indexValue={2}
                             apiURL="nhanKhau"
                             label="CCCD - Họ và tên mẹ"
                             name="giayKhaiSinh.me_id"
@@ -136,6 +138,7 @@ function ResidentAddChild(props) {
                     </Col>
                     <Col xs={6}>
                         <AppSelectApi
+                            indexValue={3}
                             apiURL="nhanKhau"
                             label="CCCD - Họ và tên người khai sinh"
                             name="giayKhaiSinh.nguoi_khai_sinh"

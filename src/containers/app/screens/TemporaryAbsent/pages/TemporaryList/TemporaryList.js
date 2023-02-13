@@ -1,7 +1,13 @@
 import { Table, Tag, Space, notification, Button } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './TemporaryList.module.sass';
-import { ACCEPT_TAM_TRU, ACCEPT_TAM_TRU_RESET, LAY_TAM_TRU } from '../../redux/action';
+import {
+    ACCEPT_TAM_TRU,
+    ACCEPT_TAM_TRU_RESET,
+    LAY_TAM_TRU,
+    REJECT_TAM_TRU,
+    REJECT_TAM_TRU_RESET,
+} from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { IconEdit, IconTrash } from '~/assets/svgs';
@@ -21,6 +27,9 @@ function TemporaryList(props) {
     const acpTamTru = useSelector((state) => {
         return state.temporaryAbsent.acpTamTru;
     });
+    const rejectTamTru = useSelector((state) => {
+        return state.temporaryAbsent.rejectTamTru;
+    });
     const danhSachNhanKhau = useSelector((state) => {
         return state.resident?.list;
     });
@@ -31,6 +40,10 @@ function TemporaryList(props) {
 
     const handleAccept = (id) => {
         dispatch(ACCEPT_TAM_TRU({ id: id }));
+    };
+
+    const handleReject = (id) => {
+        dispatch(REJECT_TAM_TRU({ id: id }));
     };
 
     useEffect(() => {
@@ -48,11 +61,30 @@ function TemporaryList(props) {
             });
         }
         dispatch(ACCEPT_TAM_TRU_RESET());
+        dispatch(LAY_TAM_TRU({ type: 'don_tam_tru' }));
     }, [acpTamTru?.state]);
+
+    useEffect(() => {
+        let ignore = false;
+        if (rejectTamTru.state == REQUEST_STATE.SUCCESS) {
+            notification.success({
+                message: 'Success',
+                description: 'Từ chối thành công!',
+            });
+        }
+        if (rejectTamTru?.state === REQUEST_STATE.ERROR) {
+            notification.error({
+                message: 'Error',
+                description: 'Từ chối thất bại!',
+            });
+        }
+        dispatch(REJECT_TAM_TRU_RESET());
+        dispatch(LAY_TAM_TRU({ type: 'don_tam_tru' }));
+    }, [rejectTamTru?.state]);
 
     console.log('tamTruList', tamTruList);
     useEffect(() => {
-        dispatch(LAY_TAM_TRU({ type: 'don_tam_vang' }));
+        dispatch(LAY_TAM_TRU({ type: 'don_tam_tru' }));
     }, [acpTamTru?.state]);
 
     const idList = [];
@@ -176,25 +208,30 @@ function TemporaryList(props) {
             sorter: true,
         },
         {
+            title: 'Ghi chú',
+            dataIndex: 'ghi_chu',
+            key: 'ghi_chu',
+        },
+        {
             title: 'Trạng thái',
             key: 'trang_thai',
             dataIndex: 'trang_thai',
             width: 120,
             render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : 'volcano'}>
-                        {trang_thai === 'PHE_DUYET' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : trang_thai === 'TU_CHOI' ? 'red' : ''}>
+                        {trang_thai === 'PHE_DUYET'
+                            ? 'Đã phê duyệt'
+                            : trang_thai === 'TU_CHOI'
+                            ? 'Từ chối'
+                            : 'Chưa xử lý'}
                     </Tag>
                 </>
             ),
         },
+
         {
-            title: 'Ghi chú',
-            dataIndex: 'ghi_chu',
-            key: 'ghi_chu',
-        },
-        {
-            title: 'Action',
+            title: 'Hành động',
             key: 'action',
             fixed: 'right',
             width: 150,
@@ -204,6 +241,9 @@ function TemporaryList(props) {
                     className={cx('action-wrapper')}
                 >
                     <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                    <Button danger onClick={() => handleReject(record.id)}>
+                        Từ chối
+                    </Button>
                 </div>
             ),
         },

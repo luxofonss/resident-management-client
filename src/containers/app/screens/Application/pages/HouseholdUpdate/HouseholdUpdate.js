@@ -141,12 +141,12 @@ function HouseholdUpdate(props) {
             width: 160,
         },
 
-        {
-            title: 'Người phê duyệt',
-            dataIndex: 'user_phe_duyet',
-            key: 'user_phe_duyet',
-            width: 170,
-        },
+        // {
+        //     title: 'Người phê duyệt',
+        //     dataIndex: 'user_phe_duyet',
+        //     key: 'user_phe_duyet',
+        //     width: 170,
+        // },
         // {
         //     title: 'Thông tin thay đổi',
         //     key: 'mo_ta',
@@ -168,11 +168,14 @@ function HouseholdUpdate(props) {
             key: 'trang_thai',
             dataIndex: 'trang_thai',
             width: 100,
-
             render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : 'volcano'}>
-                        {trang_thai === 'PHE_DUYET' ? 'Đã phê duyệt' : 'Chờ phê duyệt'}
+                    <Tag color={trang_thai === 'PHE_DUYET' ? 'geekblue' : trang_thai === 'TU_CHOI' ? 'red' : 'volcano'}>
+                        {trang_thai === 'PHE_DUYET'
+                            ? 'Đã phê duyệt'
+                            : trang_thai === 'TU_CHOI'
+                            ? 'Từ chối'
+                            : 'Chờ phê duyệt'}
                     </Tag>
                 </>
             ),
@@ -181,15 +184,15 @@ function HouseholdUpdate(props) {
             title: 'Action',
             key: 'action',
             fixed: 'right',
-            width: 250,
+            width: 150,
             render: (_, record) => (
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div
+                    {/* <div
                         style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
                         className={cx('action-wrapper')}
                     >
                         <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
-                    </div>
+                    </div> */}
                     <Link to={`/application/household/update/detail/${record.id}`}>
                         <Button>Xem chi tiết</Button>
                     </Link>
@@ -203,3 +206,20 @@ function HouseholdUpdate(props) {
 }
 
 export default HouseholdUpdate;
+
+bi_danh: 'string';
+cccd: '123';
+cccd_ngay_cap: '2002-09-01';
+cccd_noi_cap: 'string';
+dan_toc: 'string';
+email: 'string@gmail.com';
+ho: 'string';
+ngay_sinh: '2002-02-24';
+nghe_nhiep: 'string';
+nguyen_quan: 'string';
+noi_lam_viec: 'string test update noi lam veic';
+noi_sinh: 'string';
+so_dien_thoai: '123456';
+ten: 'string';
+ten_dem: 'string';
+ton_giao: 'string';

@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CHUYEN_HK, NHAP_HK } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 import { useParams } from 'react-router-dom';
-import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
+import { LAY_NK, LAY_NK_2, LAY_NK_RESET, LAY_NK_RESET_2 } from '../../../Resident/redux/action';
 import AppSelectApi from '~/components/AppSelectApi';
 import { IconPlus, IconX } from '~/assets/svgs';
 
@@ -22,6 +22,7 @@ const cx = classNames.bind(styles);
 function HouseholdAddResident(props) {
     const [indexes, setIndexes] = React.useState([0]);
     const [counter, setCounter] = React.useState(1);
+    const [reset, setReset] = useState(false);
     const nhapKhau = useSelector((state) => state.household.nhapHK);
     const danhSachNhanKhau = useSelector((state) => {
         return state.resident?.list2;
@@ -45,8 +46,15 @@ function HouseholdAddResident(props) {
     console.log('id', id);
 
     useEffect(() => {
-        dispatch(LAY_NK_2({ ids: id }));
-    }, [id]);
+        if (id) {
+            dispatch(LAY_NK_RESET_2());
+            setReset(true);
+
+            dispatch(LAY_NK_2({ ids: id }));
+        }
+    }, []);
+    console.log('reset', reset);
+    console.log('state', danhSachNhanKhau.state);
 
     const addResident = () => {
         setIndexes((prevIndexes) => [...prevIndexes, counter]);
@@ -157,7 +165,7 @@ function HouseholdAddResident(props) {
                             return (
                                 <div key={index}>
                                     <Row gutter={[24, 12]}>
-                                        {id && (
+                                        {id && danhSachNhanKhau.state === 'SUCCESS' && reset && (
                                             <Col xs={11}>
                                                 <AppInput
                                                     type="text"

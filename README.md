@@ -3,13 +3,7 @@
 2.  npm install
 
 3.  npm start
-    {
 
-    "noi_dang_ki": "asg",
-    "ghi_chu": "asgasg",
 
-            "quan_he": "ac",
+patch /nhankhau/dinh-chinh/tu-choi/id
 
-            "trang_thai": "CHO_DUYET",
-
-        },

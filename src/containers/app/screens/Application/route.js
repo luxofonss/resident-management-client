@@ -61,8 +61,19 @@ export const childRoutes = [
         isPrivate: true,
         layout: AppLayout,
         component: lazy(async () => {
-            await initModules([applicationModule, residentModule, householdModule], 'app');
+            await initModules([applicationModule, householdModule], 'app');
             return import('./pages/HouseholdUpdateDetail');
+        }),
+    },
+    {
+        path: '/application/resident/update/detail/:id',
+        key: 'update-detail',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([applicationModule, householdModule, residentModule], 'app');
+            return import('./pages/ResidentUpdateDetail');
         }),
     },
     {
@@ -85,6 +96,17 @@ export const childRoutes = [
         component: lazy(async () => {
             await initModules([applicationModule, residentModule], 'app');
             return import('./pages/ResidentDeath');
+        }),
+    },
+    {
+        path: '/application/resident/update',
+        key: 'resident-update',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([applicationModule, residentModule], 'app');
+            return import('./pages/ResidentUpdate');
         }),
     },
 ];

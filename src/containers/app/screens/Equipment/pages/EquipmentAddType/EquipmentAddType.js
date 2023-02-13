@@ -39,32 +39,48 @@ function EquipmentAddType(props) {
         dispatch(TAO_LOAI_TAI_NGUYEN_RESET());
     }, [taoLoaiTaiNguyen?.state]);
     return (
-        <div>
+        <div style={{ margin: '0 auto', width: '75%' }}>
+            <div className="page-header flex-center">Thêm loại thiết bị</div>
             <AppForm onSubmit={onSubmit}>
-                <Row gutter={16}>
+                <Row gutter={[12, 12]}>
                     <Col xs={12}>
                         <AppInput required label="Tên thiết bị" name="name"></AppInput>
                     </Col>
                     <Col xs={12}>
                         <AppInput required label="Xuất xứ" name="xuat_xu"></AppInput>
                     </Col>
-                </Row>
-                <AppInput required label="Mô tả" name="mo_ta"></AppInput>
-                <Row gutter={16}>
+                    <Col xs={24}>
+                        <AppInput required label="Mô tả" name="mo_ta"></AppInput>
+                    </Col>
                     <Col xs={12}>
                         <AppInput type="number" required label="Thu phí" name="thu_phi"></AppInput>
                     </Col>
                     <Col xs={12}>
                         <AppInput type="number" required label="Giá trị" name="gia_tri"></AppInput>
                     </Col>
+                    <Col xs={24}>
+                        <AppInput type="number" required label="Số tiền cọc" name="thu_phi_coc"></AppInput>
+                    </Col>
+                    <Col xs={24}>
+                        <AppInput required label="Ghi chú" name="ghi_chu"></AppInput>
+                    </Col>
+                    <Col xs={24}>
+                        <div style={{ marginTop: '24px', display: 'flex', gap: '24px' }}>
+                            <input
+                                style={{ width: '24px' }}
+                                id="la_cong_trinh"
+                                type="checkbox"
+                                name="la_cong_trinh"
+                            ></input>
+                            <label for="la_cong_trinh">Là công trình</label>
+                        </div>
+                    </Col>
+                    <Col xs={24}>
+                        <div className="bottom-right">
+                            <AppButton type="submit">Submit</AppButton>
+                        </div>
+                    </Col>
                 </Row>
-                <AppInput type="number" required label="Số tiền cọc" name="thu_phi_coc"></AppInput>
-                <AppInput required label="Ghi chú" name="ghi_chu"></AppInput>
-                <div>
-                    <label for="la_cong_trinh">Là công trình</label>
-                    <input id="la_cong_trinh" type="checkbox" name="la_cong_trinh"></input>
-                </div>
-                <AppButton type="submit">Submit</AppButton>
             </AppForm>
         </div>
     );

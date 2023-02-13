@@ -16,6 +16,7 @@ import { MUON_THIET_BI, MUON_THIET_BI_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 import AppSelectEquipment from '~/components/AppSelectEquipment';
 import { IconPlus, IconX } from '~/assets/svgs';
+import { isEmptyValue } from '~/helpers/check';
 
 const cx = classNames.bind(styles);
 
@@ -29,8 +30,17 @@ function EquipmentBorrow(props) {
     const onSubmit = (data) => {
         let phienSuDungSubmit = [];
         data.phienSuDung.forEach((phien) => {
-            if (phien.id !== '' && phien.ngay_muon && phien.ngay_hen_tra) {
-                phienSuDungSubmit.push(phien);
+            if (phien.id !== '' && phien.ngay_muon && phien.ngay_hen_tra && !isEmptyValue(phien.so_luong)) {
+                for (let i = 1; i <= phien.so_luong; i++) {
+                    phienSuDungSubmit.push({
+                        tai_nguyen_id: phien.tai_nguyen_id,
+                        mo_ta: phien.mo_ta,
+                        ngay_muon: phien.ngay_muon,
+                        ngay_hen_tra: phien.ngay_hen_tra,
+                        ghi_chu: phien.ghi_chu,
+                    });
+                }
+                // phienSuDungSubmit.push(phien);
             }
         });
 
@@ -119,14 +129,14 @@ function EquipmentBorrow(props) {
                                         <Col xs={5}>
                                             <AppInput name={`phienSuDung[${index}].mo_ta`} label="Mô tả" required />
                                         </Col>
-                                        <Col xs={5}>
+                                        <Col xs={3}>
                                             <AppDateInput
                                                 name={`phienSuDung[${index}].ngay_muon`}
                                                 label="Ngày mượn"
                                                 required
                                             />
                                         </Col>
-                                        <Col xs={5}>
+                                        <Col xs={3}>
                                             <AppDateInput
                                                 name={`phienSuDung[${index}].ngay_hen_tra`}
                                                 label="Ngày hẹn trả"
@@ -135,6 +145,13 @@ function EquipmentBorrow(props) {
                                         </Col>
                                         <Col xs={4}>
                                             <AppInput name={`phienSuDung[${index}].ghi_chu`} label="Ghi chú" />
+                                        </Col>
+                                        <Col xs={4}>
+                                            <AppInput
+                                                type="number"
+                                                name={`phienSuDung[${index}].so_luong`}
+                                                label="Số lượng"
+                                            />
                                         </Col>
                                         <Col xs={1}>
                                             <div

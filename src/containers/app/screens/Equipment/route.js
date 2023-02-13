@@ -74,4 +74,26 @@ export const childRoutes = [
             return import('./pages/EquipmentBorrowList');
         }),
     },
+    {
+        path: '/equipment/borrow/detail/:id',
+        key: 'borrow-detail',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([equipmentModule], 'app');
+            return import('./pages/EquipmentBorrowDetail');
+        }),
+    },
+    {
+        path: '/equipment/back/:id',
+        key: 'back',
+        exact: true,
+        isPrivate: true,
+        layout: AppLayout,
+        component: lazy(async () => {
+            await initModules([equipmentModule], 'app');
+            return import('./pages/EquipmentBack');
+        }),
+    },
 ];

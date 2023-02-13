@@ -1,1 +1,1 @@
-export { default } from './HouseholdSeparate';
+export { default } from './ResidentUpdate';
