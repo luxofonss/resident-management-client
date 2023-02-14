@@ -31,7 +31,7 @@ const columns = [
         key: 'number',
         fixed: 'right',
         width: 150,
-        render: (_, record) => <div>{record.nhanKhau.length + 1}</div>,
+        render: (_, record) => <div>{record.nhanKhau.length}</div>,
     },
     {
         title: 'Hành động',

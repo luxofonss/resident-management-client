@@ -58,6 +58,7 @@ function AbsentAdd(props) {
 
     return (
         <div style={{ width: '50%', minWidth: '450px', margin: '0 auto' }}>
+            <div className="page-header">Khai báo tạm vắng</div>
             <AppForm onSubmit={onSubmit}>
                 <Row gutter={(24, 12)}>
                     {nhanKhau.state === 'SUCCESS' ? (

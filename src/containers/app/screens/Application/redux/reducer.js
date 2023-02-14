@@ -37,6 +37,14 @@ import {
     LAY_DON_FAIL,
     LAY_DON_RESET,
     LAY_DON_SUCCESS,
+    ACCEPT_DINH_CHINH_NK,
+    ACCEPT_DINH_CHINH_NK_SUCCESS,
+    ACCEPT_DINH_CHINH_NK_FAIL,
+    ACCEPT_DINH_CHINH_NK_RESET,
+    REJECT_DINH_CHINH_NK,
+    REJECT_DINH_CHINH_NK_SUCCESS,
+    REJECT_DINH_CHINH_NK_FAIL,
+    REJECT_DINH_CHINH_NK_RESET,
 } from './action';
 
 const defaultState = {
@@ -323,6 +331,70 @@ export default combineReducers({
                 };
             }
             case REJECT_NHAP_KHAU_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    acceptDinhChinhNK: (state = defaultState, action) => {
+        switch (action.type) {
+            case ACCEPT_DINH_CHINH_NK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case ACCEPT_DINH_CHINH_NK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case ACCEPT_DINH_CHINH_NK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case ACCEPT_DINH_CHINH_NK_RESET().type: {
+                return {
+                    ...state,
+                    state: null,
+                    data: null,
+                };
+            }
+            default:
+                return state;
+        }
+    },
+    rejectDinhChinhNK: (state = defaultState, action) => {
+        switch (action.type) {
+            case REJECT_DINH_CHINH_NK().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.REQUEST,
+                };
+            }
+            case REJECT_DINH_CHINH_NK_SUCCESS().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.SUCCESS,
+                    data: action.payload,
+                };
+            }
+            case REJECT_DINH_CHINH_NK_FAIL().type: {
+                return {
+                    ...state,
+                    state: REQUEST_STATE.ERROR,
+                };
+            }
+            case REJECT_DINH_CHINH_NK_RESET().type: {
                 return {
                     ...state,
                     state: null,

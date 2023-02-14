@@ -249,3 +249,59 @@ export function REJECT_NHAP_KHAU_RESET(payload) {
         payload,
     };
 }
+
+export function ACCEPT_DINH_CHINH_NK(payload) {
+    return {
+        type: 'ACCEPT_DINH_CHINH_NK',
+        payload,
+    };
+}
+
+export function ACCEPT_DINH_CHINH_NK_SUCCESS(payload) {
+    return {
+        type: 'ACCEPT_DINH_CHINH_NK_SUCCESS',
+        payload,
+    };
+}
+
+export function ACCEPT_DINH_CHINH_NK_FAIL(payload) {
+    return {
+        type: 'ACCEPT_DINH_CHINH_NK_FAIL',
+        payload,
+    };
+}
+
+export function ACCEPT_DINH_CHINH_NK_RESET(payload) {
+    return {
+        type: 'ACCEPT_DINH_CHINH_NK_RESET',
+        payload,
+    };
+}
+
+export function REJECT_DINH_CHINH_NK(payload) {
+    return {
+        type: 'REJECT_DINH_CHINH_NK',
+        payload,
+    };
+}
+
+export function REJECT_DINH_CHINH_NK_SUCCESS(payload) {
+    return {
+        type: 'REJECT_DINH_CHINH_NK_SUCCESS',
+        payload,
+    };
+}
+
+export function REJECT_DINH_CHINH_NK_FAIL(payload) {
+    return {
+        type: 'REJECT_DINH_CHINH_NK_FAIL',
+        payload,
+    };
+}
+
+export function REJECT_DINH_CHINH_NK_RESET(payload) {
+    return {
+        type: 'REJECT_DINH_CHINH_NK_RESET',
+        payload,
+    };
+}

@@ -88,11 +88,13 @@ function ResidentList(props) {
             title: 'CCCD',
             dataIndex: 'cccd',
             key: 'cccd',
+            width: 100,
         },
         {
             title: 'Dân tộc',
             dataIndex: 'dan_toc',
             key: 'dan_toc',
+            width: 100,
         },
         {
             title: 'Giới tính',
@@ -104,26 +106,32 @@ function ResidentList(props) {
                 }
             },
             key: 'gioi_tinh',
+            width: 90,
         },
         {
             title: 'Nguyên quán',
             dataIndex: 'nguyen_quan',
             key: 'nguyen_quan',
+            width: 350,
         },
         {
             title: 'Nghề nghiệp',
             dataIndex: 'nghe_nghiep',
             key: 'nghe_nghiep',
+            width: 100,
         },
         {
             title: 'Nơi làm việc',
             dataIndex: 'noi_lam_viec',
             key: 'noi_lam_viec',
+            width: 150,
         },
         {
             title: 'Trạng thái',
             key: 'active',
             dataIndex: 'active',
+            width: 100,
+
             render: (_, { active }) => (
                 <>
                     <Tag color={active === 1 ? 'geekblue' : 'volcano'}>{active === 1 ? 'ACTIVE' : 'INACTIVE'}</Tag>

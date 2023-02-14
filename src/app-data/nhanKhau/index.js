@@ -139,3 +139,37 @@ export const apiTrackBackNK = async (params) => {
         };
     }
 };
+
+export const apiAcceptDinhChinhNhanKhau = async (params) => {
+    try {
+        const response = await PATCH(`/nhankhau/dinh-chinh/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};
+
+export const apiRejectDinhChinhNhanKhau = async (params) => {
+    try {
+        const response = await PATCH(`/nhankhau/tu-choi/${params.id}`, params, { isFullPath: false });
+        return {
+            state: REQUEST_STATE.SUCCESS,
+            data: response,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            error: error,
+            state: REQUEST_STATE.ERROR,
+            data: {},
+        };
+    }
+};

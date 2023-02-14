@@ -28,7 +28,7 @@ function Demo(props) {
                 <AppForm>
                     <Row gutter={[24, 12]}>
                         <Col xs={24}>
-                            <AppInput label="Giảng viên" value="Tên giảng viên" disabled />
+                            <AppInput label="Giảng viên" value="ThS. Nguyễn Mạnh Tuấn" disabled />
                         </Col>
                         <Col xs={24}>
                             <AppInput label="Môn" value="Công nghệ phần mềm" disabled />

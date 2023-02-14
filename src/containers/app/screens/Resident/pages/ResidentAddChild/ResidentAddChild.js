@@ -11,6 +11,7 @@ import AppButton from '~/components/AppButton/AppButton';
 import { KHAI_SINH_NK, KHAI_SINH_NK_RESET, THEM_NK_RESET } from '../../redux/action';
 import { REQUEST_STATE } from '~/app-configs';
 import AppSelectApi from '~/components/AppSelectApi';
+import AppSelectInput from '~/components/AppSelectInput';
 
 const cx = classNames.bind(styles);
 
@@ -73,6 +74,20 @@ function ResidentAddChild(props) {
                     </Col>
                     <Col xs={6}>
                         <AppInput type="text" label="Tên" name="nhanKhauInfo.ten" required></AppInput>
+                    </Col>
+                    <Col xs={6}>
+                        <AppSelectInput
+                            options={{
+                                options: [
+                                    { name: 'Nam', value: 1 },
+                                    { name: 'Nữ', value: 0 },
+                                ],
+                            }}
+                            type="text"
+                            label="Giới tính"
+                            name="nhanKhauInfo.gioi_tinh"
+                            required
+                        ></AppSelectInput>
                     </Col>
                     {/* <Col xs={6}>
                         <AppInput type="number" label="CCCD" name="nhanKhauInfo.cccd" required></AppInput>

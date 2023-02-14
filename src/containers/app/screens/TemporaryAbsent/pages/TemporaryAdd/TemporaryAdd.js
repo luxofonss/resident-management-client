@@ -42,6 +42,8 @@ function TemporaryAdd(props) {
     }, []);
     return (
         <div>
+            <div className="page-header">Khai báo tạm trú</div>
+
             <AppForm onSubmit={onSubmit}>
                 <Row gutter={32}>
                     <Col xs={5}>

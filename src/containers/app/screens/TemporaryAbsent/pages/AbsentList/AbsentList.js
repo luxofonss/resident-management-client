@@ -1,4 +1,4 @@
-import { Table, Tag, Space, notification, Button } from 'antd';
+import { Table, Tag, Space, notification, Button, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './AbsentList.module.sass';
 import {
@@ -11,8 +11,8 @@ import {
     REJECT_TAM_VANG_RESET,
 } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { IconEdit, IconTrash } from '~/assets/svgs';
+import { useEffect, useMemo, useState } from 'react';
+import { CheckIcon, IconEdit, IconTrash, XCircleIcon } from '~/assets/svgs';
 import { Link } from 'react-router-dom';
 import { REQUEST_STATE, USER_ROLE } from '~/app-configs';
 import { ACCEPT_CHUYEN_KHAU_RESET } from '../../../Application/redux/action';
@@ -38,6 +38,17 @@ function AbsentList(props) {
     const danhSachNhanKhau2 = useSelector((state) => {
         return state.resident?.list2;
     });
+
+    const [showArrow, setShowArrow] = useState(true);
+    const [arrowAtCenter, setArrowAtCenter] = useState(false);
+
+    const mergedArrow = useMemo(() => {
+        if (arrowAtCenter)
+            return {
+                arrowPointAtCenter: true,
+            };
+        return showArrow;
+    }, [showArrow, arrowAtCenter]);
 
     const handleAccept = (id) => {
         dispatch(ACCEPT_TAM_VANG({ id: id }));
@@ -232,7 +243,7 @@ function AbsentList(props) {
                   title: 'Hành động',
                   key: 'id',
                   fixed: 'right',
-                  width: 220,
+                  width: 80,
                   render: (_, record) => (
                       <div
                           style={
@@ -245,10 +256,35 @@ function AbsentList(props) {
                           }
                           className={cx('action-wrapper')}
                       >
-                          <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                          {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
                           <Button danger onClick={() => handleReject(record.id)}>
                               Từ chối
-                          </Button>
+                          </Button> */}
+                          {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button> */}
+                          <Tooltip
+                              style={{ cursor: 'poiner' }}
+                              onClick={() => handleAccept(record.id)}
+                              color="cyan"
+                              placement="top"
+                              title={<span>Phê duyệt</span>}
+                              arrow={mergedArrow}
+                          >
+                              <div style={{ cursor: 'pointer' }}>
+                                  <CheckIcon stroke="green" />
+                              </div>
+                          </Tooltip>
+                          <Tooltip
+                              style={{ cursor: 'poiner' }}
+                              onClick={() => handleReject(record.id)}
+                              color="cyan"
+                              placement="top"
+                              title={<span>Từ chối</span>}
+                              arrow={mergedArrow}
+                          >
+                              <div style={{ cursor: 'pointer' }}>
+                                  <XCircleIcon stroke="red" />
+                              </div>
+                          </Tooltip>
                       </div>
                   ),
               }

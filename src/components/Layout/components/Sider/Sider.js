@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { REQUEST_STATE, SIDER_COLLAPSE, USER_ROLE } from '~/app-configs';
-
+import logo from '~/assets/images/uchiha.png';
 import { getNavItem } from '~/components/Layout/AppLayout/AppLayout';
 import './Sider.sass';
 
@@ -95,7 +95,7 @@ export default function AppSider(props) {
                 border: 'none',
                 minHeight: '100vh',
             }}
-            width={250}
+            width={300}
             collapsible
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
@@ -108,7 +108,7 @@ export default function AppSider(props) {
                     height: '100%',
                 }}
             >
-                <div
+                {/* <div
                     style={{
                         height: 32,
                         margin: 16,
@@ -120,7 +120,23 @@ export default function AppSider(props) {
                     }}
                 >
                     Quản lý hộ khẩu
-                </div>
+                </div> */}
+                <img
+                    style={{
+                        height: 32,
+                        width: 55,
+                        margin: '0 auto',
+                        marginTop: '16px',
+                        // margin: 16,
+                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        // background: 'rgba(255, 255, 255, 0.2)',
+                    }}
+                    src={logo}
+                    alt="logo"
+                />
                 <div style={{ marginTop: '10px', flex: '1' }}>
                     <Menu
                         mode="inline"
@@ -141,7 +157,7 @@ export default function AppSider(props) {
                         fontSize: '12px',
                     }}
                 >
-                    © Luxofons {new Date().getFullYear()}
+                    ©CNPM {new Date().getFullYear()}
                 </div>
             </div>
         </Sider>

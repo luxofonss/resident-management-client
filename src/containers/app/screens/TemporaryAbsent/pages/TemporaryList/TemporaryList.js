@@ -258,6 +258,7 @@ function TemporaryList(props) {
     }, []);
     return (
         <div>
+            <div className="page-header">Khai báo tạm trú</div>
             {tamTruList.state === REQUEST_STATE.SUCCESS && (
                 <Table
                     dataSource={dataSource}

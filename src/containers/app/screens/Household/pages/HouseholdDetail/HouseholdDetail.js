@@ -45,9 +45,9 @@ function HouseholdDetail(props) {
     }
 
     useEffect(() => {
-        dispatch(LAY_HK({ id: id }));
         dispatch(LAY_NK_RESET());
         dispatch(LAY_NK_RESET_2());
+        dispatch(LAY_HK({ id: id }));
         // dispatch(LAY_NK({ ids: danhSachHoKhau?.data?.data[0].nhanKhau }));
     }, []);
 

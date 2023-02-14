@@ -95,7 +95,7 @@ function ResidentAddChild(props) {
         {
             title: 'Ngày khai sinh',
             // dataIndex: 'ngay_khai_sinh',
-            render: (_, record) => record.ngay_khai_sinh.slice(0, 1),
+            render: (_, record) => record.ngay_khai_sinh.slice(0, 10),
             key: 'ngay_khai_sinh',
             width: 140,
         },

@@ -11,6 +11,7 @@ import {
     apiRejectDinhChinhKhau,
     apiRejectNhapKhau,
 } from '~/app-data/hoKhau';
+import { apiAcceptDinhChinhNhanKhau, apiRejectDinhChinhNhanKhau } from '~/app-data/nhanKhau';
 import {
     ACCEPT_CHUYEN_KHAU,
     ACCEPT_CHUYEN_KHAU_FAIL,
@@ -39,6 +40,10 @@ import {
     LAY_DON,
     LAY_DON_ERROR,
     LAY_DON_SUCCESS,
+    ACCEPT_DINH_CHINH_NK_SUCCESS,
+    ACCEPT_DINH_CHINH_NK_FAIL,
+    ACCEPT_DINH_CHINH_NK,
+    REJECT_DINH_CHINH_NK,
 } from './action';
 
 function* handleLayDon({ type, payload }) {
@@ -169,6 +174,34 @@ function* handleRejectNhapKhau({ type, payload }) {
     }
 }
 
+function* handleAcceptDinhChinhNhapKhau({ type, payload }) {
+    try {
+        const response = yield call(apiAcceptDinhChinhNhanKhau, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(ACCEPT_DINH_CHINH_NK_SUCCESS(response.data));
+        } else {
+            yield put(ACCEPT_DINH_CHINH_NK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
+function* handleRejectDinhChinhNhapKhau({ type, payload }) {
+    try {
+        const response = yield call(apiRejectDinhChinhNhanKhau, payload);
+
+        if (response.state === REQUEST_STATE.SUCCESS) {
+            yield put(REJECT_DINH_CHINH_NK_SUCCESS(response.data));
+        } else {
+            yield put(REJECT_DINH_CHINH_NK_FAIL());
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 export default function* () {
     yield takeLatest(LAY_DON().type, handleLayDon);
     yield takeLatest(ACCEPT_CHUYEN_KHAU().type, handleAcceptCK);
@@ -179,4 +212,6 @@ export default function* () {
     yield takeLatest(REJECT_TACH_KHAU().type, handleRejectTK);
     yield takeLatest(REJECT_DINH_CHINH_KHAU().type, handleRejectDinhChinhKhau);
     yield takeLatest(REJECT_NHAP_KHAU().type, handleRejectNhapKhau);
+    yield takeLatest(ACCEPT_DINH_CHINH_NK().type, handleAcceptDinhChinhNhapKhau);
+    yield takeLatest(REJECT_DINH_CHINH_NK().type, handleRejectDinhChinhNhapKhau);
 }

@@ -11,7 +11,7 @@ import AppInput from '~/components/AppInput';
 import InfoDiv from '~/components/InfoDiv';
 import { ACCEPT_UPDATE_HK, ACCEPT_UPDATE_HK_RESET, LAY_HK } from '../../../Household/redux/action';
 import { LAY_NK } from '../../../Resident/redux/action';
-import { LAY_DON } from '../../redux/action';
+import { ACCEPT_DINH_CHINH_NK, ACCEPT_DINH_CHINH_NK_RESET, LAY_DON } from '../../redux/action';
 import styles from './ResidentUpdateDetail.module.sass';
 
 const cx = classNames.bind(styles);
@@ -21,7 +21,7 @@ function ResidentUpdateDetail(props) {
     const [loadDon, setLoadDon] = useState(false);
     const don = useSelector((state) => state.application.list);
     const nhanKhau = useSelector((state) => state.resident.list);
-    const acceptUpdateHK = useSelector((state) => state.household.acceptUpdateHK);
+    const acceptDinhChinhNK = useSelector((state) => state.application.acceptDinhChinhNK);
     const { id } = useParams();
 
     console.log('nhanKhau', nhanKhau);
@@ -38,24 +38,24 @@ function ResidentUpdateDetail(props) {
     }, [don.state]);
 
     useEffect(() => {
-        if (acceptUpdateHK.state == REQUEST_STATE.SUCCESS) {
+        if (acceptDinhChinhNK.state == REQUEST_STATE.SUCCESS) {
             notification.success({
                 message: 'Success',
                 description: 'Phê duyệt thành công!',
             });
             dispatch(LAY_DON({ type: 'don_dinh_chinh_nhan_khau', id: id }));
         }
-        if (acceptUpdateHK?.state === REQUEST_STATE.ERROR) {
+        if (acceptDinhChinhNK?.state === REQUEST_STATE.ERROR) {
             notification.error({
                 message: 'Error',
                 description: 'Phê duyệt thất bại!',
             });
         }
-        dispatch(ACCEPT_UPDATE_HK_RESET());
-    }, [acceptUpdateHK?.state]);
+        dispatch(ACCEPT_DINH_CHINH_NK_RESET());
+    }, [acceptDinhChinhNK?.state]);
 
     const handleAccept = () => {
-        dispatch(ACCEPT_UPDATE_HK({ id: id }));
+        dispatch(ACCEPT_DINH_CHINH_NK({ id: id }));
     };
 
     useEffect(() => {
