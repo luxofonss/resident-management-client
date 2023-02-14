@@ -1,4 +1,4 @@
-import { Table, Tag, Space, notification, Button } from 'antd';
+import { Table, Tag, Space, notification, Button, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import styles from './TemporaryList.module.sass';
 import {
@@ -9,8 +9,8 @@ import {
     REJECT_TAM_TRU_RESET,
 } from '../../redux/action';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { IconEdit, IconTrash } from '~/assets/svgs';
+import { useEffect, useMemo, useState } from 'react';
+import { CheckIcon, IconEdit, IconTrash, XCircleIcon } from '~/assets/svgs';
 import { Link } from 'react-router-dom';
 import { REQUEST_STATE } from '~/app-configs';
 import { LAY_NK, LAY_NK_2 } from '../../../Resident/redux/action';
@@ -37,6 +37,17 @@ function TemporaryList(props) {
     const danhSachNhanKhau2 = useSelector((state) => {
         return state.resident?.list2;
     });
+
+    const [showArrow, setShowArrow] = useState(true);
+    const [arrowAtCenter, setArrowAtCenter] = useState(false);
+
+    const mergedArrow = useMemo(() => {
+        if (arrowAtCenter)
+            return {
+                arrowPointAtCenter: true,
+            };
+        return showArrow;
+    }, [showArrow, arrowAtCenter]);
 
     const handleAccept = (id) => {
         dispatch(ACCEPT_TAM_TRU({ id: id }));
@@ -239,16 +250,40 @@ function TemporaryList(props) {
             title: 'Hành động',
             key: 'action',
             fixed: 'right',
-            width: 150,
+            width: 100,
             render: (_, record) => (
                 <div
                     style={record.trang_thai === 'TAO_MOI' ? {} : { display: 'none' }}
                     className={cx('action-wrapper')}
                 >
-                    <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
+                    {/* <Button onClick={() => handleAccept(record.id)}>Phê duyệt</Button>
                     <Button danger onClick={() => handleReject(record.id)}>
                         Từ chối
-                    </Button>
+                    </Button> */}
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleAccept(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Phê duyệt</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <CheckIcon stroke="green" />
+                        </div>
+                    </Tooltip>
+                    <Tooltip
+                        style={{ cursor: 'poiner' }}
+                        onClick={() => handleReject(record.id)}
+                        color="cyan"
+                        placement="top"
+                        title={<span>Từ chối</span>}
+                        arrow={mergedArrow}
+                    >
+                        <div style={{ cursor: 'pointer' }}>
+                            <XCircleIcon stroke="red" />
+                        </div>
+                    </Tooltip>
                 </div>
             ),
         },

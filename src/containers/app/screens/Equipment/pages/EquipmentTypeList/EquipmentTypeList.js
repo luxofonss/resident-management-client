@@ -74,6 +74,19 @@ const columns = [
         key: 'ghi_chu',
     },
     {
+        title: 'Xem tài nguyên',
+        key: 'id1',
+        fixed: 'right',
+        width: 150,
+        render: (_, { id }) => (
+            <div className={cx('action-wrapper')}>
+                <Link to={`/equipment/able-list/${id}`}>
+                    <Button>Xem tài nguyên khả dụng</Button>
+                </Link>
+            </div>
+        ),
+    },
+    {
         title: 'Action',
         key: 'id',
         fixed: 'right',

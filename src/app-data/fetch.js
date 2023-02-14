@@ -51,7 +51,46 @@ export const GET = (path, params, options = {}) => {
                   } else {
                       // TODO with "all" value;
                       valueParam = valueParam != 'all' ? valueParam : '';
+                      console.log('valueParam', valueParam);
                       adjustParam = `${key}=${encodeURIComponent(valueParam)}`;
+                  }
+                  return adjustParam;
+              })
+              .join('&')
+        : '';
+    const _url = (options.isFullPath ? path : Configs.BASE_API + path) + (_params === '' ? '' : '?' + _params);
+
+    const _options = getOptions(options);
+
+    return axios.get(_url, _options).then((response) => response.data);
+};
+
+export const GET_WITHOUT_URI = (path, params, options = {}) => {
+    const _params = params
+        ? Object.keys(params)
+              .map((key) => {
+                  let valueParam = params[key];
+                  let adjustParam = '';
+                  if (Array.isArray(valueParam)) {
+                      // TODO with "all" value;
+                      adjustParam = valueParam
+                          .map((paramDetail) => `${key}=${encodeURIComponent(paramDetail != 'all' ? paramDetail : '')}`)
+                          .join('&');
+                  } else if (typeof valueParam === 'object') {
+                      adjustParam = adjustParam + `${key}={`;
+                      adjustParam =
+                          adjustParam +
+                          Object.keys(valueParam)
+                              .map((key) => {
+                                  return `"${key}":"${valueParam[key]}"`;
+                              })
+                              .join(',');
+                      adjustParam = adjustParam + '}';
+                  } else {
+                      // TODO with "all" value;
+                      valueParam = valueParam != 'all' ? valueParam : '';
+                      console.log('valueParam', valueParam);
+                      adjustParam = `${key}=${valueParam}`;
                   }
                   return adjustParam;
               })

@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import moment from 'moment';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { LAY_LOAI_TB, LAY_TN_KHA_DUNG } from '../../redux/action';
 import styles from './EquipmentAbleList.module.sass';
 
@@ -62,9 +62,10 @@ const columns = [
         key: 'id',
         fixed: 'right',
         width: 150,
-        render: (_, { id }) => (
+        render: (_, record) => (
             <div className={cx('action-wrapper')}>
-                <Link to={`/equipment/borrow/${id}`}>Mượn</Link>
+                <div>{record.id}</div>
+                <Link to={`/equipment/borrow/${record.id}`}>Mượn</Link>
             </div>
         ),
     },
@@ -77,9 +78,11 @@ function EquipmentAbleList(props) {
         return state.equipment.danhSachTNKhaDung;
     });
 
+    const { id } = useParams();
+
     useEffect(() => {
         dispatch(
-            LAY_TN_KHA_DUNG({ type: 10, startDate: '2000-01-01', endDate: moment(Date.now()).format('YYYY-MM-DD') }),
+            LAY_TN_KHA_DUNG({ type: id, startDate: '2000-01-01', endDate: moment(Date.now()).format('YYYY-MM-DD') }),
         );
     }, []);
 

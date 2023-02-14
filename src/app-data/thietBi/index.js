@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { REQUEST_STATE, TOKEN_KEY } from '~/app-configs';
-import { PATCH, PUT } from '~/app-data/fetch';
+import { GET_WITHOUT_URI, PATCH, PUT } from '~/app-data/fetch';
 import { DELETE } from '~/app-data/fetch';
 import { POST } from '~/app-data/fetch';
 import { GET } from '~/app-data/fetch';
@@ -161,7 +161,9 @@ export const apiTraTaiNguyen = async (params) => {
 
 export const apiTrackBackTN = async (params) => {
     try {
-        const response = await GET(`/tai-nguyen/track-back/${params.id}`, params.params, { isFullPath: false });
+        const response = await GET_WITHOUT_URI(`/tai-nguyen/track-back/${params.id}`, params.params, {
+            isFullPath: false,
+        });
         return {
             state: REQUEST_STATE.SUCCESS,
             data: response,
@@ -175,19 +177,3 @@ export const apiTrackBackTN = async (params) => {
         };
     }
 };
-// "cu": {
-//     "id": 7,
-//     "mo_ta": "string",
-//     "ghi_chu": "string",
-//     "ngay_them": "2023-02-12T17:00:00.000Z",
-//     "tinh_trang": 10,
-//     "loai_id": 10
-// },
-// "moi": {
-//     "id": 7,
-//     "mo_ta": "xuoc_dam",
-//     "ghi_chu": "string",
-//     "ngay_them": "2023-02-12T17:00:00.000Z",
-//     "tinh_trang": 8,
-//     "loai_id": 10
-// }

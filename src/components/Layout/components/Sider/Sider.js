@@ -52,7 +52,6 @@ export default function AppSider(props) {
             getNavItem('Thêm tài nguyên', '/equipment/add', <UnorderedListOutlined />),
 
             getNavItem('Danh sách loại tài nguyên', '/equipment/type/', <UnorderedListOutlined />),
-            getNavItem('Danh sách tài nguyên khả dụng', '/equipment/able-list', <UnorderedListOutlined />),
             getNavItem('Danh sách phiếu mượn', '/equipment/borrow-list', <UnorderedListOutlined />),
 
             // getNavItem('Mượn tài nguyên', '/equipment/borrow', <UnorderedListOutlined />),

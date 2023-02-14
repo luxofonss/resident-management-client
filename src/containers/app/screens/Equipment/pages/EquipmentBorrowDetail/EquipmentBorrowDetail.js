@@ -79,9 +79,11 @@ function EquipmentBorrowDetail(props) {
             key: 'trang_thai',
             dataIndex: 'trang_thai',
             width: 130,
-            render: (_, { ngay_tra }) => (
+            render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={ngay_tra ? 'geekblue' : 'volcano'}>{ngay_tra ? 'Đã trả' : 'Chưa trả'}</Tag>
+                    <Tag color={trang_thai === 'DONE' ? 'geekblue' : 'volcano'}>
+                        {trang_thai === 'DONE' ? 'Đã trả' : 'Chưa trả'}
+                    </Tag>
                 </>
             ),
         },
@@ -104,7 +106,7 @@ function EquipmentBorrowDetail(props) {
             let selectedChange = [];
             if (!isEmptyValue(selectedRows)) {
                 selectedRows.forEach((selection) => {
-                    selectedChange.push(selection.id);
+                    selectedChange.push(selection.tai_nguyen_id);
                 });
             } else {
                 selectedChange = [];

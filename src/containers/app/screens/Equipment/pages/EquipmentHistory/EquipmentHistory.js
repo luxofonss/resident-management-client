@@ -25,12 +25,24 @@ function EquipmentHistory(props) {
 
     useEffect(() => {
         dispatch(LAY_LOAI_TB({ id: id }));
+        const now = new Date();
         dispatch(
             TRACK_BACK_TN({
                 id: id,
                 params: {
                     startDate: '2000-12-20',
-                    endDate: moment(Date.now()).format('YYYY-MM-DD'),
+
+                    endDate:
+                        moment(Date.now()).format('YYYY-MM-DD') +
+                        'T' +
+                        ('0' + now.getHours()).slice(-2) +
+                        ':' +
+                        ('0' + now.getMinutes()).slice(-2) +
+                        ':' +
+                        ('0' + now.getSeconds()).slice(-2) +
+                        '.000Z',
+
+                    // endDate: now,
                 },
             }),
         );
@@ -153,7 +165,7 @@ function EquipmentHistory(props) {
                                                     disabled
                                                     defaultValue={trackBackTN?.data[
                                                         selectedIndex
-                                                    ]?.moi?.ngay_them.slice(0, 10)}
+                                                    ]?.moi?.ngay_them?.slice(0, 10)}
                                                 />
                                                 <AppInput
                                                     label="Ghi chú"

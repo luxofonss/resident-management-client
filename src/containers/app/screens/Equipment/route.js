@@ -106,7 +106,7 @@ export const childRoutes = [
         }),
     },
     {
-        path: '/equipment/able-list',
+        path: '/equipment/able-list/:id',
         key: 'able',
         exact: true,
         role: [USER_ROLE.ADMIN, USER_ROLE.USER],

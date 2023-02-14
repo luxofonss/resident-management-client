@@ -161,7 +161,7 @@ function AbsentList(props) {
         },
         {
             title: 'Full Name',
-            width: 100,
+            width: 180,
             render: (_, { ho, ten, ten_dem }) => {
                 return ho + ' ' + ten_dem + ' ' + ten;
             },
@@ -243,7 +243,7 @@ function AbsentList(props) {
                   title: 'Hành động',
                   key: 'id',
                   fixed: 'right',
-                  width: 80,
+                  width: 100,
                   render: (_, record) => (
                       <div
                           style={
