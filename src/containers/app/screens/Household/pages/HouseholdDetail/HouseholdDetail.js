@@ -138,7 +138,7 @@ function HouseholdDetail(props) {
             title: 'Action',
             key: 'id',
             fixed: 'right',
-            width: 250,
+            width: 150,
             render: (_, record) => (
                 <div className={cx('action-wrapper')}>
                     <div className={cx('action-icon')}>
@@ -151,11 +151,7 @@ function HouseholdDetail(props) {
                             <IconTrash width={14} height={14} />
                         </Link>
                     </div> */}
-                    {isEmptyValue(record.chu_ho_id) && (
-                        <Button>
-                            <Link to={`/household/add-resident/${record.id}`}>Nhập khẩu</Link>
-                        </Button>
-                    )}
+
                     <Link to={`/resident/death/:${record.id}`}>
                         <Button danger>Khai tử</Button>
                     </Link>
