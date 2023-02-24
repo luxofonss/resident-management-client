@@ -30,7 +30,7 @@ const AppSelectEquipment = ({ apiURL, isFullPath = false, minWidth, name, requir
     const selections = useRef();
     const wrapperRef = useRef();
     const _name = name;
-    const searchValue = g(nameInput, 1000);
+    const searchValue = (nameInput, 1000);
 
     const handleSelect = (id, name, index) => {
         console.log(name, id);
