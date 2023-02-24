@@ -55,7 +55,7 @@ const AppSelectEquipment = ({ apiURL, isFullPath = false, minWidth, name, requir
 
     useEffect(() => {
         console.log('searchValue', searchValue);
-        dispatch(LAY_LOAI_TB({ name: searchValue }));
+        dispatch(LAY_LOAI_TB());
     }, [searchValue]);
 
     useEffect(() => {
