@@ -12,6 +12,7 @@ import { isEmptyValue } from '~/helpers/check';
 import {
     LAY_LOAI_TB,
     LAY_PHIEU_MUON,
+    LAY_TAI_NGUYEN,
     MUON_THIET_BI,
     MUON_THIET_BI_RESET,
     TRA_TAI_NGUYEN,
@@ -27,7 +28,7 @@ function EquipmentBack(props) {
     const [counter, setCounter] = React.useState(1);
     const traTaiNguyen = useSelector((state) => state.equipment.traTaiNguyen);
     const currentRouter = useSelector((state) => state.router.location);
-    const loaiTaiNguyen = useSelector((state) => state.equipment.danhSachLoaiThietBi);
+    const loaiTaiNguyen = useSelector((state) => state.equipment.layTaiNguyen);
     const phieuMuon = useSelector((state) => state.equipment.layPhieuMuon);
 
     console.log('currentRouter', currentRouter.search);
@@ -56,7 +57,7 @@ function EquipmentBack(props) {
 
     useEffect(() => {
         dispatch(LAY_PHIEU_MUON({ id: params.id }));
-        dispatch(LAY_LOAI_TB({ id: searchParams.getAll('ids') }));
+        dispatch(LAY_TAI_NGUYEN({ id: searchParams.getAll('ids') }));
     }, []);
 
     const onSubmit = (data) => {

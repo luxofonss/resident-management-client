@@ -87,12 +87,19 @@ function EquipmentBorrowDetail(props) {
             fixed: 'right',
             width: 150,
             render: (_, record) => {
-                if (danhSachPhieuMuon?.data[0]?.trang_thai !== 'DONE')
+                if (danhSachPhieuMuon?.data[0]?.trang_thai !== 'DONE' && selected)
                     return (
                         <Link to={`/equipment/back/${id}?${selected}`}>
                             <Button>Trả</Button>
                         </Link>
                     );
+                else {
+                    return (
+                        <Link to={`/equipment/back/${id}?ids=${record.tai_nguyen_id}`}>
+                            <Button>Trả</Button>
+                        </Link>
+                    );
+                }
             },
         },
     ];
