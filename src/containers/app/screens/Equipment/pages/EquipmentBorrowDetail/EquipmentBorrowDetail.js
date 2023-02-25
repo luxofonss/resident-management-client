@@ -43,7 +43,7 @@ function EquipmentBorrowDetail(props) {
             title: 'Ngày mượn',
             // dataIndex: 'ngay_muon',
             render: (_, record) => {
-                return record.ngay_muon?.slice(0, 10);
+                return record.ngay_muon.slice(0, 10);
             },
             key: 'ngay_muon',
             width: 130,
@@ -51,18 +51,16 @@ function EquipmentBorrowDetail(props) {
         {
             title: 'Ngày hẹn trả',
             render: (_, record) => {
-                return record.ngay_hen_tra?.slice(0, 10);
+                return record.ngay_hen_tra.slice(0, 10);
             },
             key: 'ngay_hen_tra',
             width: 130,
         },
         {
             title: 'Ngày trả',
-            render: (_, record) => {
-                return record.ngay_tra?.slice(0, 10);
-            },
+            dataIndex: 'ngay_tra',
             key: 'ngay_tra',
-            width: 130,
+            width: 100,
         },
 
         {
@@ -83,20 +81,20 @@ function EquipmentBorrowDetail(props) {
                 </>
             ),
         },
-        // {
-        //     title: 'Hành động',
-        //     key: 'action',
-        //     fixed: 'right',
-        //     width: 150,
-        //     render: (_, record) => {
-        //         if (danhSachPhieuMuon?.data[0]?.trang_thai !== 'DONE')
-        //             return (
-        //                 <Link to={`/equipment/back/${id}?${selected}`}>
-        //                     <Button>Trả</Button>
-        //                 </Link>
-        //             );
-        //     },
-        // },
+        {
+            title: 'Hành động',
+            key: 'action',
+            fixed: 'right',
+            width: 150,
+            render: (_, record) => {
+                if (danhSachPhieuMuon?.data[0]?.trang_thai !== 'DONE')
+                    return (
+                        <Link to={`/equipment/back/${id}?${selected}`}>
+                            <Button>Trả</Button>
+                        </Link>
+                    );
+            },
+        },
     ];
 
     const rowSelection = {
@@ -202,11 +200,6 @@ function EquipmentBorrowDetail(props) {
                             dataSource={danhSachPhieuMuon.data[0].phien_su_dung}
                             columns={columns}
                         />
-                        {danhSachPhieuMuon?.data[0]?.trang_thai !== 'DONE' && (
-                            <Link to={`/equipment/back/${id}?${selected}`}>
-                                <Button>Trả</Button>
-                            </Link>
-                        )}
                     </Fragment>
                 )}
             </div>
