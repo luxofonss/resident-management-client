@@ -35,21 +35,15 @@ function EquipmentBorrowDetail(props) {
         },
         {
             title: 'Loại tài nguyên',
-            dataIndex: 'tai_nguyen_id',
-            key: 'tai_nguyen_id',
+            dataIndex: 'ten',
+            key: 'ten',
             width: 130,
         },
-        // {
-        //     title: 'Mô tả',
-        //     dataIndex: 'mo_ta',
-        //     key: 'mo_ta',
-        //     width: 200,
-        // },
         {
             title: 'Ngày mượn',
             // dataIndex: 'ngay_muon',
             render: (_, record) => {
-                return record.ngay_muon.slice(0, 10);
+                return record.ngay_muon?.slice(0, 10);
             },
             key: 'ngay_muon',
             width: 130,
@@ -57,16 +51,18 @@ function EquipmentBorrowDetail(props) {
         {
             title: 'Ngày hẹn trả',
             render: (_, record) => {
-                return record.ngay_hen_tra.slice(0, 10);
+                return record.ngay_hen_tra?.slice(0, 10);
             },
             key: 'ngay_hen_tra',
             width: 130,
         },
         {
             title: 'Ngày trả',
-            dataIndex: 'ngay_tra',
+            render: (_, record) => {
+                return record.ngay_tra?.slice(0, 10);
+            },
             key: 'ngay_tra',
-            width: 100,
+            width: 130,
         },
 
         {
@@ -81,23 +77,26 @@ function EquipmentBorrowDetail(props) {
             width: 130,
             render: (_, { trang_thai }) => (
                 <>
-                    <Tag color={trang_thai === 'DONE' ? 'geekblue' : 'volcano'}>
-                        {trang_thai === 'DONE' ? 'Đã trả' : 'Chưa trả'}
+                    <Tag color={danhSachPhieuMuon?.data[0]?.trang_thai === 'DONE' ? 'geekblue' : 'volcano'}>
+                        {danhSachPhieuMuon?.data[0]?.trang_thai === 'DONE' ? 'Đã trả' : 'Chưa trả'}
                     </Tag>
                 </>
             ),
         },
-        {
-            title: 'Action',
-            key: 'action',
-            fixed: 'right',
-            width: 150,
-            render: (_, record) => (
-                <Link to={`/equipment/back/${id}?${selected}`}>
-                    <Button>Trả</Button>
-                </Link>
-            ),
-        },
+        // {
+        //     title: 'Hành động',
+        //     key: 'action',
+        //     fixed: 'right',
+        //     width: 150,
+        //     render: (_, record) => {
+        //         if (danhSachPhieuMuon?.data[0]?.trang_thai !== 'DONE')
+        //             return (
+        //                 <Link to={`/equipment/back/${id}?${selected}`}>
+        //                     <Button>Trả</Button>
+        //                 </Link>
+        //             );
+        //     },
+        // },
     ];
 
     const rowSelection = {
@@ -203,6 +202,11 @@ function EquipmentBorrowDetail(props) {
                             dataSource={danhSachPhieuMuon.data[0].phien_su_dung}
                             columns={columns}
                         />
+                        {danhSachPhieuMuon?.data[0]?.trang_thai !== 'DONE' && (
+                            <Link to={`/equipment/back/${id}?${selected}`}>
+                                <Button>Trả</Button>
+                            </Link>
+                        )}
                     </Fragment>
                 )}
             </div>
